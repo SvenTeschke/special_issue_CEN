@@ -9,7 +9,6 @@
 # Output: 
 #         - CLS of variable X_i and Y
 #
-# mark: this function is NEARLY from the Parry Paper
 
 
 getCLS = function(XY){
@@ -26,7 +25,6 @@ getCLS = function(XY){
   return(CLS)
 } 
 
-### sketch ####
 # Inv_or_MP: function to get inverse or pseudoinverse
 #
 # Input: R - Matrix
@@ -55,20 +53,22 @@ vnorm <- function(x){
 
 # sketch2b: to calculate the cls of a matrix X with sketching
 # 
-# Input:
+# Input: - X:  combinded matrix of X and Y
+#        - epsilon: parameter
+#        - vi: how many important varaiables (optional, but must be specified)
+#        - abs: abs or no abs cls?
 #
-# Output:
-#
-# so dass eine zeile nich oefters auf eine andere projiziert werden kann
+# Output: - cls: cls of variable j with response y
+#         - rank: the rank of the important variables by cls
+
 sketch2b <- function(X, epsilon = 0.2, vi = 2, 
                     abs = T){
   p = ncol(X)
   n = nrow(X)
   X <- t(X)
-  # first sketch
   r = round((ceiling(n*log(n)))/(epsilon^2)) # cohan
   s = round(ceiling(log(n)/epsilon^2))
-  X_ <- matrix(0, nrow = r, ncol = n) ## ??? 
+  X_ <- matrix(0, nrow = r, ncol = n) 
   for(d in 1:p){
       f = sample(1:r, s)
       g = sample(c(-1,1), s, replace = T)
@@ -86,9 +86,6 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
   
   Om <- X %*% R_inv
   print("om")
-  # Om_ <- Om %*% t(Om)
-  # CLS_sketch_3a_0.5 <- rbind(CLS_sketch_3a_0.5, Om_[-p,p])
-  # LS_sketch_3a_0.5 <- rbind(LS_sketch_3a_0.5, diag(Om_)[-p])
   Om_ <- c()
   for(i in 1:(p-1)){
     Om_[i] <- Om[i, ] %*% Om[p,]
@@ -104,20 +101,18 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
 
 
 
+# randomCLS_general_CLS_sample: calculate cls with RW approach
+#
+# Input: - Data: Data matrix X
+#        - response_: response Y
+#        - w: window size
+#        - R: max number of samples
+#        - bagging: bagging step in each sample (default: F)
+#        - abs_cls: abs or no abs cls
+#        - pr: print iterations?
+#
+# Output: - cls: dataframe with all variables and their cls (if they are chosen at least once)
 
-
-#### how many ####
-
-# how?
-# random window sampling in jedem schritt? wie?
-
-
-# bisher:
-# einfach nur verbesserung zu bisheriger funktion
-
-
-# while bis alle einmal angeschaut oder for einfach "hoch genug" setzen?
-# while dauert halt ggf unenenldich lange
 
 randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
                                   bagging = F, abs_cls = T, pr = T){
@@ -128,40 +123,17 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
   if(w==0){
     w = n+1
   } else{w = w}
-  
 
-
-  
-  ## start with random windows:
-  
-  # init Score matrices:
-  #score_cls = numeric(0)
-  
-  # init chosen SNP matrices
-  #chosen_cls = c()
-  
-  
   A <- numeric(0)  # control if we catch all SNPs
-  
-  
   # loop:
   SNPs = colnames(Data)
-  
-  
   cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
   
-  
- # for(i in 1:R){
   i = 0
-  while (length(A) < p & i < R) {
-    
-    
-
+  while (length(A) < p & i < R) { # break if R is reached or all variables are choosen at least once
     
     s = sample(1:p, w)  # sample w SNPs in each step independently
-    
-    A <- c(A, s) %>% unique() #%>% length() # count how many different SNPs we consider
-    
+    A <- c(A, s) %>% unique() # count how many different SNPs we consider
     
     if(pr == T){i = i+1
     print(i)
@@ -179,7 +151,7 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
     # calc all scores for the subset:
     levs_ = getCLS(XY_) 
     
-    if(abs_cls == T){
+    if(abs_cls == T){ # abs or not?
       levs_ <- abs(levs_)
     } else{levs_ <- levs_}
     
@@ -192,24 +164,24 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
 
     cls <- cls[,-3]
     
-    # for(j in 1:length(s)){
-    #   if(is.na(cls$Score[s[j]])){
-    #     cls$Score[s[j]] <- levs_[j]
-    #     cls$SNP[s[j]] = SNPs[s[j]]
-    #   }else{if(cls$Score[s[j]] < levs_[j]){cls$Score[s[j]] <- levs_[j]}}}
-    
-    
   }  
- # }
   
-  
-  # return(list("CLS" = chosen_cls, 
-  #             "score" = sore_cls,
-  #             "selected" = length(A)/ncol(Data),
-  #             "A" = A))
   return(cls)
   
 }
+
+
+# Sliding_general_CLS_sampling: calculate cls with SW approach
+#
+# Input: - Data: Data matrix X
+#        - response_: response Y
+#        - w: window size
+#        - bagging: bagging step in each sample (default: F)
+#        - abs_cls: abs or no abs cls
+#        - samp_: should the columns sampled before start?
+#
+# Output: - cls: dataframe with all variables and their cls 
+
 
 
 
@@ -224,12 +196,8 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
     w = n+1
   } else{w = w}
   
-  s = w # so viele schritte nach vorne
+  s = w # steps forward -> no overlapping
   
-  
-  ## start with sliding windows:
-  
-
   
   if(samp_ == T){
     print("sample")
@@ -238,8 +206,6 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
   print("normal")}
   
   SNPs = colnames(Data)
-  
-  
   cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
   
   fin <- w  # end of the first window 
@@ -273,21 +239,38 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
     cls$Score[mi:ma] <- levs_    
     cls$SNP[mi:ma] <- SNPs[mi:ma]
     
-    
-    
     # updating window indices:
     fin <- fin + s
     mi <- mi + s
     }
-  #return(list("CLS" = chosen_cls))
   return(cls)
 }
+
+
+
+
+
+
 
 # hilfsfunktion fuer hawmnay, die mir alle scores zu allen SNPs aus gibt
 # how samp?
 
 
-
+# how_many2: calculate cls with all methods:
+#
+# Input: - Data: combinded data of X and Y
+#        - res_number: which column is Y?
+#        - abs: abs cls or not?
+#        - whole: calc cls of the whole matrix?
+#        - RW: calc CLS with RW approach?
+#        - w_RW, R, pr_RW: parameter of RW approach -> see above
+#        - SW: calc CLS with SW approach?
+#        - w_SW: window size for SW approach
+#        - corr: calc corr?
+#        - sketch: calc CLS with sketching?
+#        - eps: eps in sketching approach
+#
+# Output: - list of cls calculated by the different approaches and corr
 
 
 # 2w
@@ -335,15 +318,10 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
  # correlation:
  if(corr_ == T){
-
-   # nach und nach einlesen:
-   # for(j in 1:(res_number-1)){
-   #   corr_d <- c(corr_d, abs(cor(Data[-test.ind,j], as.numeric(Data[-test.ind,res_number]))))
-   #   if(pr_corr == T){print(j)}}
-
+   
    # direkt:
    res = as.numeric(Data[,res_number])
-   corr_d <- apply(Data[,-res_number], 2, function(x) cor(x, res)) #%>% abs()
+   corr_d <- apply(Data[,-res_number], 2, function(x) cor(x, res)) 
    if(abs == T){
      corr_d = abs(corr_d)
      print("corr abs")
@@ -536,12 +514,7 @@ rf2_ <- function(Data, res_number = 200001, abs =T, q = 100,
   
 }
 
-# sample:
 
-# Data: kompletter Datensatz mit y in der letzten Spalte
-# res_number: Nummer der Spalte in der y ist (meist letzte)
-# abs: absolute?
-# q: die wie viel extremsten Variablen will ich haben
 
 
 
