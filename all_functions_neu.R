@@ -1,0 +1,718 @@
+### all functions ####
+
+
+# getCLS: function to get the CLS (only the CLS of variable X_i with Y)
+#               of a matrix X together with response y 
+# 
+# Input: - XY: cbind of matrix X with response y
+#
+# Output: 
+#         - CLS of variable X_i and Y
+#
+# mark: this function is NEARLY from the Parry Paper
+
+
+getCLS = function(XY){
+  # If number of rows is less than number of columns,
+  # need to transpose combination matrix, as this switches the roles of obs and variables,
+  if(nrow(XY) < ncol(XY)) C = t(XY) else C = XY
+  decomp = qr.Q(qr(C)) 
+  
+  CLS <- c() 
+  # to save the matrix multiplication with Q we calculate only the scalar product of the corresponding rows.
+  for(i in 1:(nrow(decomp)-1)){
+    CLS[i] <- decomp[i, ] %*% decomp[nrow(decomp), ]
+  }
+  return(CLS)
+} 
+
+### sketch ####
+# Inv_or_MP: function to get inverse or pseudoinverse
+#
+# Input: R - Matrix
+#
+# Outout: Inverse or Pseudoinverse
+Inv_or_MP <- function(R){
+  tryCatch({
+    solve(R)
+  },
+  error = function(e){
+    MASS::ginv(R)
+  }
+  )
+}
+
+# vnorm: to calculate the Norm of a vector
+#
+# Input: x - vecor
+#
+# Output: the norm of the input vector x
+vnorm <- function(x){
+  vn <- sqrt(sum(x^2))
+  return(vn)
+}
+
+
+# sketch2b: to calculate the cls of a matrix X with sketching
+# 
+# Input:
+#
+# Output:
+#
+# so dass eine zeile nich oefters auf eine andere projiziert werden kann
+sketch2b <- function(X, epsilon = 0.2, vi = 2, 
+                    abs = T){
+  p = ncol(X)
+  n = nrow(X)
+  X <- t(X)
+  # first sketch
+  r = round((ceiling(n*log(n)))/(epsilon^2)) # cohan
+  s = round(ceiling(log(n)/epsilon^2))
+  X_ <- matrix(0, nrow = r, ncol = n) ## ??? 
+  for(d in 1:p){
+      f = sample(1:r, s)
+      g = sample(c(-1,1), s, replace = T)
+      for(l in 1:s){
+      X_[f[l],] <- X_[f[l],] + X[d,] * g[l]}
+    }
+  print("X_")
+  rm(f)
+  rm(g)
+  gc()
+  print("del f,g")
+  R <- qr.R(qr(X_)) # R from QR decomp.
+  R_inv <- Inv_or_MP(R)
+  print("R_inv")
+  
+  Om <- X %*% R_inv
+  print("om")
+  # Om_ <- Om %*% t(Om)
+  # CLS_sketch_3a_0.5 <- rbind(CLS_sketch_3a_0.5, Om_[-p,p])
+  # LS_sketch_3a_0.5 <- rbind(LS_sketch_3a_0.5, diag(Om_)[-p])
+  Om_ <- c()
+  for(i in 1:(p-1)){
+    Om_[i] <- Om[i, ] %*% Om[p,]
+  }
+  if(abs == T){
+    Om_ = abs(Om_)
+  }
+  CLS_rank <- rank(-Om_)[1:vi]
+  
+  return(list("cls" = Om_,
+              "rank" = CLS_rank))
+}
+
+
+
+
+
+#### how many ####
+
+# how?
+# random window sampling in jedem schritt? wie?
+
+
+# bisher:
+# einfach nur verbesserung zu bisheriger funktion
+
+
+# while bis alle einmal angeschaut oder for einfach "hoch genug" setzen?
+# while dauert halt ggf unenenldich lange
+
+randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
+                                  bagging = F, abs_cls = T, pr = T){
+  n = nrow(Data)
+  p = ncol(Data)
+  
+  # window width:
+  if(w==0){
+    w = n+1
+  } else{w = w}
+  
+
+
+  
+  ## start with random windows:
+  
+  # init Score matrices:
+  #score_cls = numeric(0)
+  
+  # init chosen SNP matrices
+  #chosen_cls = c()
+  
+  
+  A <- numeric(0)  # control if we catch all SNPs
+  
+  
+  # loop:
+  SNPs = colnames(Data)
+  
+  
+  cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  
+  
+ # for(i in 1:R){
+  i = 0
+  while (length(A) < p & i < R) {
+    
+    
+
+    
+    s = sample(1:p, w)  # sample w SNPs in each step independently
+    
+    A <- c(A, s) %>% unique() #%>% length() # count how many different SNPs we consider
+    
+    
+    if(pr == T){i = i+1
+    print(i)
+    pp = paste((100*length(A))/p, "%")
+    print(pp)}
+    
+    # bagging yes or no:
+    if(bagging == TRUE){
+      n_ <- sample(1:n, n, TRUE)
+    } else{n_ = 1:n}
+    
+    
+    # construct window, contains of w SNPs and response y:
+    XY_ = cbind(Data[n_ ,s], response_[n_]) 
+    # calc all scores for the subset:
+    levs_ = getCLS(XY_) 
+    
+    if(abs_cls == T){
+      levs_ <- abs(levs_)
+    } else{levs_ <- levs_}
+    
+    cls <- cbind(cls, 0)
+    cls[s,3] <- levs_
+    cls$SNP[s] <- SNPs[s]
+    
+    
+    cls$Score[s] = apply(cls[s,2:3], 1, function(x) max(x, na.rm = T))
+
+    cls <- cls[,-3]
+    
+    # for(j in 1:length(s)){
+    #   if(is.na(cls$Score[s[j]])){
+    #     cls$Score[s[j]] <- levs_[j]
+    #     cls$SNP[s[j]] = SNPs[s[j]]
+    #   }else{if(cls$Score[s[j]] < levs_[j]){cls$Score[s[j]] <- levs_[j]}}}
+    
+    
+  }  
+ # }
+  
+  
+  # return(list("CLS" = chosen_cls, 
+  #             "score" = sore_cls,
+  #             "selected" = length(A)/ncol(Data),
+  #             "A" = A))
+  return(cls)
+  
+}
+
+
+
+Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
+                                            bagging = F, abs_cls = T,
+                                            samp_ = F){
+  n = nrow(Data)
+  p = ncol(Data)
+  
+  # window width:
+  if(w==0){
+    w = n+1
+  } else{w = w}
+  
+  s = w # so viele schritte nach vorne
+  
+  
+  ## start with sliding windows:
+  
+
+  
+  if(samp_ == T){
+    print("sample")
+    Data <- Data[, sample(1:p)]
+  } else{Data = Data
+  print("normal")}
+  
+  SNPs = colnames(Data)
+  
+  
+  cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  
+  fin <- w  # end of the first window 
+  mi <- 1   # begin of the first window
+  ma <- fin  # end of window
+  # start with loop:
+  
+  while(fin < (p+(s/2))){ 
+    
+    print(c(mi,fin)) 
+    mi <- mi
+    ma <- fin
+    
+    # BAGGING yes or no?
+    if(bagging == T){
+      n_ = sample(1:n, n, replace = T)
+    } else{n_ = 1:n}
+    
+    
+    # construct window, contains of w SNPs and response y
+    XY_ = cbind(Data[n_ ,mi:ma], response_[n_])
+    # calc all scores for the subset:
+    levs_ = getCLS(XY_)    
+    
+    # absolute cls?
+    if(abs_cls == T){
+      levs_ <- abs(levs_)
+    } else{levs_ <- levs_}
+    
+    
+    cls$Score[mi:ma] <- levs_    
+    cls$SNP[mi:ma] <- SNPs[mi:ma]
+    
+    
+    
+    # updating window indices:
+    fin <- fin + s
+    mi <- mi + s
+    }
+  #return(list("CLS" = chosen_cls))
+  return(cls)
+}
+
+# hilfsfunktion fuer hawmnay, die mir alle scores zu allen SNPs aus gibt
+# how samp?
+
+
+
+
+
+# 2w
+how_many2 <- function(Data, res_number = 2001, abs =T,
+                          #whole:
+                          whole = T,
+                          #RW:
+                          RW = T, w_RW = 200, R = 200, pr_RW = T,
+                          #SW:
+                          SW = T, w_SW = 200,
+                          #corr:
+                          corr_ = T, pr_corr = T,
+                          # sketch:
+                          sketch = T, eps = 0.5){
+  
+  
+  
+  # whole cls:
+  if(whole == T){
+    CCC <- getCLS(Data)
+    
+    if(abs == T){
+      CCC = abs(CCC)
+      print("abs")} else{print("not abs")}
+    
+    CCC = data.frame("SNP" = paste0("SNP", 1:length(CCC)), "Score" = CCC)
+    CCC = arrange(CCC, by = -CCC$Score)}else{CCC = NA}
+  
+  print("whole done")
+  # RW:
+  if(RW ==T){
+    CCC_RW = randomCLS_general_CLS_sample(Data[,-res_number], Data[,res_number], w = w_RW, R = R,
+                                          bagging = F, abs_cls = abs, pr = pr_RW)
+
+   CCC_RW = arrange(CCC_RW, by = -CCC_RW$Score)}else{CCC_RW = NA}
+
+  print("RW done")
+  # SW:
+  if(SW == T){
+    CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, abs_cls = abs)
+
+    CCC_SW = arrange(CCC_SW, by = -CCC_SW$Score)}else{CCC_SW = NA}
+
+  print("SW done")
+
+ # correlation:
+ if(corr_ == T){
+
+   # nach und nach einlesen:
+   # for(j in 1:(res_number-1)){
+   #   corr_d <- c(corr_d, abs(cor(Data[-test.ind,j], as.numeric(Data[-test.ind,res_number]))))
+   #   if(pr_corr == T){print(j)}}
+
+   # direkt:
+   res = as.numeric(Data[,res_number])
+   corr_d <- apply(Data[,-res_number], 2, function(x) cor(x, res)) #%>% abs()
+   if(abs == T){
+     corr_d = abs(corr_d)
+     print("corr abs")
+   }
+   corr_d <- data.frame("SNP" = names(corr_d), "Score" = as.numeric(corr_d))
+   corr_d <- arrange(corr_d, by = -corr_d$Score)}else{corr_d = NA}
+
+  print("corr done")
+
+# sketch:
+  if(sketch == T){
+  CCC_sketch = sketch2b(Data, epsilon = eps, abs = abs, vi = 2)
+  CCC_sketch = data.frame("SNP" = paste0("SNP", 1:length(CCC_sketch$cls)), "Score" = CCC_sketch$cls)
+  CCC_sketch = arrange(CCC_sketch, by = -CCC_sketch$Score)}else{CCC_sketch = NA}
+  
+  
+  
+  
+  return(list("p_whole" = CCC,
+              "p_RW" = CCC_RW,
+              "p_SW" = CCC_SW,
+              "p_corr" = corr_d,
+              "p_sketch" = CCC_sketch))
+  
+}
+
+
+
+
+
+#### prediction ####
+rf2_ <- function(Data, res_number = 200001, abs =T, q = 100,
+                 test_numb = 0, mtr,
+                 #full:
+                 full = T,
+                 #whole:
+                 whole = T,
+                 #RW:
+                 RW = T, w_RW = 2000, R = 2000, pr_RW = T,
+                 #SW:
+                 SW = T, w_SW = 2000,
+                 #arb_inc:
+                 arb_inc = T,
+                 #arb:
+                 arb = T,
+                 #corr:
+                 corr_ = T, pr_corr = T,
+                 # skectch:
+                 sketch_ = T, eps_sketch = 0.2, vi_sketch = 2){
+  
+  n = nrow(Data)
+  p = ncol(Data)
+  test.ind = sample(1:n, test_numb)
+  
+  # rF vom vollen Modell:
+  
+  if(full == T){
+    RR_full = ranger(x = Data[-test.ind,-res_number], y= as.factor(Data[-test.ind,res_number]), 
+                     importance = "impurity", mtry = q)
+    
+    
+    p1 = predict(RR_full, Data[test.ind, -res_number])
+    p_full = table(Data[test.ind, res_number], p1$predictions) %>% diag() %>% sum()}else{p_full = NA}
+  
+  print("full done")
+  # vorher CLS:
+  
+  # whole cls:
+  if(whole == T){
+    CCC <- getCLS(Data[-test.ind, ])
+    
+    if(abs == T){
+      CCC = abs(CCC)
+      print("abs")} else{print("not abs")}
+    
+    index = which(rank(-CCC) < q) 
+    
+    RR_whole = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                      mtry = mtr)
+    
+    
+    p2 = predict(RR_whole, Data[test.ind, index])
+    p_whole = table(Data[test.ind, res_number], p2$predictions) %>% diag() %>% sum()}else{p_whole = NA}
+  
+  print("whole done")
+  # RW:
+  if(RW ==T){
+    CCC_RW = randomCLS_general_CLS_sample(Data[-test.ind,-res_number], Data[-test.ind,res_number], w = w_RW, R = R,
+                                          bagging = F, abs_cls = abs, pr = pr_RW)
+    
+    
+    index = which(rank(-CCC_RW$Score) < q) 
+    
+    RR_RW = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                   mtry = mtr)
+    
+    
+    p3 = predict(RR_RW, Data[test.ind,  index])
+    p_RW = table(Data[test.ind, res_number], p3$predictions) %>% diag() %>% sum()}else{p_RW = NA}
+  
+  print("RW done")
+  
+  # SW:
+  if(SW == T){
+    CCC_SW = Sliding_general_CLS_sampling(Data[-test.ind,-res_number], Data[-test.ind,res_number], 
+                                          w=w_SW, abs_cls = abs)
+    
+    index = which(rank(-CCC_SW$Score) < q) 
+    
+    RR_SW = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                   mtry = mtr)
+    
+    
+    p4 = predict(RR_SW, Data[test.ind,  index])
+    p_SW = table(Data[test.ind, res_number], p4$predictions) %>% diag() %>% sum()}else{p_SW = NA}
+  
+  print("SW done")
+  
+  
+  # arbitrary inc
+  if(arb_inc){
+    
+    index = 1:q
+    RR_arb_inc = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                        mtry = mtr)
+    
+    
+    p5 = predict(RR_arb_inc, Data[test.ind,  index])
+    p_arb_inc = table(Data[test.ind, res_number], p5$predictions) %>% diag() %>% sum()}else{p_arb_inc = NA}
+  print("arb_inc done")
+  
+  
+  # arbitrary
+  if(arb == T){
+    index = sample(1:(res_number-1), q) 
+    
+    
+    RR_arb = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                    mtry = mtr)
+    
+    
+    p6 = predict(RR_arb, Data[test.ind,  index])
+    p_arb = table(Data[test.ind, res_number], p6$predictions) %>% diag() %>% sum()}else{p_arb = NA}
+  
+  print("arb done")
+  
+  
+  # correlation:
+  if(corr_ == T){
+    corr_d <- c()
+    # nach und nach einlesen:
+    # for(j in 1:(res_number-1)){
+    #   corr_d <- c(corr_d, abs(cor(Data[-test.ind,j], as.numeric(Data[-test.ind,res_number]))))
+    #   if(pr_corr == T){print(j)}}
+    
+    # direkt:
+    res = Data[-test.ind,res_number]
+    corr_d <- apply(Data[-test.ind,-res_number], 2, function(x) cor(x, res)) 
+    if(abs == T){
+      corr_d = abs(corr_d)}else{print("not abs")}
+    
+    index = which(rank(-corr_d) < q) 
+    
+    RR_corr = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                     mtry = mtr)
+    
+    p7 = predict(RR_corr, Data[test.ind,  index])
+    p_corr = table(Data[test.ind, res_number], p7$predictions) %>% diag() %>% sum()}else{p_corr = NA}
+  
+  print("corr done")
+  
+  
+  # sketch 
+  if(sketch_ == T){
+    sk_d = sketch2b(X = Data[-test.ind,], epsilon = eps_sketch, vi = vi_sketch, abs = abs)
+    
+    index = which(rank(-sk_d$cls) < q) 
+    
+    RR_sketch = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                       mtry = mtr)
+    
+    p8 = predict(RR_sketch, Data[test.ind,  index])
+    p_sketch = table(Data[test.ind, res_number], p8$predictions) %>% diag() %>% sum()}else{p_sketch = NA}
+  
+  
+  
+  return(1-c(p_full/test_numb, p_whole/test_numb, p_RW/test_numb,
+             p_SW/test_numb, p_arb_inc/test_numb, p_arb/test_numb,
+             p_corr/test_numb, p_sketch/test_numb))
+  
+}
+
+# sample:
+
+# Data: kompletter Datensatz mit y in der letzten Spalte
+# res_number: Nummer der Spalte in der y ist (meist letzte)
+# abs: absolute?
+# q: die wie viel extremsten Variablen will ich haben
+
+
+
+
+
+rf3_ <- function(Data, res_number = 20001, abs =T, q = 100,
+                 test_numb = 0, mtr,
+                 #full:
+                 full = T,
+                 #whole:
+                 whole = T,
+                 #RW:
+                 RW = T, w_RW = 2000, R = 2000, pr_RW = T,
+                 #SW:
+                 SW = T, w_SW = 2000,
+                 #arb_inc:
+                 arb_inc = T,
+                 #arb:
+                 arb = T,
+                 #corr:
+                 corr_ = T, pr_corr = T,
+                 # sketch:
+                 sketch_ = T, eps_sketch = 0.2, vi_sketch = 2){
+  
+  n = nrow(Data)
+  test.ind = sample(1:n, test_numb)
+  
+  # rF vom vollen Modell:
+  
+  if(full == T){
+    RR_full = ranger(x = Data[-test.ind,-res_number], y= as.factor(Data[-test.ind,res_number]), 
+                     importance = "impurity", mtry = mtr)
+    
+    
+    p1 = predict(RR_full, Data[test.ind, -res_number])
+    p_full = table(Data[test.ind, res_number], p1$predictions) %>% diag() %>% sum()}else{p_full = NA}
+  
+  print("full done")
+  # vorher CLS:
+  
+  # whole cls:
+  if(whole == T){
+    CCC <- getCLS(Data[-test.ind, ])
+    
+    if(abs == T){
+      CCC = abs(CCC)
+      print("abs")} else{print("not abs")}
+    
+    CCC <- sapply(CCC, function(x) max(c(0,x)))
+    prob <- CCC/sum(CCC)
+    index = sample(1:(res_number-1), q, prob = prob)
+    
+    RR_whole = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                      mtry = mtr)
+    
+    
+    p2 = predict(RR_whole, Data[test.ind, index])
+    p_whole = table(Data[test.ind, res_number], p2$predictions) %>% diag() %>% sum()}else{p_whole = NA}
+  
+  print("whole done")
+  # RW:
+  if(RW ==T){
+    CCC_RW = randomCLS_general_CLS_sample(Data[-test.ind,-res_number], Data[-test.ind,res_number], w = w_RW, R = R,
+                                          bagging = F, abs_cls = abs, pr = pr_RW)
+    
+    CCC_RW <- sapply(CCC_RW$Score, function(x) max(c(0,x),na.rm = T))
+    prob <- CCC_RW/sum(CCC_RW)
+    index = sample(1:(res_number-1), q, prob = prob)
+    
+    
+    RR_RW = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                   mtry = mtr)
+    
+    
+    p3 = predict(RR_RW, Data[test.ind,  index])
+    p_RW = table(Data[test.ind, res_number], p3$predictions) %>% diag() %>% sum()}else{p_RW = NA}
+  
+  print("RW done")
+  
+  # SW:
+  if(SW == T){
+    CCC_SW = Sliding_general_CLS_sampling(Data[-test.ind,-res_number], Data[-test.ind,res_number], 
+                                          w=w_SW, abs_cls = abs)
+    
+    CCC_SW <- sapply(CCC_SW$Score, function(x) max(c(0,x)))
+    prob <- CCC_SW/sum(CCC_SW)
+    index = sample(1:(res_number-1), q, prob = prob)
+    
+    RR_SW = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                   mtry = mtr)
+    
+    
+    p4 = predict(RR_SW, Data[test.ind,  index])
+    p_SW = table(Data[test.ind, res_number], p4$predictions) %>% diag() %>% sum()}else{p_SW = NA}
+  
+  print("SW done")
+  
+  
+  # arbitrary inc
+  if(arb_inc){
+    
+    index = 1:q
+    RR_arb_inc = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                        mtry = mtr)
+    
+    
+    p5 = predict(RR_arb_inc, Data[test.ind,  index])
+    p_arb_inc = table(Data[test.ind, res_number], p5$predictions) %>% diag() %>% sum()}else{p_arb_inc = NA}
+  print("arb_inc done")
+  
+  
+  # arbitrary
+  if(arb == T){
+    index = sample(1:(res_number-1), q) 
+    
+    
+    RR_arb = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                    mtry = mtr)
+    
+    
+    p6 = predict(RR_arb, Data[test.ind,  index])
+    p_arb = table(Data[test.ind, res_number], p6$predictions) %>% diag() %>% sum()}else{p_arb = NA}
+  
+  print("arb done")
+  
+  
+  # correlation:
+  if(corr_ == T){
+    corr_d <- c()
+    res = Data[-test.ind,res_number]
+    corr_d <- apply(Data[-test.ind,-res_number], 2, function(x) cor(x, res)) 
+    if(abs == T){
+      corr_d = abs(corr_d)}else{print("not abs")}
+    
+    prob <- corr_d/sum(corr_d)
+    index = sample(1:(res_number-1), q, prob = prob)
+    
+    RR_corr = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                     mtry = mtr)
+    
+    p7 = predict(RR_corr, Data[test.ind,  index])
+    p_corr = table(Data[test.ind, res_number], p7$predictions) %>% diag() %>% sum()}else{p_corr = NA}
+  
+  print("corr done")
+  
+  
+  
+  # sketch 
+  if(sketch_ == T){
+    sk_d = sketch2b(X = Data[-test.ind,], epsilon = eps_sketch, vi = vi_sketch, abs = abs)
+    
+    
+    
+    CCC_sk <- sapply(sk_d$cls, function(x) max(c(0,x),na.rm = T))
+    prob <- CCC_sk/sum(CCC_sk)
+    index = sample(1:(res_number-1), q, prob = prob)
+    
+    
+    RR_sketch = ranger(x = Data[-test.ind,index], y= as.factor(Data[-test.ind,res_number]), importance = "impurity",
+                       mtry = mtr)
+    
+    p8 = predict(RR_sketch, Data[test.ind,  index])
+    p_sketch = table(Data[test.ind, res_number], p8$predictions) %>% diag() %>% sum()}else{p_sketch = NA}
+  
+  
+  
+  
+  
+  
+  return(1-c(p_full/test_numb, p_whole/test_numb, p_RW/test_numb,
+             p_SW/test_numb, p_arb_inc/test_numb, p_arb/test_numb,
+             p_corr/test_numb, p_sketch/test_numb))
+  
+}
