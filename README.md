@@ -16,3 +16,7 @@ conclusion_2w - Results of above Calculations of scenario 1
            p=2000000 due to memory reasons
 
 conclusion_2w2w - Results of above Calculations of scenario 2
+
+2w2w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
+
+conclusion_3w - Results of above Calculations of scenario 3
