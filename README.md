@@ -17,6 +17,22 @@ conclusion_2w - Results of above Calculations of scenario 1
 
 conclusion_2w2w - Results of above Calculations of scenario 2
 
-2w2w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
+3w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
 
 conclusion_3w - Results of above Calculations of scenario 3
+
+4w_xxx - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
+
+conclusion_4w - Results of above Calculations of scenario 4
+
+hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance
+
+2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance
+
+
+all_functions_neu -
+
+simulation_scenarios_neu - 
+
+toyexample_neu
+

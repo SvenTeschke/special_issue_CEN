@@ -1051,33 +1051,33 @@ ggsave(filename = "plt_2w2w_200k_not_abs.pdf", plt_2w2w_200k_not_abs, device = "
 
 
 #### 2000k: ####
-# load("selected_2w2w_2000k_not_abs_10.RData")
-# load("selected_2w2w_2000k_not_abs_20.RData")
-# load("selected_2w2w_2000k_not_abs_30.RData")
-# load("selected_2w2w_2000k_not_abs_40.RData")
-# load("selected_2w2w_2000k_not_abs_50.RData")
-# load("selected_2w2w_2000k_not_abs_60.RData")
-# load("selected_2w2w_2000k_not_abs_70.RData")
-# load("selected_2w2w_2000k_not_abs_80.RData")
-# load("selected_2w2w_2000k_not_abs_90.RData")
-# load("selected_2w2w_2000k_not_abs_100.RData")
-# 
-# 
-# selected_2w2w_2000k_not_abs = list()
-# for(i in 1:7){
-# selected_2w2w_2000k_not_abs[[i]] = cbind(selected_2w2w_2000k_not_abs_10[[i]],
-#                                        selected_2w2w_2000k_not_abs_20[[i]],
-#                                        selected_2w2w_2000k_not_abs_30[[i]],
-#                                        selected_2w2w_2000k_not_abs_40[[i]],
-#                                        selected_2w2w_2000k_not_abs_50[[i]],
-#                                        selected_2w2w_2000k_not_abs_60[[i]],
-#                                        selected_2w2w_2000k_not_abs_70[[i]],
-#                                        selected_2w2w_2000k_not_abs_80[[i]],
-#                                        selected_2w2w_2000k_not_abs_90[[i]],
-#                                        selected_2w2w_2000k_not_abs_100[[i]])}
-# names(selected_2w2w_2000k_not_abs) = names(selected_2w2w_2000k_not_abs_10)
-# save(selected_2w2w_2000k_not_abs,
-#       file = "selected_2w2w_2000k_not_abs.RData")
+load("selected_2w2w_2000k_not_abs_10.RData")
+load("selected_2w2w_2000k_not_abs_20.RData")
+load("selected_2w2w_2000k_not_abs_30.RData")
+load("selected_2w2w_2000k_not_abs_40.RData")
+load("selected_2w2w_2000k_not_abs_50.RData")
+load("selected_2w2w_2000k_not_abs_60.RData")
+load("selected_2w2w_2000k_not_abs_70.RData")
+load("selected_2w2w_2000k_not_abs_80.RData")
+load("selected_2w2w_2000k_not_abs_90.RData")
+load("selected_2w2w_2000k_not_abs_100.RData")
+
+
+selected_2w2w_2000k_not_abs = list()
+for(i in 1:7){
+selected_2w2w_2000k_not_abs[[i]] = cbind(selected_2w2w_2000k_not_abs_10[[i]],
+                                       selected_2w2w_2000k_not_abs_20[[i]],
+                                       selected_2w2w_2000k_not_abs_30[[i]],
+                                       selected_2w2w_2000k_not_abs_40[[i]],
+                                       selected_2w2w_2000k_not_abs_50[[i]],
+                                       selected_2w2w_2000k_not_abs_60[[i]],
+                                       selected_2w2w_2000k_not_abs_70[[i]],
+                                       selected_2w2w_2000k_not_abs_80[[i]],
+                                       selected_2w2w_2000k_not_abs_90[[i]],
+                                       selected_2w2w_2000k_not_abs_100[[i]])}
+names(selected_2w2w_2000k_not_abs) = names(selected_2w2w_2000k_not_abs_10)
+save(selected_2w2w_2000k_not_abs,
+      file = "selected_2w2w_2000k_not_abs.RData")
 
 
 load("selected_2w2w_2000k_not_abs.RData")

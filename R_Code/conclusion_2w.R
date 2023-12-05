@@ -135,70 +135,6 @@ ggsave(filename = "dens_2w_2k_neg_abs.pdf", dens_2w_2k_neg_abs, device = "pdf",
 
 
 
-# # pos+neg
-# # one postive ifluence, one negative 
-# load("C:/Users/teschke/Promotion/Research/merging_CLS_paper/Data/neu/Szen2w_2k_pn.RData")
-# 
-# CLS2w2w_2k_pn <- numeric()
-# for(i in 1:1000){
-#   
-#   CLS2w2w_2k_pn <- rbind(CLS2w2w_2k_pn, getCLS(cbind(Szen2w2w_2k_pn[[i]]$x, Szen2w2w_2k_pn[[i]]$y)))
-#   print(i)
-# }
-# 
-# vv2w2w_i2_neg1 = density(CLS2w2w_2k_pn[,1:2])
-# vv2w2w_i2_neg2 = density(CLS2w2w_2k_pn[,3:4])
-# vv2w2w_ni_2w_neg = density(CLS2w2w_2k_pn[, -(1:4)])
-# 
-# 
-# dens_2w2w_2k_pn =  ggplot() +
-#   geom_line(aes(x= vv2w2w_i2_neg1$x, y = vv2w2w_i2_neg1$y, colour = "imp2_1"), size = 1) +
-#   geom_line(aes(x= vv2w2w_i2_neg2$x, y = vv2w2w_i2_neg2$y, colour = "imp2_2"), size = 1) +
-#   geom_line(aes(x = vv2w2w_ni_2w_neg$x, vv2w2w_ni_2w_neg$y), size = 1) +
-#   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1 (pos + neg)") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="SNPs:",
-#                       values=c(imp2_1 = "darkgreen",
-#                                imp2_2 ="firebrick" ),
-#                       labels = c( "important"))
-# 
-# 
-# ggsave(filename = "dens_2w2w_2k_pn.pdf", dens_2w2w_2k_pn, device = "pdf",
-#        width = 10, height = 5)
-# 
-# 
-# # one postive ifluence, one negative - absolute
-# vv2w2w_i2_neg1 = density(abs(CLS2w2w_2k_pn[,1:2]))
-# vv2w2w_i2_neg2 = density(abs(CLS2w2w_2k_pn[,3:4]))
-# vv2w2w_ni_2w_neg = density(abs(CLS2w2w_2k_pn[, -(1:4)]))
-# 
-# 
-# dens_2w2w_2k_pn_abs =  ggplot() +
-#   geom_line(aes(x= vv2w2w_i2_neg1$x, y = vv2w2w_i2_neg1$y, colour = "imp2_1"), size = 1) +
-#   geom_line(aes(x= vv2w2w_i2_neg2$x, y = vv2w2w_i2_neg2$y, colour = "imp2_2"), size = 1) +
-#   geom_line(aes(x = vv2w2w_ni_2w_neg$x, vv2w2w_ni_2w_neg$y), size = 1) +
-#   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1 (pos + neg)") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="SNPs:",
-#                       values=c(imp2_1 = "darkgreen",
-#                                imp2_2 ="firebrick" ),
-#                       labels = c( "important"))
-# 
-# 
-# ggsave(filename = "dens_2w2w_2k_pn_abs.pdf", dens_2w2w_2k_pn_abs, device = "pdf",
-#        width = 10, height = 5)
-
-
 # large interaction but low main effect
 load("Szen2w_2k_int_nomain4.RData")
 
@@ -774,31 +710,31 @@ ggsave(filename = "plt_mean_2w_200k_not_abs.pdf", plt_mean_2w_200k_not_abs, devi
 
 
 ##### p = 2000k ####
-# load("selected_2w_2000k_10_not_abs_neu.RData")
-# load("selected_2w_2000k_20_not_abs_neu.RData")
-# load("selected_2w_2000k_30_not_abs_neu.RData")
-# load("selected_2w_2000k_40_not_abs_neu.RData")
-# load("selected_2w_2000k_50_not_abs_neu.RData")
-# load("selected_2w_2000k_60_not_abs_neu.RData")
-# load("selected_2w_2000k_70_not_abs_neu.RData")
-# load("selected_2w_2000k_80_not_abs_neu.RData")
-# load("selected_2w_2000k_90_not_abs_neu.RData")
-# load("selected_2w_2000k_100_not_abs_neu.RData")
-# selected_2w_2000k_not_abs <- list()
-# for(i in 1:length(selected_2w_2000k_10_not_abs)){
-#   selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
-#                                           selected_2w_2000k_20_not_abs[[i]],
-#                                           selected_2w_2000k_30_not_abs[[i]],
-#                                           selected_2w_2000k_40_not_abs[[i]],
-#                                           selected_2w_2000k_50_not_abs[[i]],
-#                                           selected_2w_2000k_60_not_abs[[i]],
-#                                           selected_2w_2000k_70_not_abs[[i]],
-#                                           selected_2w_2000k_80_not_abs[[i]],
-#                                           selected_2w_2000k_90_not_abs[[i]],
-#                                           selected_2w_2000k_100_not_abs[[i]])
-# }
-# names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
-# save(selected_2w_2000k_not_abs, file = "selected_2w_2000k_not_abs.RData")
+load("selected_2w_2000k_10_not_abs_neu.RData")
+load("selected_2w_2000k_20_not_abs_neu.RData")
+load("selected_2w_2000k_30_not_abs_neu.RData")
+load("selected_2w_2000k_40_not_abs_neu.RData")
+load("selected_2w_2000k_50_not_abs_neu.RData")
+load("selected_2w_2000k_60_not_abs_neu.RData")
+load("selected_2w_2000k_70_not_abs_neu.RData")
+load("selected_2w_2000k_80_not_abs_neu.RData")
+load("selected_2w_2000k_90_not_abs_neu.RData")
+load("selected_2w_2000k_100_not_abs_neu.RData")
+selected_2w_2000k_not_abs <- list()
+for(i in 1:length(selected_2w_2000k_10_not_abs)){
+  selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
+                                          selected_2w_2000k_20_not_abs[[i]],
+                                          selected_2w_2000k_30_not_abs[[i]],
+                                          selected_2w_2000k_40_not_abs[[i]],
+                                          selected_2w_2000k_50_not_abs[[i]],
+                                          selected_2w_2000k_60_not_abs[[i]],
+                                          selected_2w_2000k_70_not_abs[[i]],
+                                          selected_2w_2000k_80_not_abs[[i]],
+                                          selected_2w_2000k_90_not_abs[[i]],
+                                          selected_2w_2000k_100_not_abs[[i]])
+}
+names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
+save(selected_2w_2000k_not_abs, file = "selected_2w_2000k_not_abs.RData")
 load("selected_2w_2000k_not_abs.RData")
 
 q = 10000
