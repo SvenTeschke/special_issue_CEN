@@ -30,9 +30,9 @@ hapmap - Evaluation of the hap map data with random Forests with focus on predic
 2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance
 
 
-all_functions_neu -
+all_functions_neu - File with all functions i used
 
-simulation_scenarios_neu - 
+simulation_scenarios_neu - file with the simulation of all scenarios
 
-toyexample_neu
+toyexample_neu - Rcode for the toyexample in the motivation section
 
