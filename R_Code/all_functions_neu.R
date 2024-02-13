@@ -250,12 +250,6 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
 
 
 
-
-
-# hilfsfunktion fuer hawmnay, die mir alle scores zu allen SNPs aus gibt
-# how samp?
-
-
 # how_many2: calculate cls with all methods:
 #
 # Input: - Data: combinded data of X and Y
@@ -350,7 +344,7 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
 
 
-###############################
+###############################  later versions: ####
 RW_CLS <- function(Data, response_, w = 0, R = 100,
                    bagging = F, abs_cls = T, pr = T){
   n = nrow(Data)
@@ -404,4 +398,76 @@ RW_CLS <- function(Data, response_, w = 0, R = 100,
   
   return(cls)
   
+}
+
+SW_CLS <- function(Data, response_, w = 0,
+          abs_cls = T){
+  n = nrow(Data)
+  p = ncol(Data)
+  
+  # window width:
+  if(w<n){
+    w = n+1
+  } else{w = w}
+  
+  SNPs <- colnames(Data)
+  cls <- data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  
+  fin <- w  # end of the first window 
+  mi <- 1   # begin of the first window
+  ma <- fin  # end of window
+  # start with loop:
+  
+  while(fin < (p+1)){ 
+    
+    print(c(mi,fin)) 
+    mi <- mi
+    ma <- fin
+
+    # construct window, contains of w SNPs and response y
+    XY_ = cbind(Data[ ,mi:ma], response_)
+    # calc all scores for the subset:
+    levs_ = getCLS(XY_)    
+    
+    # absolute cls?
+    if(abs_cls == T){
+      levs_ <- abs(levs_)
+    } else{levs_ <- levs_}
+    
+    
+    cls$Score[mi:ma] <- levs_    
+    cls$SNP[mi:ma] <- SNPs[mi:ma]
+    
+    # updating window indices:
+    fin <- fin + w
+    mi <- mi + w
+  }
+  
+  if(fin != (p+w)){ # falls es nicht aufgeht, letztes Fenster berechnen in der selben Größe wie die bisherigen
+    
+    mi = p-w+1
+    ma = p
+    
+    print(c(mi,ma)) 
+    
+    # construct window, contains of w SNPs and response y
+    XY_ = cbind(Data[ ,mi:ma], response_)
+    # calc all scores for the subset:
+    levs_ = getCLS(XY_) 
+    
+    
+    # absolute cls?
+    if(abs_cls == T){
+      levs_ <- abs(levs_)
+    } else{levs_ <- levs_}
+    
+    # einfach ueberschreiben --> das geht bestimmt auch besser
+    cls$Score[mi:ma] <- levs_    
+    cls$SNP[mi:ma] <- SNPs[mi:ma]
+    
+    
+  }else{print("Geht auf")}
+  
+  
+  return(cls)
 }
