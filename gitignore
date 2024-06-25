@@ -1,4 +1,3 @@
-Szen*
-*.gz
-*.aux
-*.RData
+/Data/
+
+/R_Code/results/
