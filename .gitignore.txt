@@ -1,8 +1,0 @@
-# big data files
-/Data/
-
-# old/first version
-/before_Major/
-
-# big data files
-/R_Code/results/
