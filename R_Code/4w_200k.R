@@ -29,7 +29,7 @@ for(i in 1:100){
   xyz3 <- how_many2(Data = cbind(Szen4w_200k[[i]]$x, Szen4w_200k[[i]]$y), res_number = 200001,abs = F,
                     whole = F, RW = F, SW = F, corr_ = F, sketch = T, eps = 0.1)
   
-  p_whole_ = cbind(p_whole_, xyz$p_whole$SNP[1:10000], xyz$p_whole$Score[1:10000])
+  p_whole_ = cbind(p_whole_, xyz$p_whole$SNP[1:10000], xyz$p_whole$Score[1:10000]) # just consider the SNPs with the 10000 largest CLS
   p_RW_ = cbind(p_RW_, xyz$p_RW$SNP[1:10000], xyz$p_RW$Score[1:10000])
   p_SW_ = cbind(p_SW_, xyz$p_SW$SNP[1:10000], xyz$p_SW$Score[1:10000])
   p_corr_ =cbind(p_corr_, xyz$p_corr$SNP[1:10000], xyz$p_corr$Score[1:10000])
@@ -47,6 +47,6 @@ for(i in 1:100){
   
   Szen4w_200k[[i]] <- "done"
   gc()
-  save(selected_4w_200k_not_abs, file = "selected_4w_200k_not_abs.RData")
+  save(selected_4w_200k_not_abs, file = "results/selected_4w_200k_not_abs.RData")
   print(i)
 }

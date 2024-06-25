@@ -6,8 +6,8 @@ library("ggpubr") ## for ggrange
 source("all_functions_neu.R")
 
 #### density ####
-load("Szen2w_2k.RData")
-load("Szen2w_20k.RData")
+load("../Data/Szen2w_2k.RData")
+load("../Data/Szen2w_20k.RData")
 
 # calculating the CLS for 2k:
 CLS2w_2k <- numeric()
@@ -72,7 +72,7 @@ dens_2w_2k_abs =  ggplot() +
                                unimp = "black"),
                       labels = c( "important", "unimportant"))
 
-ggsave(filename = "dens_2w_2k_abs.pdf", dens_2w_2k_abs, device = "pdf",
+ggsave(filename = "figure/dens_2w_2k_abs.pdf", dens_2w_2k_abs, device = "pdf",
         width = 10, height = 5)
 
 
@@ -106,33 +106,8 @@ dens_2w_2k_neg =  ggplot() +
                       labels = c( "important"))
 
 
-ggsave(filename = "dens_2w_2k_neg.pdf", dens_2w_2k_neg, device = "pdf",
+ggsave(filename = "figure/dens_2w_2k_neg.pdf", dens_2w_2k_neg, device = "pdf",
        width = 10, height = 5)
-
-
-# absolute with negative influence:
-vv2w_i2_neg_abs = density(abs(CLS2w_2k_neg[,1:2]))
-vv2w_ni_2w_neg_abs = density(abs(CLS2w_2k_neg[, -(1:2)]))
-
-
-dens_2w_2k_neg_abs =  ggplot() +
-  geom_line(aes(x= vv2w_i2_neg_abs$x, y = vv2w_i2_neg_abs$y, colour = "imp2"), size = 1) +
-  geom_line(aes(x = vv2w_ni_2w_neg_abs$x, vv2w_ni_2w_neg_abs$y), size = 1) +
-  labs(x = "absolute CLS", y = "estimated density", title = "Density of CLS in scenario 1 (negative)") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen"),
-                      labels = c( "important"))
-
-
-ggsave(filename = "dens_2w_2k_neg_abs.pdf", dens_2w_2k_neg_abs, device = "pdf",
-       width = 10, height = 5)
-
 
 
 # large interaction but low main effect
@@ -165,7 +140,7 @@ dens_2w_2k_int_nomain4 =  ggplot() +
                                unimp = "black"),
                       labels = c( "important", "unimportant"))
 
-# as comparison: low maineffect and no interaction effect
+# as comparison: low main effect and no interaction effect
 load("Szen2w_2k_int_nomain5.RData")
 
 CLS2w_2k_int_nomain5 <- numeric()
@@ -200,32 +175,7 @@ dens_2w_2k_int_nomain5 =  ggplot() +
 plt_dens_no_with = ggarrange(dens_2w_2k_int_nomain5, dens_2w_2k_int_nomain4,
                              common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "plt_dens_no_with.pdf", plt_dens_no_with, device = "pdf",
-       width = 10, height = 5)
-
-
-
-#### 20k ####
-
-vv2w_i2 = density(CLS2w_20k[,1:2])
-vv2w_ni_2w = density(CLS2w_20k[, -(1:2)])
-
-dens_2w_20k =  ggplot() + 
-  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), size = 1) +
-  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y), size = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen"),
-                      labels = c( "important"))
-
-
-ggsave(filename = "dens_2w_20k.pdf", dens_2w_20k, device = "pdf",
+ggsave(filename = "figure/plt_dens_no_with.pdf", plt_dens_no_with, device = "pdf",
        width = 10, height = 5)
 
 
@@ -373,7 +323,7 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole"))
 
-ggsave(filename = "plt_mean_2w_2k_not_abs.pdf", plt_mean_2w_2k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt_mean_2w_2k_not_abs.pdf", plt_mean_2w_2k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
@@ -535,14 +485,14 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole"))
 
-ggsave(filename = "plt_mean_2w_20k_not_abs.pdf", plt_mean_2w_20k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt_mean_2w_20k_not_abs.pdf", plt_mean_2w_20k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
 plt2k_20k_not_abs = ggarrange(plt_mean_2w_2k_not_abs, plt_mean_2w_20k_not_abs,
                              common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "plt2k_20k_not_abs.pdf", plt2k_20k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt2k_20k_not_abs.pdf", plt2k_20k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
@@ -704,7 +654,7 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole"))
 
-ggsave(filename = "plt_mean_2w_200k_not_abs.pdf", plt_mean_2w_200k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt_mean_2w_200k_not_abs.pdf", plt_mean_2w_200k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
@@ -880,14 +830,14 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole"))
 
-ggsave(filename = "plt_mean_2w_2000k_not_abs.pdf", plt_mean_2w_2000k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt_mean_2w_2000k_not_abs.pdf", plt_mean_2w_2000k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
 plt200k_2000k_not_abs = ggarrange(plt_mean_2w_200k_not_abs, plt_mean_2w_2000k_not_abs,
                                   common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "plt200k_2000k_not_abs.pdf", plt200k_2000k_not_abs, device = "pdf",
+ggsave(filename = "figure/plt200k_2000k_not_abs.pdf", plt200k_2000k_not_abs, device = "pdf",
        width = 10, height = 5)
 
 
@@ -899,5 +849,5 @@ plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
                           plt_mean_2w_2000k_not_abs,nrow = 1,
                                   common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "plt2w_not_abs.pdf", plt2w_not_abs, device = "pdf",
+ggsave(filename = "figure/plt2w_not_abs.pdf", plt2w_not_abs, device = "pdf",
        width = 20, height = 5)

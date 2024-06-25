@@ -46,4 +46,4 @@ selected_3w_2k_not_abs = list("whole" = p_whole_,
                               "e_0.5" = p_sketch_0.5_,
                               "e_0.2" = p_sketch_0.2_,
                               "e_0.1" = p_sketch_0.1_)
-save(selected_3w_2k_not_abs, file = "selected_3w_2k_not_abs.RData")
+save(selected_3w_2k_not_abs, file = "results/selected_3w_2k_not_abs.RData")

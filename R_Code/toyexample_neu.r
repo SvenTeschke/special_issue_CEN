@@ -58,4 +58,4 @@ toy_plot = ggplot(toy, aes(x= q, y = value, color = name)) +
                                cls =  "darkgreen"),
                       labels = c("cls", "corr"))
 
-ggsave(filename = "toyplot.pdf", toy_plot, device = "pdf", width = 10, height = 5)
+ggsave(filename = "figure/toyplot.pdf", toy_plot, device = "pdf", width = 10, height = 5)

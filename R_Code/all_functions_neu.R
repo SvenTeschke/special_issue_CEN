@@ -214,8 +214,8 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
   # start with loop:
   
   while(fin < (p+(s/2))){ 
-    
-    print(c(mi,fin)) 
+    if(pr == T){
+    print(c(mi,fin))} 
     mi <- mi
     ma <- fin
     
@@ -274,7 +274,7 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
                           #RW:
                           RW = T, w_RW = 200, R = 200, pr_RW = T,
                           #SW:
-                          SW = T, w_SW = 200,
+                          SW = T, w_SW = 200, pr_SW = T,
                           #corr:
                           corr_ = T, pr_corr = T,
                           # sketch:
@@ -304,7 +304,8 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
   print("RW done")
   # SW:
   if(SW == T){
-    CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, abs_cls = abs)
+    CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, abs_cls = abs,
+                                          pr = pr_SW)
 
     CCC_SW = arrange(CCC_SW, by = -CCC_SW$Score)}else{CCC_SW = NA}
 

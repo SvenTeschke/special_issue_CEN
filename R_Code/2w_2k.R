@@ -41,8 +41,8 @@ for(i in 1:1000){
                                   "e_0.5" = p_sketch_0.5_,
                                   "e_0.2" = p_sketch_0.2_,
                                   "e_0.1" = p_sketch_0.1_)
-  save(selected_2w_2k_not_abs, file = "selected_2w_2k_not_abs_neu.RData")
+  #save(selected_2w_2k_not_abs, file = "selected_2w_2k_not_abs_neu.RData")
   print(i)
 }
 
-save(selected_2w_2k_not_abs, file = "selected_2w_2k_not_abs_neu.RData")
+save(selected_2w_2k_not_abs, file = "results/selected_2w_2k_not_abs_neu.RData")
