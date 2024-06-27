@@ -52,6 +52,7 @@ dens_2w_2k =  ggplot() +
 ggsave(filename = "dens_2w_2k.pdf", dens_2w_2k, device = "pdf",
        width = 10, height = 5)
 
+ggsave(filename = "results/dens_2w_2k.eps", dens_2w_2k, device = "eps")
 
 # absolute cls:
 vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
@@ -851,3 +852,86 @@ plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
 
 ggsave(filename = "figure/plt2w_not_abs.pdf", plt2w_not_abs, device = "pdf",
        width = 20, height = 5)
+
+
+
+### paramter tuning ####
+# paramter w #
+
+# 2w and p=20,000:
+load("results/w_2w_20k.RData")
+
+w <- c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)
+sliding_20k <- colMeans(h)
+random_20k <- colMeans(r)
+
+w_20k <- data.frame(w, sliding_20k, random_20k)
+names(w_20k) <- c("w", "SW", "RW")
+
+# plot:
+w_20k_l <- pivot_longer(w_20k, cols = c(SW, RW))
+
+w_20k_plot <- ggplot(w_20k_l, aes(x = w, y = value, color = name)) +
+  geom_point() +
+  geom_line() +
+ # scale_y_continuous(expand = c(0, 0)) +
+  scale_color_manual(name="Method:",values = c("SW" = "navy", "RW" = "firebrick")) +
+#  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black")
+  labs(x = "w", y = "important variables found", title = "p=20000") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size =14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  theme(plot.margin = margin(10, 20, 10, 10)) 
+
+
+
+
+
+# 2w and p=200,000:
+load("results/w_2w_200k.RData")
+
+w <- c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)
+sliding_200k <- colMeans(h)
+random_200k <- colMeans(r)
+
+w_200k <- data.frame(w, sliding_200k, random_200k)
+names(w_200k) <- c("w", "SW", "RW")
+
+w_200k_l <- pivot_longer(w_200k, cols = c(SW, RW))
+
+w_200k_plot <- ggplot(w_200k_l, aes(x = w, y = value, color = name)) +
+  geom_point() +
+  geom_line() +
+ # scale_y_continuous(expand = c(0, 0)) +
+  scale_color_manual(values = c(name="Method:", "SW" = "navy", "RW" = "firebrick")) +
+ # geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black")
+  labs(x = "w", y = "important variables found", title = "p=200000") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  theme(plot.margin = margin(10, 20, 10, 10)) 
+  
+  
+  
+w_plot <- ggarrange(
+  w_20k_plot, w_200k_plot,
+  ncol = 2,  # Zwei Spalten
+  nrow = 1,  # Eine Zeile
+  common.legend = TRUE,  # Gemeinsame Legende
+  legend = "bottom",  # Position der Legende
+  widths = c(1, 1)#,  # Relative Breiten der Plots
+  # font.label = list(size = 14, color = "black", face = "bold"),  # Schriftart der Labels
+  # padding = unit(0.5, "cm")  # Abstand zwischen den Plots
+)
+
+
+ggsave("plots/w_tuning.eps", plot = w_plot, device = cairo_ps,
+       width = 8.2, height = 4.1, units = "in",
+       dpi = 300,
+       limitsize = FALSE)

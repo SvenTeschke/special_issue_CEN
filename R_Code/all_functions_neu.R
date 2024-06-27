@@ -187,7 +187,7 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
 
 Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
                                             bagging = F, abs_cls = T,
-                                            samp_ = F){
+                                            samp_ = F, pr = T){
   n = nrow(Data)
   p = ncol(Data)
   
