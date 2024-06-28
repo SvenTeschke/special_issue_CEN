@@ -5,31 +5,24 @@ library("ggpubr") ## for ggrange
 # read the funtions we need
 source("all_functions_neu.R")
 
-#### density ####
-load("../Data/Szen2w_2k.RData")
-load("../Data/Szen2w_20k.RData")
+#### density plots ####
 
-# calculating the CLS for 2k:
+
+# not absolute cls:
+
+###### Figure 1 #######
+load("../Data/Szen2w_2k.RData")
+
+# calculating the CLS for p = 2k:
 CLS2w_2k <- numeric()
 for(i in 1:1000){
   
   CLS2w_2k <- rbind(CLS2w_2k, getCLS(cbind(Szen2w_2k[[i]]$x, Szen2w_2k[[i]]$y)))
   print(i)
 }
+# save(CLS2w_2k, file = "results/CLS2w_2k.RData")
 
-# calculating the CLS for 20k:
-CLS2w_20k <- numeric()
-for(i in 1:1000){
-  
-  CLS2w_20k <- rbind(CLS2w_20k, getCLS(cbind(Szen2w_20k[[i]]$x, Szen2w_20k[[i]]$y)))
-  print(i)
-}
-
-
-#### 2k ####
-
-
-# not absolute cls:
+# calculate the density:
 vv2w_i2 = density(CLS2w_2k[,1:2])
 vv2w_ni_2w = density(CLS2w_2k[, -(1:2)])
 
@@ -39,7 +32,7 @@ dens_2w_2k =  ggplot() +
   geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -47,72 +40,56 @@ dens_2w_2k =  ggplot() +
   scale_colour_manual(name="SNPs:",
                       values=c(imp2 = "darkgreen",
                                unimp = "black"),
-                      labels = c( "important", "unimportant"))
-
-ggsave(filename = "dens_2w_2k.pdf", dens_2w_2k, device = "pdf",
-       width = 10, height = 5)
-
-ggsave(filename = "results/dens_2w_2k.eps", dens_2w_2k, device = "eps")
-
-# absolute cls:
-vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
-vv2w_ni_2w = density(abs(CLS2w_2k[, -(1:2)]))
-
-dens_2w_2k_abs =  ggplot() + 
-  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
-  labs(x = "absolute CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen",
-                               unimp = "black"),
-                      labels = c( "important", "unimportant"))
-
-ggsave(filename = "figure/dens_2w_2k_abs.pdf", dens_2w_2k_abs, device = "pdf",
-        width = 10, height = 5)
+                      labels = c( "important", "unimportant")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 
-# negativ:
-# 'negative' influence on the response if a SNP (interaction) is present
-load("Szen2w_2k_neg.RData")
 
-CLS2w_2k_neg <- numeric()
+
+ggsave(filename = "plots/density_2w_2k.eps", dens_2w_2k, device = cairo_ps,
+       width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
+
+
+##### Figure 2 ####
+# what happens when there is a low main effect and a large interaction effect:
+
+
+# low main effect and no interaction effect  --> Figure 2 (a)
+load("../Data/Szen2w_2k_int_nomain5.RData")
+
+CLS2w_2k_nomain <- numeric()
 for(i in 1:1000){
   
-  CLS2w_2k_neg <- rbind(CLS2w_2k_neg, getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
+  CLS2w_2k_nomain <- rbind(CLS2w_2k_nomain, getCLS(cbind(Szen2w_2k_int_nomain5[[i]]$x,
+                                                         Szen2w_2k_int_nomain5[[i]]$y)))
   print(i)
 }
 
-vv2w_i2_neg = density(CLS2w_2k_neg[,1:2])
-vv2w_ni_2w_neg = density(CLS2w_2k_neg[, -(1:2)])
+# save(CLS2w_2k_nomain, file = "results/CLS2w_2k_nomain.RData")
+
+vv2w_i2a = density(CLS2w_2k_nomain[,1:2])
+vv2w_ni_2wa = density(CLS2w_2k_nomain[, -(1:2)])
 
 
-dens_2w_2k_neg =  ggplot() +
-  geom_line(aes(x= vv2w_i2_neg$x, y = vv2w_i2_neg$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w_neg$x, vv2w_ni_2w_neg$y), size = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1 (negative)") +
+dens_2w_2k_nomain =  ggplot() +
+  geom_line(aes(x= vv2w_i2a$x, y = vv2w_i2a$y, colour = "imp2"), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2wa$x, vv2w_ni_2wa$y, colour = "unimp"), linewidth = 1) +
+  labs(x = "CLS", y = "estimated density", title = "Density of CLS") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
   scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen"),
-                      labels = c( "important"))
+                      values=c(imp2 = "darkgreen",
+                               unimp = "black"),
+                      labels = c( "important", "unimportant")) +
+  theme(plot.margin = margin(10,10,10,10))
 
-
-ggsave(filename = "figure/dens_2w_2k_neg.pdf", dens_2w_2k_neg, device = "pdf",
-       width = 10, height = 5)
-
-
-# large interaction but low main effect
-load("Szen2w_2k_int_nomain4.RData")
+# and in compariso:
+# large interaction but low main effect --> Figure 2 (b)
+load("../Data/Szen2w_2k_int_nomain4.RData")
 
 CLS2w_2k_int_nomain <- numeric()
 for(i in 1:1000){
@@ -122,16 +99,19 @@ for(i in 1:1000){
   print(i)
 }
 
-vv2w_i2 = density(CLS2w_2k_int_nomain[,1:2])
-vv2w_ni_2w = density(CLS2w_2k_int_nomain[, -(1:2)])
+# save(CLS2w_2k_int_nomain, file = "results/CLS2w_2k_int_nomain.RData")
+
+# calculate the density:
+vv2w_i2b = density(CLS2w_2k_int_nomain[,1:2])
+vv2w_ni_2wb = density(CLS2w_2k_int_nomain[, -(1:2)])
 
 
-dens_2w_2k_int_nomain4 =  ggplot() +
-  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
+dens_2w_2k_int_nomain =  ggplot() + #4
+  geom_line(aes(x= vv2w_i2b$x, y = vv2w_i2b$y, colour = "imp2"), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2wb$x, vv2w_ni_2wb$y, colour = "unimp"), linewidth = 1) +
   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -139,55 +119,103 @@ dens_2w_2k_int_nomain4 =  ggplot() +
   scale_colour_manual(name="SNPs:",
                       values=c(imp2 = "darkgreen",
                                unimp = "black"),
-                      labels = c( "important", "unimportant"))
-
-# as comparison: low main effect and no interaction effect
-load("Szen2w_2k_int_nomain5.RData")
-
-CLS2w_2k_int_nomain5 <- numeric()
-for(i in 1:1000){
-  
-  CLS2w_2k_int_nomain5 <- rbind(CLS2w_2k_int_nomain5, getCLS(cbind(Szen2w_2k_int_nomain5[[i]]$x,
-                                                                   Szen2w_2k_int_nomain5[[i]]$y)))
-  print(i)
-}
-
-vv2w_i25 = density(CLS2w_2k_int_nomain5[,1:2])
-vv2w_ni_2w5 = density(CLS2w_2k_int_nomain5[, -(1:2)])
-
-
-dens_2w_2k_int_nomain5 =  ggplot() +
-  geom_line(aes(x= vv2w_i25$x, y = vv2w_i25$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w5$x, vv2w_ni_2w5$y, colour = "unimp"), linewidth = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen",
-                               unimp = "black"),
-                      labels = c( "important", "unimportant"))
+                      labels = c( "important", "unimportant"))+
+  theme(plot.margin = margin(10,10,10,10))
 
 
 
-plt_dens_no_with = ggarrange(dens_2w_2k_int_nomain5, dens_2w_2k_int_nomain4,
+
+plt_dens_no_with = ggarrange(dens_2w_2k_nomain, dens_2w_2k_int_nomain,
                              common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "figure/plt_dens_no_with.pdf", plt_dens_no_with, device = "pdf",
-       width = 10, height = 5)
+ggsave(filename = "plots/density_nomain_withint.eps", plt_dens_no_with, device = cairo_ps,
+       width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
-#### how many ####
+
+##### Figure 7 ####
+# what happens whein 'negative' influence on the response if a SNP (interaction) is present
+load("../Data/Szen2w_2k_neg.RData")
+
+CLS2w_2k_neg <- numeric()
+for(i in 1:1000){
+  
+  CLS2w_2k_neg <- rbind(CLS2w_2k_neg, getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
+  print(i)
+}
+# save(CLS2w_2k_neg, file = "results/CLS2w_2k_neg.RData")
+
+# calculate the density:
+vv2w_i2_neg = density(CLS2w_2k_neg[,1:2])
+vv2w_ni_2w_neg = density(CLS2w_2k_neg[, -(1:2)])
+
+
+dens_2w_2k_neg =  ggplot() +
+  geom_line(aes(x= vv2w_i2_neg$x, y = vv2w_i2_neg$y, colour = "imp2"), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2w_neg$x, vv2w_ni_2w_neg$y), linewidth = 1) +
+  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1 (negative)") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size =14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  scale_colour_manual(name="SNPs:",
+                      values=c(imp2 = "darkgreen"),
+                      labels = c( "important")) +
+  theme(plot.margin = margin(10,10,10,10))
+
+
+ggsave(filename = "plots/density_2w_2k_neg.eps", dens_2w_2k_neg, device = cairo_ps,
+       width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
+
+
+
+
+# absolute cls:
+
+##### Figure 13 ####
+# calculate the density of the absolute CLS:
+vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
+vv2w_ni_2w = density(abs(CLS2w_2k[, -(1:2)]))
+
+dens_2w_2k_abs =  ggplot() + 
+  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
+  labs(x = "absolute CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size =14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  scale_colour_manual(name="SNPs:",
+                      values=c(imp2 = "darkgreen",
+                               unimp = "black"),
+                      labels = c( "important", "unimportant")) +
+  theme(plot.margin = margin(10,10,10,10))
+
+ggsave(filename = "plots/density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
+        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
+
+
+
+
+#### how many important SNPs we can detect? ####
+
+##### Figure 4 ####
+# and
+##### Table 5 #####
 
 ##### p = 2k #####
-load("selected_2w_2k_not_abs_neu.RData")
+# for Figure 4 (a)
+load("results/2w/selected_2w_2k_not_abs_neu.RData")
+
+# count how many important SNPs we can detect:
 
 q = 1000
-# whole:
+# whole X without any approximation or sketching method
 whole_ = c()
 for(j in seq(1,1999,2)){
   
@@ -200,7 +228,7 @@ for(j in seq(1,1999,2)){
   print(j)
 }
 
-# RW
+# Random Window (RW)
 RW_ = c()
 for(j in seq(1,1999,2)){
   
@@ -239,7 +267,7 @@ for(j in seq(1,1999,2)){
   print(j)
 }
 
-# sketch 0.5
+# sketch with epsilon = 0.5
 e_0.5_ = c()
 for(j in seq(1,1999,2)){
   
@@ -252,7 +280,7 @@ for(j in seq(1,1999,2)){
   print(j)
 }
 
-# e_0.2:
+# epsilon = 0.2:
 e_0.2_ = c()
 for(j in seq(1,1999,2)){
   
@@ -264,7 +292,7 @@ for(j in seq(1,1999,2)){
   print(j)
 }
 
-# e_0.1:
+# epsilon = 0.1:
 e_0.1_ = c()
 for(j in seq(1,1999,2)){
   
@@ -285,7 +313,8 @@ mean_2w_2k_not_abs <- data.frame("q" = 2:1000,
                                  "e0.2" = colMeans(e_0.2_)[-1],
                                  "e0.1" = colMeans(e_0.1_)[-1])
 
-# 575:
+# for Table 3 (a)
+# n*log(n) = 575:
 median(whole_[,574])
 median(RW_[,574])
 median(SW_[,574])
@@ -305,7 +334,7 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "p=2000") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -322,18 +351,19 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                  "RW", "SW", "whole")) +
+   theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
 
-ggsave(filename = "figure/plt_mean_2w_2k_not_abs.pdf", plt_mean_2w_2k_not_abs, device = "pdf",
-       width = 10, height = 5)
+# ggsave(filename = "plots/plt_mean_2w_2k_not_abs.eps", plt_mean_2w_2k_not_abs, device = cairo_ps,
+#        width = 6.1, height = 5, units = "in", dpi = 300,  limitsize  = F)
 
 
 
 ##### p = 20k #####
+# for Figure 4 (b)
+load("results/2w/selected_2w_20k_not_abs_neu.RData")
 
-load("selected_2w_20k_not_abs_neu.RData")
-
-q = 1000
+q = 1000 # up to q = 1000
 # whole:
 whole_ = c()
 for(j in seq(1,1999,2)){
@@ -448,8 +478,8 @@ mean_2w_20k_not_abs <- data.frame("q" = 2:1000,
                                    "e0.5" = colMeans(e_0.5_)[-1],
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
-
-# 575:
+# for Table 3 (b)
+# n*log(n):
 median(whole_[,574])
 median(RW_[,574])
 median(SW_[,574])
@@ -467,7 +497,7 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "p=20000") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -484,24 +514,25 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
 
-ggsave(filename = "figure/plt_mean_2w_20k_not_abs.pdf", plt_mean_2w_20k_not_abs, device = "pdf",
-       width = 10, height = 5)
+# ggsave(filename = "plots/plt_mean_2w_20k_not_abs.eps", plt_mean_2w_20k_not_abs, device = cairo_ps,
+#        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
-plt2k_20k_not_abs = ggarrange(plt_mean_2w_2k_not_abs, plt_mean_2w_20k_not_abs,
-                             common.legend = TRUE, legend="bottom")
-
-ggsave(filename = "figure/plt2k_20k_not_abs.pdf", plt2k_20k_not_abs, device = "pdf",
-       width = 10, height = 5)
+# plt2k_20k_not_abs = ggarrange(plt_mean_2w_2k_not_abs, plt_mean_2w_20k_not_abs,
+#                              common.legend = TRUE, legend="bottom")
+# 
+# ggsave(filename = "plots/plt2k_20k_not_abs.eps", plt2k_20k_not_abs, device = cairo_ps,
+#        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
 
 ##### p = 200k #####
-load("selected_2w_200k_not_abs_neu.RData")
-
+# for Figure 4 (c)
+load("results/2w/selected_2w_200k_not_abs_neu.RData")
 q = 10000
 # whole:
 whole_ = c()
@@ -617,7 +648,7 @@ mean_2w_200k_not_abs <- data.frame("q" = 2:10000,
                                  "e0.5" = colMeans(e_0.5_)[-1],
                                  "e0.2" = colMeans(e_0.2_)[-1],
                                  "e0.1" = colMeans(e_0.1_)[-1])
-
+# for Table 3 (c)
 # 575:
 median(whole_[,574])
 median(RW_[,574])
@@ -636,7 +667,7 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "p=200000") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -653,24 +684,27 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                  "RW", "SW", "whole")) +
+   theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
 
-ggsave(filename = "figure/plt_mean_2w_200k_not_abs.pdf", plt_mean_2w_200k_not_abs, device = "pdf",
-       width = 10, height = 5)
+
+# ggsave(filename = "plots/plt_mean_2w_200k_not_abs.eps", plt_mean_2w_200k_not_abs, device = cairo_ps,
+#        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
 ##### p = 2000k ####
-load("selected_2w_2000k_10_not_abs_neu.RData")
-load("selected_2w_2000k_20_not_abs_neu.RData")
-load("selected_2w_2000k_30_not_abs_neu.RData")
-load("selected_2w_2000k_40_not_abs_neu.RData")
-load("selected_2w_2000k_50_not_abs_neu.RData")
-load("selected_2w_2000k_60_not_abs_neu.RData")
-load("selected_2w_2000k_70_not_abs_neu.RData")
-load("selected_2w_2000k_80_not_abs_neu.RData")
-load("selected_2w_2000k_90_not_abs_neu.RData")
-load("selected_2w_2000k_100_not_abs_neu.RData")
+# for Figure 4 (d)
+load("results/2w/selected_2w_2000k_10_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_20_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_30_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_40_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_50_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_60_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_70_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_80_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_90_not_abs_neu.RData")
+load("results/2w/selected_2w_2000k_100_not_abs_neu.RData")
 selected_2w_2000k_not_abs <- list()
 for(i in 1:length(selected_2w_2000k_10_not_abs)){
   selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
@@ -685,8 +719,8 @@ for(i in 1:length(selected_2w_2000k_10_not_abs)){
                                           selected_2w_2000k_100_not_abs[[i]])
 }
 names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
-save(selected_2w_2000k_not_abs, file = "selected_2w_2000k_not_abs.RData")
-load("selected_2w_2000k_not_abs.RData")
+save(selected_2w_2000k_not_abs, file = "results/2w/selected_2w_2000k_not_abs.RData")
+# load("results/2w/selected_2w_2000k_not_abs.RData")
 
 q = 10000
 # whole:
@@ -792,6 +826,7 @@ mean_2w_2000k_not_abs <- data.frame("q" = 2:10000,
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
 
+# for Table 3(d)
 # 575:
 # median(whole_[,574])
 median(RW_[,574])
@@ -812,7 +847,7 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "p=2000000") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -829,29 +864,31 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = unit(c(1,1,1,1), "cm"))
 
-ggsave(filename = "figure/plt_mean_2w_2000k_not_abs.pdf", plt_mean_2w_2000k_not_abs, device = "pdf",
-       width = 10, height = 5)
+# ggsave(filename = "plots/plt_mean_2w_2000k_not_abs.eps", plt_mean_2w_2000k_not_abs, device = cairo_ps,
+#        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
+
+# 
+# plt200k_2000k_not_abs = ggarrange(plt_mean_2w_200k_not_abs, plt_mean_2w_2000k_not_abs,
+#                                   common.legend = TRUE, legend="bottom")
+# 
+# ggsave(filename = "plots/plt200k_2000k_not_abs.eps", plt200k_2000k_not_abs, device = cairo_ps,
+#        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
-plt200k_2000k_not_abs = ggarrange(plt_mean_2w_200k_not_abs, plt_mean_2w_2000k_not_abs,
-                                  common.legend = TRUE, legend="bottom")
 
-ggsave(filename = "figure/plt200k_2000k_not_abs.pdf", plt200k_2000k_not_abs, device = "pdf",
-       width = 10, height = 5)
-
-
-
-
+# Figure 4:
 plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
                           plt_mean_2w_20k_not_abs,
                           plt_mean_2w_200k_not_abs, 
-                          plt_mean_2w_2000k_not_abs,nrow = 1,
-                                  common.legend = TRUE, legend="bottom")
+                          plt_mean_2w_2000k_not_abs, ncol = 4, 
+                          nrow = 1, 
+                                  common.legend = TRUE, legend="bottom", widths = c(10, 10))
 
-ggsave(filename = "figure/plt2w_not_abs.pdf", plt2w_not_abs, device = "pdf",
-       width = 20, height = 5)
+ggsave(filename = "plots/plt_2w_not_abs.eps", plt2w_not_abs, device = cairo_ps,
+               width = 8, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
@@ -877,14 +914,14 @@ w_20k_plot <- ggplot(w_20k_l, aes(x = w, y = value, color = name)) +
  # scale_y_continuous(expand = c(0, 0)) +
   scale_color_manual(name="Method:",values = c("SW" = "navy", "RW" = "firebrick")) +
 #  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black")
-  labs(x = "w", y = "important variables found", title = "p=20000") +
+  labs(x = expression(italic(w)), y = "important variables found", title = expression(paste(italic(p) == 20000))) +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  theme(plot.margin = margin(10, 20, 10, 10)) 
+  theme(plot.margin = margin(10,10,10,10))
 
 
 
@@ -915,23 +952,41 @@ w_200k_plot <- ggplot(w_200k_l, aes(x = w, y = value, color = name)) +
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  theme(plot.margin = margin(10, 20, 10, 10)) 
+  theme(plot.margin = margin(10,10,10,10))
   
   
   
 w_plot <- ggarrange(
   w_20k_plot, w_200k_plot,
-  ncol = 2,  # Zwei Spalten
-  nrow = 1,  # Eine Zeile
-  common.legend = TRUE,  # Gemeinsame Legende
-  legend = "bottom",  # Position der Legende
-  widths = c(1, 1)#,  # Relative Breiten der Plots
-  # font.label = list(size = 14, color = "black", face = "bold"),  # Schriftart der Labels
-  # padding = unit(0.5, "cm")  # Abstand zwischen den Plots
+  ncol = 2, 
+  nrow = 1,  
+  common.legend = TRUE,  
+  legend = "bottom", 
+  widths = c(1, 1)
 )
 
 
 ggsave("plots/w_tuning.eps", plot = w_plot, device = cairo_ps,
-       width = 8.2, height = 4.1, units = "in",
+       width = 8.2, height = 5, units = "in",
        dpi = 300,
        limitsize = FALSE)
+
+
+
+
+
+#### 20k ####
+
+load("../Data/Szen2w_20k.RData")
+
+
+
+# calculating the CLS for 20k:
+CLS2w_20k <- numeric()
+for(i in 1:1000){
+  
+  CLS2w_20k <- rbind(CLS2w_20k, getCLS(cbind(Szen2w_20k[[i]]$x, Szen2w_20k[[i]]$y)))
+  print(i)
+}
+
+save(CLS2w_20k, file = "results/CLS2w_20k.RDatat")

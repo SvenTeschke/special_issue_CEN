@@ -10,7 +10,7 @@
 2w_xxx - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
          p=2000000 due to memory reasons
 
-conclusion_2w - Results of above Calculations of scenario 1
+conclusion_2w - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
 
 2w2w_xxx - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
            p=2000000 due to memory reasons
