@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 library("ggpubr") ## for ggrange
-
+library("latex2exp")
 # read the funtions we need
 source("all_functions_neu.R")
 
@@ -45,7 +45,7 @@ dens_2w_2k =  ggplot() +
 
 
 
-
+# Figure 1:
 ggsave(filename = "plots/density_2w_2k.eps", dens_2w_2k, device = cairo_ps,
        width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
@@ -127,7 +127,7 @@ dens_2w_2k_int_nomain =  ggplot() + #4
 
 plt_dens_no_with = ggarrange(dens_2w_2k_nomain, dens_2w_2k_int_nomain,
                              common.legend = TRUE, legend="bottom")
-
+# Figure 2:
 ggsave(filename = "plots/density_nomain_withint.eps", plt_dens_no_with, device = cairo_ps,
        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
@@ -166,7 +166,7 @@ dens_2w_2k_neg =  ggplot() +
                       labels = c( "important")) +
   theme(plot.margin = margin(10,10,10,10))
 
-
+# Figure 7:
 ggsave(filename = "plots/density_2w_2k_neg.eps", dens_2w_2k_neg, device = cairo_ps,
        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
@@ -196,6 +196,7 @@ dens_2w_2k_abs =  ggplot() +
                       labels = c( "important", "unimportant")) +
   theme(plot.margin = margin(10,10,10,10))
 
+# Figure 13:
 ggsave(filename = "plots/density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
         width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
@@ -332,7 +333,7 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
   geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=2000") +
+  labs(x = expression(q), y = "important variables found", title = expression(p=="2000")) +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -351,8 +352,8 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                  "RW", "SW", "whole")) +
-   theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
+                                   "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 # ggsave(filename = "plots/plt_mean_2w_2k_not_abs.eps", plt_mean_2w_2k_not_abs, device = cairo_ps,
 #        width = 6.1, height = 5, units = "in", dpi = 300,  limitsize  = F)
@@ -478,7 +479,7 @@ mean_2w_20k_not_abs <- data.frame("q" = 2:1000,
                                    "e0.5" = colMeans(e_0.5_)[-1],
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
-# for Table 3 (b)
+# for Table 4 (b)
 # n*log(n):
 median(whole_[,574])
 median(RW_[,574])
@@ -495,7 +496,7 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
   geom_line(aes(x = q, y = 2*q / 20000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=20000") +
+  labs(x = expression(q), y = "important variables found", title = expression(p=="20000")) +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -515,7 +516,7 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
-  theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
+  theme(plot.margin = margin(10,10,10,10))
 
 # ggsave(filename = "plots/plt_mean_2w_20k_not_abs.eps", plt_mean_2w_20k_not_abs, device = cairo_ps,
 #        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
@@ -648,7 +649,7 @@ mean_2w_200k_not_abs <- data.frame("q" = 2:10000,
                                  "e0.5" = colMeans(e_0.5_)[-1],
                                  "e0.2" = colMeans(e_0.2_)[-1],
                                  "e0.1" = colMeans(e_0.1_)[-1])
-# for Table 3 (c)
+# for Table 4 (c)
 # 575:
 median(whole_[,574])
 median(RW_[,574])
@@ -665,7 +666,7 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=200000") +
+  labs(x = expression(q), y = "important variables found", title = expression(p=="200000")) +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -685,7 +686,7 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                   "RW", "SW", "whole")) +
-   theme(plot.margin = margin(0.1 ,0.1, 0.1, 0.1))
+  theme(plot.margin = margin(10,10,10,10))
 
 
 # ggsave(filename = "plots/plt_mean_2w_200k_not_abs.eps", plt_mean_2w_200k_not_abs, device = cairo_ps,
@@ -719,7 +720,7 @@ for(i in 1:length(selected_2w_2000k_10_not_abs)){
                                           selected_2w_2000k_100_not_abs[[i]])
 }
 names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
-save(selected_2w_2000k_not_abs, file = "results/2w/selected_2w_2000k_not_abs.RData")
+# save(selected_2w_2000k_not_abs, file = "results/2w/selected_2w_2000k_not_abs.RData")
 # load("results/2w/selected_2w_2000k_not_abs.RData")
 
 q = 10000
@@ -826,7 +827,7 @@ mean_2w_2000k_not_abs <- data.frame("q" = 2:10000,
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
 
-# for Table 3(d)
+# for Table 4(d)
 # 575:
 # median(whole_[,574])
 median(RW_[,574])
@@ -865,7 +866,8 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
-  theme(plot.margin = unit(c(1,1,1,1), "cm"))
+  theme(plot.margin = margin(10,10,10,10))
+
 
 # ggsave(filename = "plots/plt_mean_2w_2000k_not_abs.eps", plt_mean_2w_2000k_not_abs, device = cairo_ps,
 #        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
@@ -884,11 +886,11 @@ plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
                           plt_mean_2w_20k_not_abs,
                           plt_mean_2w_200k_not_abs, 
                           plt_mean_2w_2000k_not_abs, ncol = 4, 
-                          nrow = 1, 
-                                  common.legend = TRUE, legend="bottom", widths = c(10, 10))
+                          nrow = 1, common.legend = TRUE, legend="bottom")
 
+# Figure 4:
 ggsave(filename = "plots/plt_2w_not_abs.eps", plt2w_not_abs, device = cairo_ps,
-               width = 8, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
+              width = 16.4, height = 6, units = "in", dpi = 300,  limitsize  = F)
 
 
 
