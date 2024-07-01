@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 library("ggpubr") ## for ggrange
-library("latex2exp")
+
 # read the funtions we need
 source("all_functions_neu.R")
 
@@ -46,7 +46,7 @@ dens_2w_2k =  ggplot() +
 
 
 # Figure 1:
-ggsave(filename = "plots/density_2w_2k.eps", dens_2w_2k, device = cairo_ps,
+ggsave(filename = "plots/Fig01_density_2w_2k.eps", dens_2w_2k, device = cairo_ps,
        width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
@@ -89,7 +89,7 @@ dens_2w_2k_nomain =  ggplot() +
 
 # and in compariso:
 # large interaction but low main effect --> Figure 2 (b)
-load("../Data/Szen2w_2k_int_nomain4.RData")
+load("../Data/Fig02_Szen2w_2k_int_nomain4.RData")
 
 CLS2w_2k_int_nomain <- numeric()
 for(i in 1:1000){
@@ -167,7 +167,7 @@ dens_2w_2k_neg =  ggplot() +
   theme(plot.margin = margin(10,10,10,10))
 
 # Figure 7:
-ggsave(filename = "plots/density_2w_2k_neg.eps", dens_2w_2k_neg, device = cairo_ps,
+ggsave(filename = "plots/Fig07_density_2w_2k_neg.eps", dens_2w_2k_neg, device = cairo_ps,
        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
@@ -197,7 +197,7 @@ dens_2w_2k_abs =  ggplot() +
   theme(plot.margin = margin(10,10,10,10))
 
 # Figure 13:
-ggsave(filename = "plots/density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
+ggsave(filename = "plots/Fig13_density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
         width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
@@ -207,7 +207,7 @@ ggsave(filename = "plots/density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_
 
 ##### Figure 4 ####
 # and
-##### Table 5 #####
+##### Table 3 #####
 
 ##### p = 2k #####
 # for Figure 4 (a)
@@ -479,7 +479,7 @@ mean_2w_20k_not_abs <- data.frame("q" = 2:1000,
                                    "e0.5" = colMeans(e_0.5_)[-1],
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
-# for Table 4 (b)
+# for Table 3 (b)
 # n*log(n):
 median(whole_[,574])
 median(RW_[,574])
@@ -649,7 +649,7 @@ mean_2w_200k_not_abs <- data.frame("q" = 2:10000,
                                  "e0.5" = colMeans(e_0.5_)[-1],
                                  "e0.2" = colMeans(e_0.2_)[-1],
                                  "e0.1" = colMeans(e_0.1_)[-1])
-# for Table 4 (c)
+# for Table 3 (c)
 # 575:
 median(whole_[,574])
 median(RW_[,574])
@@ -827,7 +827,7 @@ mean_2w_2000k_not_abs <- data.frame("q" = 2:10000,
                                    "e0.2" = colMeans(e_0.2_)[-1],
                                    "e0.1" = colMeans(e_0.1_)[-1])
 
-# for Table 4(d)
+# for Table 3(d)
 # 575:
 # median(whole_[,574])
 median(RW_[,574])
@@ -881,7 +881,7 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
 
 
 
-# Figure 4:
+
 plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
                           plt_mean_2w_20k_not_abs,
                           plt_mean_2w_200k_not_abs, 
@@ -889,8 +889,8 @@ plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
                           nrow = 1, common.legend = TRUE, legend="bottom")
 
 # Figure 4:
-ggsave(filename = "plots/plt_2w_not_abs.eps", plt2w_not_abs, device = cairo_ps,
-              width = 16.4, height = 6, units = "in", dpi = 300,  limitsize  = F)
+ggsave(filename = "plots/Fig04_2w_not_abs.eps", plt2w_not_abs, device = cairo_ps,
+              width = 16.4, height = 5, units = "in", dpi = 300,  limitsize  = F)
 
 
 

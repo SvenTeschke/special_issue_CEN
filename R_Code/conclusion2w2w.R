@@ -6,13 +6,13 @@ library("ggpubr") ## for ggrange
 source("all_functions_neu.R")
 
 
-#### how many ####
+#### Table 4 ####
 
 #### 2k: ####
-load("selected_2w2w_2k_not_abs_neu.RData")
+load("results/2w2w/selected_2w2w_2k_not_abs_neu.RData")
 
-
-# table out of 4:
+# count how many in total out of 4:
+# for Table 4
 q = 575
 how_whole = c()
 for(i in seq(1,1999,2)){
@@ -92,8 +92,8 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-
-# each interaction:
+##### Figure 5 ####
+# count how many out of 2 we found for each interaction:
 q = 1000
 # whole:
 whole1_ = c()
@@ -228,16 +228,6 @@ for(j in seq(1,1999,2)){
 }
 
 
-# save(whole1_, whole2_, RW1_, RW2_,
-#      SW1_, SW2_, corr1_, corr2_,
-#      e_0.51_, e_0.52_, 
-#      e_0.21_, e_0.22_,
-#      e_0.11_, e_0.12_, file = "howmany_2w2w_2k_not_abs.RData")
-
-
-
-# load("howmany_2w2w_2k_not_abs.RData")
-
 mean_2w2w_2k_1_not_abs <- data.frame("q" = 2:1000,
                                  "whole" = colMeans(whole1_)[-1],
                                  "RW" = colMeans(RW1_)[-1],
@@ -248,7 +238,9 @@ mean_2w2w_2k_1_not_abs <- data.frame("q" = 2:1000,
                                  "e0.1" = colMeans(e_0.11_)[-1])
 
 
+# Figure 5:
 mean_2w2w_2k_1_not_abs = mean_2w2w_2k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+
 plt_mean_2w2w_2k_1_not_abs = ggplot(mean_2w2w_2k_1_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
@@ -256,60 +248,11 @@ plt_mean_2w2w_2k_1_not_abs = ggplot(mean_2w2w_2k_1_not_abs, aes(x = q, y = value
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "first interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
-  scale_colour_manual(name="Method:",
-                      values=c(xcorr = "yellow", 
-                               e0.1 = "violetred2",
-                               e0.2 = "violetred",
-                               e0.5 = "violet",  
-                               expected = "grey",
-                               RW = "firebrick",
-                               SW = "navy",
-                               whole = "darkgreen"),
-                      labels = c("xcorr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
-                                 expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
-
-mean_2w2w_2k_2_not_abs <- data.frame("q" = 2:1000,
-                                     "whole" = colMeans(whole2_)[-1],
-                                     "RW" = colMeans(RW2_)[-1],
-                                     "SW" = colMeans(SW2_)[-1],
-                                     "corr" = colMeans(corr2_)[-1],
-                                     "e0.5" = colMeans(e_0.52_)[-1],
-                                     "e0.2" = colMeans(e_0.22_)[-1],
-                                     "e0.1" = colMeans(e_0.12_)[-1])
-
-
-mean_2w2w_2k_2_not_abs = mean_2w2w_2k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, aes(x = q, y = value, color = name)) + 
-  geom_line(linewidth = 1) + 
-  geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
-  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
-  geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "second interaction") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -322,23 +265,63 @@ plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, aes(x = q, y = value
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
+
+mean_2w2w_2k_2_not_abs <- data.frame("q" = 2:1000,
+                                     "whole" = colMeans(whole2_)[-1],
+                                     "RW" = colMeans(RW2_)[-1],
+                                     "SW" = colMeans(SW2_)[-1],
+                                     "corr" = colMeans(corr2_)[-1],
+                                     "e0.5" = colMeans(e_0.52_)[-1],
+                                     "e0.2" = colMeans(e_0.22_)[-1],
+                                     "e0.1" = colMeans(e_0.12_)[-1])
+
+
+mean_2w2w_2k_2_not_abs = mean_2w2w_2k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+
+plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, aes(x = q, y = value, color = name)) + 
+  geom_line(linewidth = 1) + 
+  geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
+  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
+  geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
+  labs(x = "q", y = "important variables found", title = "second interaction") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size =14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  scale_colour_manual(name="Method:",
+                      values=c(corr = "yellow", 
+                               e0.1 = "violetred2",
+                               e0.2 = "violetred",
+                               e0.5 = "violet",  
+                               expected = "grey",
+                               RW = "firebrick",
+                               SW = "navy",
+                               whole = "darkgreen"),
+                      labels = c("corr", 
+                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.5)), "expected",
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 plt_2w2w_2k_not_abs = ggarrange(plt_mean_2w2w_2k_1_not_abs,plt_mean_2w2w_2k_2_not_abs,
                               common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plt_2w2w_2k_not_abs.pdf", plt_2w2w_2k_not_abs, device = "pdf",
-       width = 10, height = 5)
+ggsave(filename = "plots/Fig05_2w2w_2k_not_abs.eps", plt_2w2w_2k_not_abs, device = cairo_ps,
+       width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
 
 
 #### 20k: ####
-load("selected_2w2w_20k_not_abs_neu.RData")
+load("results/2w2w/selected_2w2w_20k_not_abs_neu.RData")
 
-
-# table out of 4:
+# for Table 4:
+# how many out of 4:
 q = 575
 how_whole = c()
 for(i in seq(1,1999,2)){
@@ -419,6 +402,7 @@ how_e_0.1 %>% mean()
 
 
 # each interaction:
+##### Figure 10 ####
 q = 1000
 # whole:
 whole1_ = c()
@@ -495,7 +479,6 @@ for(j in seq(1,1999,2)){
 
 
 
-
 # corr:
 corr1_ = c()
 corr2_ = c()
@@ -519,7 +502,6 @@ for(j in seq(1,1999,2)){
   corr2_ = rbind(corr2_, corr2)
   print(j)
 }
-
 
 
 # sketch 0.5
@@ -596,8 +578,6 @@ for(j in seq(1,1999,2)){
 }
 
 
-
-
 mean_2w2w_20k_1_not_abs <- data.frame("q" = 2:1000,
                                        "whole" = colMeans(whole1_)[-1],
                                        "RW" = colMeans(RW1_)[-1],
@@ -609,6 +589,7 @@ mean_2w2w_20k_1_not_abs <- data.frame("q" = 2:1000,
 
 
 mean_2w2w_20k_1_not_abs = mean_2w2w_20k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+
 plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 20000, colour = "expected"), linewidth = 0.75) +
@@ -616,17 +597,11 @@ plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs, aes(x = q, y = val
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "first interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -639,7 +614,8 @@ plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs, aes(x = q, y = val
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 mean_2w2w_20k_2_not_abs <- data.frame("q" = 2:1000,
                                        "whole" = colMeans(whole2_)[-1],
@@ -652,6 +628,7 @@ mean_2w2w_20k_2_not_abs <- data.frame("q" = 2:1000,
 
 
 mean_2w2w_20k_2_not_abs = mean_2w2w_20k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+
 plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
@@ -659,17 +636,11 @@ plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs, aes(x = q, y = val
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "second interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -682,22 +653,23 @@ plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs, aes(x = q, y = val
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 plt_2w2w_20k_not_abs = ggarrange(plt_mean_2w2w_20k_1_not_abs,plt_mean_2w2w_20k_2_not_abs,
                                   common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plt_2w2w_20k_not_abs.pdf", plt_2w2w_20k_not_abs, device = "pdf",
-       width = 10, height = 5)
+ggsave(filename = "plots/Fig10_2w2w_20k_not_abs.eps", plt_2w2w_20k_not_abs, device = cairo_ps,
+       width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
 
 #### 200k: ####
-load("selected_2w2w_200k_not_abs.RData")
+load("results/2w2w/selected_2w2w_200k_not_abs.RData")
 
-
-# table out of 4:
+# for Table 4: 
+# how many out of 4:
 q = 575
 how_whole = c()
 for(i in seq(1,199,2)){
@@ -777,7 +749,8 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-# each interaction:
+##### Figure 11 ####
+# how many out of 2 for each interaction:
 q = 10000
 # whole:
 whole1_ = c()
@@ -964,7 +937,7 @@ mean_2w2w_200k_1_not_abs <- data.frame("q" = 2:10000,
 
 
 mean_2w2w_200k_1_not_abs = mean_2w2w_200k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-# neu = neu$name %>% factor(levels = c("whole", "RW", "SW", "e0.5", "e0.2", "corr"))
+
 plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
@@ -972,17 +945,11 @@ plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, aes(x = q, y = v
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "first interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -995,7 +962,8 @@ plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, aes(x = q, y = v
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 mean_2w2w_200k_2_not_abs <- data.frame("q" = 2:10000,
                                      "whole" = colMeans(whole2_)[-1],
@@ -1008,6 +976,7 @@ mean_2w2w_200k_2_not_abs <- data.frame("q" = 2:10000,
 
 
 mean_2w2w_200k_2_not_abs = mean_2w2w_200k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+
 plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
@@ -1015,17 +984,11 @@ plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, aes(x = q, y = v
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "second interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -1038,29 +1001,30 @@ plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, aes(x = q, y = v
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 plt_2w2w_200k_not_abs = ggarrange(plt_mean_2w2w_200k_1_not_abs,plt_mean_2w2w_200k_2_not_abs,
                                 common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plt_2w2w_200k_not_abs.pdf", plt_2w2w_200k_not_abs, device = "pdf",
-       width = 10, height = 5)
+ggsave(filename = "plots/Fig11_2w2w_200k_not_abs.eps", plt_2w2w_200k_not_abs, device = cairo_ps,
+       width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
 
 
 #### 2000k: ####
-load("selected_2w2w_2000k_not_abs_10.RData")
-load("selected_2w2w_2000k_not_abs_20.RData")
-load("selected_2w2w_2000k_not_abs_30.RData")
-load("selected_2w2w_2000k_not_abs_40.RData")
-load("selected_2w2w_2000k_not_abs_50.RData")
-load("selected_2w2w_2000k_not_abs_60.RData")
-load("selected_2w2w_2000k_not_abs_70.RData")
-load("selected_2w2w_2000k_not_abs_80.RData")
-load("selected_2w2w_2000k_not_abs_90.RData")
-load("selected_2w2w_2000k_not_abs_100.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_10.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_20.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_30.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_40.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_50.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_60.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_70.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_80.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_90.RData")
+load("results/2w2w/selected_2w2w_2000k_not_abs_100.RData")
 
 
 selected_2w2w_2000k_not_abs = list()
@@ -1076,15 +1040,15 @@ selected_2w2w_2000k_not_abs[[i]] = cbind(selected_2w2w_2000k_not_abs_10[[i]],
                                        selected_2w2w_2000k_not_abs_90[[i]],
                                        selected_2w2w_2000k_not_abs_100[[i]])}
 names(selected_2w2w_2000k_not_abs) = names(selected_2w2w_2000k_not_abs_10)
-save(selected_2w2w_2000k_not_abs,
-      file = "selected_2w2w_2000k_not_abs.RData")
+# save(reslults/2w2w/selected_2w2w_2000k_not_abs,
+#       file = "selected_2w2w_2000k_not_abs.RData")
+# 
+# 
+# load("results/2w2w/selected_2w2w_2000k_not_abs.RData")
 
 
-load("selected_2w2w_2000k_not_abs.RData")
-
-
-
-# table out of 4:
+# for Table 4
+# how manyout of 4:
 q = 575
 
 
@@ -1155,7 +1119,9 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-# each interaction:
+##### Figure 12 ####
+
+# how many out of two for each interaction:
 q = 10000
 # whole:
 
@@ -1324,7 +1290,7 @@ mean_2w2w_2000k_1_not_abs <- data.frame("q" = 2:10000,
 
 
 mean_2w2w_2000k_1_not_abs = mean_2w2w_2000k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-# neu = neu$name %>% factor(levels = c("whole", "RW", "SW", "e0.5", "e0.2", "corr"))
+
 plt_mean_2w2w_2000k_1_not_abs = ggplot(mean_2w2w_2000k_1_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
@@ -1332,17 +1298,11 @@ plt_mean_2w2w_2000k_1_not_abs = ggplot(mean_2w2w_2000k_1_not_abs, aes(x = q, y =
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "first interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -1355,7 +1315,8 @@ plt_mean_2w2w_2000k_1_not_abs = ggplot(mean_2w2w_2000k_1_not_abs, aes(x = q, y =
                       labels = c("corr", 
                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
+                                 "RW", "SW", "whole")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 mean_2w2w_2000k_2_not_abs <- data.frame("q" = 2:10000,
                                        "whole" = NA,
@@ -1368,7 +1329,7 @@ mean_2w2w_2000k_2_not_abs <- data.frame("q" = 2:10000,
 
 
 mean_2w2w_2000k_2_not_abs = mean_2w2w_2000k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-# neu = neu$name %>% factor(levels = c("whole", "RW", "SW", "e0.5", "e0.2", "corr"))
+
 plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
@@ -1376,17 +1337,11 @@ plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, aes(x = q, y =
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
   labs(x = "q", y = "important variables found", title = "second interaction") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
         legend.position = "bottom") +
-  # scale_colour_manual(name="Method:",
-  #                     values=c(whole = "darkgreen", RW = "firebrick", SW = "navy", corr = "yellow",
-  #                              e0.5 = "violet", e0.2 = "violetred", expected = "grey"),
-  #                     labels = c( "whole", "RW", "SW", "corr",
-  #                                 expression("Sketching"~(epsilon~"="~0.5)),  expression("Sketching"~(epsilon~"="~0.2)),
-  #                                 "expected"))
   scale_colour_manual(name="Method:",
                       values=c(corr = "yellow", 
                                e0.1 = "violetred2",
@@ -1402,9 +1357,10 @@ plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, aes(x = q, y =
                                  "RW", "SW", "whole"))
 
 plt_2w2w_2000k_not_abs = ggarrange(plt_mean_2w2w_2000k_1_not_abs,plt_mean_2w2w_2000k_2_not_abs,
-                                  common.legend = TRUE, legend="bottom")
+                                  common.legend = TRUE, legend="bottom") +
+  theme(plot.margin = margin(10,10,10,10))
 
-
-ggsave(filename = "plt_2w2w_2000k_not_abs.pdf", plt_2w2w_2000k_not_abs, device = "pdf",
-       width = 10, height = 5)
+# Figure 12:
+ggsave(filename = "plots/Fig12_2w2w_2000k_not_abs.eps", plt_2w2w_2000k_not_abs, device = cairo_ps,
+       width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
