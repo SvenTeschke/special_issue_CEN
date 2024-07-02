@@ -27,12 +27,14 @@ conclusion_4w - Results of above Calculations of scenario 4
 
 hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance
 
-2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance
+2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance -> here calculations for Figure 06
 
 
 all_functions_neu - File with all functions i used
 
 simulation_scenarios_neu - file with the simulation of all scenarios
 
-toyexample_neu - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
+toyexample - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
+
+paramtertuning_w - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14
 

@@ -1,16 +1,20 @@
-# 2w mit p = 500
-library(logicFS)
-library(tidyverse)
-library(logicDT)
-library(ggplot2)
-
-# load("C:/Users/teschke/Promotion/Research/merging_CLS_paper/Data/neu/Szen2w_500.RData")
-load("Szen2w_500.RData")
-source("all_functions_neu.R")
+library("logicFS")
+library("tidyverse")
+library("logicDT")
+library("ggplot2")
 
 
 
-##### prediction performance with logicDT####
+# read in the functions we need:
+source('all_functions_neu.R')
+
+# load the data. Here wie consider on 2-way intercation with a reduced p = 500
+load("../Data/Szen2w_500.RData")
+
+
+
+
+##### prediction performance with logicDT ####
 set.seed(1207)
 
 err_ohne = c()
@@ -18,7 +22,7 @@ err_mit = c()
 err_corr = c()
 err_samp = c()
 
-for(i in 1:1000){ # hier stand nur 10??
+for(i in 1:1000){ 
   Data =cbind(Szen2w_500[[i]]$x, Szen2w_500[[i]]$y)
   
   test_ind = sample(1:120, 40)
@@ -28,7 +32,7 @@ for(i in 1:1000){ # hier stand nur 10??
   resp_train <- Data_train[,501]
   resp_test <- Data_test[,501]
   
-  # ohen var sel:
+  # without variable selection beforehand:
   Data_train_x <- make.snp.dummy(Data_train[,-501])
   
   log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
@@ -41,8 +45,9 @@ for(i in 1:1000){ # hier stand nur 10??
   err_ohne = c(err_ohne, mean(p1 != resp_test))
   
   
-  # mit var sel:
+  # with variable selection beforehand
   
+  ## with CLS
   c500 = getCLS(Data_train)
   index = which(rank(-c500)< 25)
   
@@ -60,7 +65,7 @@ for(i in 1:1000){ # hier stand nur 10??
   err_mit <- c(err_mit, mean(p2 != resp_test))
   
   
-  ## corr
+   ## with correlation
   corr_d <- apply(Data_train[,-501], 2, function(x) cor(x, resp_train)) #%>% abs()
   index = which(rank(-corr_d) < 25)
   
@@ -77,7 +82,7 @@ for(i in 1:1000){ # hier stand nur 10??
   err_corr <- c(err_corr, mean(p3 != resp_test))
   
   
-  ## rand
+   ## random selection
  
   index = sample(1:500, 25)
   
@@ -96,21 +101,24 @@ for(i in 1:1000){ # hier stand nur 10??
 
   
   
-  save(err_mit, err_ohne, err_corr, err_samp, file ="logreg_vergleich2w.RData")
-  print(i)
+  save(err_mit, err_ohne, err_corr, err_samp, file ="results/2w_500/logreg_vergleich2w.RData")
+  #print(i)
   
 }
-load("logreg_vergleich2w.RData")
+load("results/2w_500/logreg_vergleich2w.RData")
 
 err_corr %>% median()
 err_mit %>% median()
 err_ohne %>% median()
 
+# is there any difference at with or without variable selection?
 t.test(err_ohne, err_mit)
 
 
-#### var imp ####
-# with test und training:
+
+#### varariable importance ####
+##### Figure 06 #####
+# with test and training:
 gc()
 set.seed(1754)
 ohne = list()
@@ -128,7 +136,7 @@ for(i in 1:1000){
   resp_train <- Data_train[,501]
   resp_test <- Data_test[,501]
   
-  # ohen var sel:
+  # without variable selection:
   Data_train_x <- make.snp.dummy(Data_train[,-501])
   
   #log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
@@ -151,7 +159,9 @@ for(i in 1:1000){
   # log.out_ohne = logicDT::logicDT.bagging(Data_x ,resp, bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
   # ohne[[i]] <- vim(log.out_ohne)$vims
   
-  # mit cls:
+  # with variable selection
+  
+    ## with cls:
   c500 = getCLS(Data_train)
   index = which(rank(-c500) < 26)
   
@@ -164,7 +174,7 @@ for(i in 1:1000){
   mit[[i]] <- vim(log.out_mit_test)$vims 
   
   
-  # corr:
+    ## with correlation:
   corr_d <- apply(Data_train[,-501], 2, function(x) cor(x, resp_train)) #%>% abs()
   index = which(rank(-corr_d) < 26)
   Data_red_x <- make.snp.dummy(Data_test[,index])
@@ -174,7 +184,7 @@ for(i in 1:1000){
                                                vim_type = "logic", ave = "before")  
   corr[[i]] <- vim(log.out_corr_test)$vims
   
-  # arb:
+    ## with an arbitrary selection:
    index = sample(1:500, 25)
    Data_red_x <- make.snp.dummy(Data_test[,index])
   
@@ -186,8 +196,10 @@ for(i in 1:1000){
   
   print(i)
 }
-# save(ohne, mit, corr,arb, file = "var_imp_testtraining.RData")
-load("var_imp_testtraining.RData")
+
+save(ohne, mit, corr,arb, file = "results/2w_500/var_imp_testtraining.RData")
+
+load("results/2w_500/var_imp_testtraining.RData")
 
 
 
@@ -240,7 +252,7 @@ plt_var_imp500_testtraining = ggplot(w_all, aes(x = q, y = value, color = name))
   geom_line(linewidth = 1) + 
   labs(x = "v", y = "presence in the top v", title = "p=500") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
+        axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
@@ -252,15 +264,16 @@ plt_var_imp500_testtraining = ggplot(w_all, aes(x = q, y = value, color = name))
                                ohne = "navy"),
                       labels = c("random", 
                                 # "corr", 
-                                 "CLS", "none"))
+                                 "CLS", "none")) +
+  theme(plot.margin = margin(10,10,10,10))
 
 
+# Figure 06:
+ggsave(filename = "plots/Fig06_var_imp500_testtraining.eps", plt_var_imp500_testtraining, device = cairo_ps,
+       width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
-ggsave(filename = "plt_var_imp500_testtraining.pdf", plt_var_imp500_testtraining, device = "pdf",
-        width = 10, height = 5)
 
-
-# single variables:
+#### how often are the two important variables in the Top2, Top10 most in important variables ####
 
 sum(w_ohne < 2)
 sum(w_arb < 2)
@@ -323,3 +336,4 @@ sum(w_ohne < 10)
 sum(w_arb < 10)
 sum(w_mit < 10)
 sum(w_corr < 10)
+
