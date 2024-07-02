@@ -34,5 +34,5 @@ all_functions_neu - File with all functions i used
 
 simulation_scenarios_neu - file with the simulation of all scenarios
 
-toyexample_neu - Rcode for the toyexample in the motivation section
+toyexample_neu - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
 
