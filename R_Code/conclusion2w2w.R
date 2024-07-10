@@ -3,7 +3,7 @@ library(ggplot2)
 library("ggpubr") ## for ggrange
 
 # read the funtions we need
-source("all_functions_neu.R")
+source("all_functions.R")
 
 
 #### Table 4 ####
@@ -239,9 +239,11 @@ mean_2w2w_2k_1_not_abs <- data.frame("q" = 2:1000,
 
 
 # Figure 5:
-mean_2w2w_2k_1_not_abs = mean_2w2w_2k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_2k_1_not_abs = mean_2w2w_2k_1_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_2k_1_not_abs = ggplot(mean_2w2w_2k_1_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_2k_1_not_abs = ggplot(mean_2w2w_2k_1_not_abs, 
+                                    aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -263,7 +265,8 @@ plt_mean_2w2w_2k_1_not_abs = ggplot(mean_2w2w_2k_1_not_abs, aes(x = q, y = value
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -278,9 +281,11 @@ mean_2w2w_2k_2_not_abs <- data.frame("q" = 2:1000,
                                      "e0.1" = colMeans(e_0.12_)[-1])
 
 
-mean_2w2w_2k_2_not_abs = mean_2w2w_2k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_2k_2_not_abs = mean_2w2w_2k_2_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, 
+                                    aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -302,7 +307,8 @@ plt_mean_2w2w_2k_2_not_abs = ggplot(mean_2w2w_2k_2_not_abs, aes(x = q, y = value
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -311,7 +317,8 @@ plt_2w2w_2k_not_abs = ggarrange(plt_mean_2w2w_2k_1_not_abs,plt_mean_2w2w_2k_2_no
                               common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plots/Fig05_2w2w_2k_not_abs.eps", plt_2w2w_2k_not_abs, device = cairo_ps,
+ggsave(filename = "plots/Fig05_2w2w_2k_not_abs.eps", plt_2w2w_2k_not_abs, 
+       device = cairo_ps,
        width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
@@ -588,9 +595,11 @@ mean_2w2w_20k_1_not_abs <- data.frame("q" = 2:1000,
                                        "e0.1" = colMeans(e_0.11_)[-1])
 
 
-mean_2w2w_20k_1_not_abs = mean_2w2w_20k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_20k_1_not_abs = mean_2w2w_20k_1_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs,
+                                     aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 20000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -612,7 +621,8 @@ plt_mean_2w2w_20k_1_not_abs = ggplot(mean_2w2w_20k_1_not_abs, aes(x = q, y = val
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -627,9 +637,11 @@ mean_2w2w_20k_2_not_abs <- data.frame("q" = 2:1000,
                                        "e0.1" = colMeans(e_0.12_)[-1])
 
 
-mean_2w2w_20k_2_not_abs = mean_2w2w_20k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_20k_2_not_abs = mean_2w2w_20k_2_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs,
+                                     aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -651,7 +663,8 @@ plt_mean_2w2w_20k_2_not_abs = ggplot(mean_2w2w_20k_2_not_abs, aes(x = q, y = val
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -660,7 +673,8 @@ plt_2w2w_20k_not_abs = ggarrange(plt_mean_2w2w_20k_1_not_abs,plt_mean_2w2w_20k_2
                                   common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plots/Fig10_2w2w_20k_not_abs.eps", plt_2w2w_20k_not_abs, device = cairo_ps,
+ggsave(filename = "plots/Fig10_2w2w_20k_not_abs.eps", plt_2w2w_20k_not_abs, 
+       device = cairo_ps,
        width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
@@ -936,9 +950,11 @@ mean_2w2w_200k_1_not_abs <- data.frame("q" = 2:10000,
                                      "e0.1" = colMeans(e_0.11_)[-1])
 
 
-mean_2w2w_200k_1_not_abs = mean_2w2w_200k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_200k_1_not_abs = mean_2w2w_200k_1_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, 
+                                      aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -960,7 +976,8 @@ plt_mean_2w2w_200k_1_not_abs = ggplot(mean_2w2w_200k_1_not_abs, aes(x = q, y = v
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -975,9 +992,11 @@ mean_2w2w_200k_2_not_abs <- data.frame("q" = 2:10000,
                                      "e0.1" = colMeans(e_0.12_)[-1])
 
 
-mean_2w2w_200k_2_not_abs = mean_2w2w_200k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w2w_200k_2_not_abs = mean_2w2w_200k_2_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, 
+                                      aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -999,7 +1018,8 @@ plt_mean_2w2w_200k_2_not_abs = ggplot(mean_2w2w_200k_2_not_abs, aes(x = q, y = v
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -1008,7 +1028,8 @@ plt_2w2w_200k_not_abs = ggarrange(plt_mean_2w2w_200k_1_not_abs,plt_mean_2w2w_200
                                 common.legend = TRUE, legend="bottom")
 
 
-ggsave(filename = "plots/Fig11_2w2w_200k_not_abs.eps", plt_2w2w_200k_not_abs, device = cairo_ps,
+ggsave(filename = "plots/Fig11_2w2w_200k_not_abs.eps", plt_2w2w_200k_not_abs, 
+       device = cairo_ps,
        width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 
@@ -1291,7 +1312,8 @@ mean_2w2w_2000k_1_not_abs <- data.frame("q" = 2:10000,
 
 mean_2w2w_2000k_1_not_abs = mean_2w2w_2000k_1_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_2000k_1_not_abs = ggplot(mean_2w2w_2000k_1_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_2000k_1_not_abs = ggplot(mean_2w2w_2000k_1_not_abs, 
+                                       aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -1330,7 +1352,8 @@ mean_2w2w_2000k_2_not_abs <- data.frame("q" = 2:10000,
 
 mean_2w2w_2000k_2_not_abs = mean_2w2w_2000k_2_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, 
+                                       aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 200000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -1352,7 +1375,8 @@ plt_mean_2w2w_2000k_2_not_abs = ggplot(mean_2w2w_2000k_2_not_abs, aes(x = q, y =
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole"))
 
@@ -1361,6 +1385,7 @@ plt_2w2w_2000k_not_abs = ggarrange(plt_mean_2w2w_2000k_1_not_abs,plt_mean_2w2w_2
   theme(plot.margin = margin(10,10,10,10))
 
 # Figure 12:
-ggsave(filename = "plots/Fig12_2w2w_2000k_not_abs.eps", plt_2w2w_2000k_not_abs, device = cairo_ps,
+ggsave(filename = "plots/Fig12_2w2w_2000k_not_abs.eps", plt_2w2w_2000k_not_abs, 
+       device = cairo_ps,
        width = 10, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 

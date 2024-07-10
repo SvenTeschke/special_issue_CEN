@@ -5,7 +5,7 @@ library("ggpubr") ## for ggrange
 
 
 # load all functions:
-source("all_functions_neu.R")
+source("all_functions.R")
 
 
 
@@ -55,7 +55,8 @@ toy <- toy %>% pivot_longer(cols = c(corr, cls))
 ##### Figure 08: #####
 toy_plot = ggplot(toy, aes(x= q, y = value, color = name)) +
   geom_line(linewidth = 1) + 
-  labs(x = expression(q), y = "important variables found (mean)", title = "How many important variables are found?") +
+  labs(x = expression(q), y = "important variables found (mean)", 
+       title = "How many important variables are found?") +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),

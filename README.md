@@ -25,7 +25,7 @@ conclusion_3w - Results of above Calculations of scenario 3
 
 conclusion_4w - Results of above Calculations of scenario 4
 
-hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance
+hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
 
 2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance -> here calculations for Figure 06
 

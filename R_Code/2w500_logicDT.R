@@ -6,7 +6,7 @@ library("ggplot2")
 
 
 # read in the functions we need:
-source('all_functions_neu.R')
+source('all_functions.R')
 
 # load the data. Here wie consider on 2-way intercation with a reduced p = 500
 load("../Data/Szen2w_500.RData")
@@ -36,7 +36,8 @@ for(i in 1:1000){
   Data_train_x <- make.snp.dummy(Data_train[,-501])
   
   log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
-                                          bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+                                          bagging.iter = 50, max_vars = 3,
+                                          max_conj = 3, search_algo = "greedy") 
   
   
   Data_test_x = make.snp.dummy(Data_test[ , -501])
@@ -55,7 +56,8 @@ for(i in 1:1000){
   Data_train_red_x <- make.snp.dummy(Data_train[,index])
   
   log.out_mit = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
-                                         bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+                                         bagging.iter = 50, max_vars = 3, 
+                                         max_conj = 3, search_algo = "greedy") 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
@@ -72,7 +74,8 @@ for(i in 1:1000){
   Data_train_red_x <- make.snp.dummy(Data_train[,index])
   
   log.out_mit_corr = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
-                                              bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+                                              bagging.iter = 50, max_vars = 3, 
+                                              max_conj = 3, search_algo = "greedy") 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
@@ -89,7 +92,8 @@ for(i in 1:1000){
   Data_train_red_x <- make.snp.dummy(Data_train[,index])
   
   log.out_mit_samp = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
-                                              bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+                                              bagging.iter = 50, max_vars = 3,
+                                              max_conj = 3, search_algo = "greedy") 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
@@ -101,12 +105,15 @@ for(i in 1:1000){
 
   
   
-  save(err_mit, err_ohne, err_corr, err_samp, file ="results/2w_500/logreg_vergleich2w.RData")
+  save(err_mit, err_ohne, err_corr, err_samp, 
+       file ="results/2w_500/logreg_vergleich2w.RData")
   #print(i)
   
 }
 load("results/2w_500/logreg_vergleich2w.RData")
 
+
+#### Table 06 ####
 err_corr %>% median()
 err_mit %>% median()
 err_ohne %>% median()
@@ -140,7 +147,8 @@ for(i in 1:1000){
   Data_train_x <- make.snp.dummy(Data_train[,-501])
   
   #log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
-                                         # bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+                                         # bagging.iter = 50, max_vars = 3,
+                                         #  max_conj = 3, search_algo = "greedy") 
   
   
   Data_test_x = make.snp.dummy(Data_test[ , -501])
@@ -150,13 +158,15 @@ for(i in 1:1000){
   
   
   log.out_ohne_test = logicDT::logicDT.bagging(Data_test_x ,resp_test, 
-                                               bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy",
+                                               bagging.iter = 50, max_vars = 3, 
+                                               max_conj = 3, search_algo = "greedy",
                                                vim_type = "logic", ave = "before") 
   ohne[[i]] <- vim(log.out_ohne_test)$vims
   
   
   
-  # log.out_ohne = logicDT::logicDT.bagging(Data_x ,resp, bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy") 
+  # log.out_ohne = logicDT::logicDT.bagging(Data_x ,resp, bagging.iter = 50, max_vars = 3, 
+  #                                        max_conj = 3, search_algo = "greedy") 
   # ohne[[i]] <- vim(log.out_ohne)$vims
   
   # with variable selection
@@ -169,7 +179,8 @@ for(i in 1:1000){
   Data_red_x = make.snp.dummy(Data_test[, index])
   
   log.out_mit_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
-                                              bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy",
+                                              bagging.iter = 50, max_vars = 3, 
+                                              max_conj = 3, search_algo = "greedy",
                                                vim_type = "logic", ave = "before") 
   mit[[i]] <- vim(log.out_mit_test)$vims 
   
@@ -180,7 +191,8 @@ for(i in 1:1000){
   Data_red_x <- make.snp.dummy(Data_test[,index])
   
   log.out_corr_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
-                                               bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy",
+                                               bagging.iter = 50, max_vars = 3, 
+                                               max_conj = 3, search_algo = "greedy",
                                                vim_type = "logic", ave = "before")  
   corr[[i]] <- vim(log.out_corr_test)$vims
   
@@ -189,7 +201,8 @@ for(i in 1:1000){
    Data_red_x <- make.snp.dummy(Data_test[,index])
   
    log.out_arb_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
-                                               bagging.iter = 50, max_vars = 3, max_conj = 3, search_algo = "greedy",
+                                               bagging.iter = 50, max_vars = 3,
+                                               max_conj = 3, search_algo = "greedy",
                                                vim_type = "logic", ave = "before")  
    arb[[i]] <- vim(log.out_arb_test)$vims
   
@@ -269,7 +282,8 @@ plt_var_imp500_testtraining = ggplot(w_all, aes(x = q, y = value, color = name))
 
 
 # Figure 06:
-ggsave(filename = "plots/Fig06_var_imp500_testtraining.eps", plt_var_imp500_testtraining, device = cairo_ps,
+ggsave(filename = "plots/Fig06_var_imp500_testtraining.eps", plt_var_imp500_testtraining, 
+       device = cairo_ps,
        width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
 

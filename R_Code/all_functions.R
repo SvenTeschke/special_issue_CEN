@@ -18,7 +18,8 @@ getCLS = function(XY){
   decomp = qr.Q(qr(C)) 
   
   CLS <- c() 
-  # to save the matrix multiplication with Q we calculate only the scalar product of the corresponding rows.
+  # to save the matrix multiplication with Q we calculate only the scalar product of the 
+  # corresponding rows.
   for(i in 1:(nrow(decomp)-1)){
     CLS[i] <- decomp[i, ] %*% decomp[nrow(decomp), ]
   }
@@ -111,7 +112,8 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
 #        - abs_cls: abs or no abs cls
 #        - pr: print iterations?
 #
-# Output: - cls: dataframe with all variables and their cls (if they are chosen at least once)
+# Output: - cls: dataframe with all variables and their cls (if they are chosen at 
+#               least once)
 
 
 randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
@@ -130,7 +132,8 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
   cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
   
   i = 0
-  while (length(A) < p & i < R) { # break if R is reached or all variables are choosen at least once
+  while (length(A) < p & i < R) { # break if R is reached or all variables are chosen 
+    # at least once
     
     s = sample(1:p, w)  # sample w SNPs in each step independently
     A <- c(A, s) %>% unique() # count how many different SNPs we consider
@@ -296,7 +299,8 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
   print("whole done")
   # RW:
   if(RW ==T){
-    CCC_RW = randomCLS_general_CLS_sample(Data[,-res_number], Data[,res_number], w = w_RW, R = R,
+    CCC_RW = randomCLS_general_CLS_sample(Data[,-res_number], Data[,res_number], 
+                                          w = w_RW, R = R,
                                           bagging = F, abs_cls = abs, pr = pr_RW)
 
    CCC_RW = arrange(CCC_RW, by = -CCC_RW$Score)}else{CCC_RW = NA}
@@ -304,7 +308,8 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
   print("RW done")
   # SW:
   if(SW == T){
-    CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, abs_cls = abs,
+    CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, 
+                                          abs_cls = abs,
                                           pr = pr_SW)
 
     CCC_SW = arrange(CCC_SW, by = -CCC_SW$Score)}else{CCC_SW = NA}
@@ -329,7 +334,8 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 # sketch:
   if(sketch == T){
   CCC_sketch = sketch2b(Data, epsilon = eps, abs = abs, vi = 2)
-  CCC_sketch = data.frame("SNP" = paste0("SNP", 1:length(CCC_sketch$cls)), "Score" = CCC_sketch$cls)
+  CCC_sketch = data.frame("SNP" = paste0("SNP", 1:length(CCC_sketch$cls)), 
+                          "Score" = CCC_sketch$cls)
   CCC_sketch = arrange(CCC_sketch, by = -CCC_sketch$Score)}else{CCC_sketch = NA}
   
   
@@ -362,7 +368,8 @@ RW_CLS <- function(Data, response_, w = 0, R = 100,
   cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
   
   i = 0
-  while (length(A) < p & i < R) { # break if R is reached or all variables are choosen at least once
+  while (length(A) < p & i < R) { # break if R is reached or all variables are chosen 
+                                  # at least once
     
     s = sample(1:p, w)  # sample w SNPs in each step independently
     A <- c(A, s) %>% unique() # count how many different SNPs we consider
@@ -444,7 +451,8 @@ SW_CLS <- function(Data, response_, w = 0,
     mi <- mi + w
   }
   
-  if(fin != (p+w)){ # falls es nicht aufgeht, letztes Fenster berechnen in der selben Größe wie die bisherigen
+  if(fin != (p+w)){ # if it does not fit, calculate the last window in the same size as 
+    # the previous ones
     
     mi = p-w+1
     ma = p
@@ -462,7 +470,7 @@ SW_CLS <- function(Data, response_, w = 0,
       levs_ <- abs(levs_)
     } else{levs_ <- levs_}
     
-    # einfach ueberschreiben --> das geht bestimmt auch besser
+   
     cls$Score[mi:ma] <- levs_    
     cls$SNP[mi:ma] <- SNPs[mi:ma]
     

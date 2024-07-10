@@ -30,13 +30,13 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2k[[i]]$x <- ifelse(Szen2w_2k[[i]]$x==1, 0, Szen2w_2k[[i]]$x)
   Szen2w_2k[[i]]$x <- ifelse(Szen2w_2k[[i]]$x==2, 1, Szen2w_2k[[i]]$x)
   Szen2w_2k[[i]]$x <- ifelse(Szen2w_2k[[i]]$x==3, 2, Szen2w_2k[[i]]$x)
 }
 
-# save(Szen2w_2k, file = "Szen2w_2k.RData")
+ save(Szen2w_2k, file = "Szen2w_2k.RData")
 
 
 #### p = 20k ####
@@ -56,18 +56,17 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_20k[[i]]$x <- ifelse(Szen2w_20k[[i]]$x==1, 0, Szen2w_20k[[i]]$x)
   Szen2w_20k[[i]]$x <- ifelse(Szen2w_20k[[i]]$x==2, 1, Szen2w_20k[[i]]$x)
   Szen2w_20k[[i]]$x <- ifelse(Szen2w_20k[[i]]$x==3, 2, Szen2w_20k[[i]]$x)
 }
 
-# save(Szen2w_20k, file = "Szen2w_20k.RData")
+save(Szen2w_20k, file = "Szen2w_20k.RData")
 
 
 #### p = 200k ####
 
-# auf server
 list_int <- list(c(-1,-1)) 
 list_snp <- list(1:2)
 
@@ -86,12 +85,12 @@ for(i in 1:100){
 }
 for(i in 1:100){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+#  recode from 1,2,3 to 0,1,2:
   Szen2w_200k[[i]]$x <- ifelse(Szen2w_200k[[i]]$x==1, 0, Szen2w_200k[[i]]$x)
   Szen2w_200k[[i]]$x <- ifelse(Szen2w_200k[[i]]$x==2, 1, Szen2w_200k[[i]]$x)
   Szen2w_200k[[i]]$x <- ifelse(Szen2w_200k[[i]]$x==3, 2, Szen2w_200k[[i]]$x)
 }
-# save(Szen2w_200k, file = "Szen2w_200k.RData")
+save(Szen2w_200k, file = "Szen2w_200k.RData")
 
 
 
@@ -99,7 +98,7 @@ for(i in 1:100){
 #### p = 2000k ####
 list_int <- list(c(-1,-1)) 
 list_snp <- list(1:2)
-
+# have to split it up, otherwise it becomes too large
 set.seed(10)
 mafs = runif(2000000,0.15,0.45)
 Szen2w_2000k <- list()
@@ -115,7 +114,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  #recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -139,7 +138,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -163,7 +162,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -186,7 +185,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -209,7 +208,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -232,7 +231,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -255,7 +254,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -279,7 +278,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -302,7 +301,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -325,7 +324,7 @@ for(i in 1:10){
 }
 for(i in 1:10){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==1, 0, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==2, 1, Szen2w_2000k[[i]]$x)
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
@@ -356,7 +355,7 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen3w_2k[[i]]$x <- ifelse(Szen3w_2k[[i]]$x==1, 0, Szen3w_2k[[i]]$x)
   Szen3w_2k[[i]]$x <- ifelse(Szen3w_2k[[i]]$x==2, 1, Szen3w_2k[[i]]$x)
   Szen3w_2k[[i]]$x <- ifelse(Szen3w_2k[[i]]$x==3, 2, Szen3w_2k[[i]]$x)
@@ -388,7 +387,7 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen3w_20k[[i]]$x <- ifelse(Szen3w_20k[[i]]$x==1, 0, Szen3w_20k[[i]]$x)
   Szen3w_20k[[i]]$x <- ifelse(Szen3w_20k[[i]]$x==2, 1, Szen3w_20k[[i]]$x)
   Szen3w_20k[[i]]$x <- ifelse(Szen3w_20k[[i]]$x==3, 2, Szen3w_20k[[i]]$x)
@@ -451,7 +450,7 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w2w_2k[[i]]$x <- ifelse(Szen2w2w_2k[[i]]$x==1, 0, Szen2w2w_2k[[i]]$x)
   Szen2w2w_2k[[i]]$x <- ifelse(Szen2w2w_2k[[i]]$x==2, 1, Szen2w2w_2k[[i]]$x)
   Szen2w2w_2k[[i]]$x <- ifelse(Szen2w2w_2k[[i]]$x==3, 2, Szen2w2w_2k[[i]]$x)
@@ -524,6 +523,7 @@ save(Szen2w2w_200k, file = "Szen2w2w_200k.RData")
 
 
 #### p = 2000k ####
+# have to split it up, otherwise it becomes too large
 set.seed(1514) 
 list_int <- list(c(-1,-1), c(-1,-1)) 
 list_snp <- list(1:2,3:4)
@@ -919,49 +919,13 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_2k_neg[[i]]$x <- ifelse(Szen2w_2k_neg[[i]]$x==1, 0, Szen2w_2k_neg[[i]]$x)
   Szen2w_2k_neg[[i]]$x <- ifelse(Szen2w_2k_neg[[i]]$x==2, 1, Szen2w_2k_neg[[i]]$x)
   Szen2w_2k_neg[[i]]$x <- ifelse(Szen2w_2k_neg[[i]]$x==3, 2, Szen2w_2k_neg[[i]]$x)
 }
 
 save(Szen2w_2k_neg, file = "/Szen2w_2k_neg.RData")
-
-
-### pos + neg ####
-
-
-#### p = 2k #### 
-# set.seed(1657)
-# list_int <- list(c(1,1), c(-1,-1)) 
-# list_snp <- list(1:2,3:4)
-# 
-# 
-# mafs = runif(2000,0.15,0.45)
-# Szen2w2w_2k_pn <- list()
-# 
-# for(i in 1:1000){  
-#   Szen2w2w_2k_pn[[i]] <- simulateSNPglm(n.obs = 120, n.snp = 2000,
-#                                      list.ia = list_int,
-#                                      list.snp = list_snp,
-#                                      maf = mafs,
-#                                      beta0 = log(0.3/(1-0.3)),
-#                                      beta = c(log(50), log(50))
-#   )
-#   print(i)
-# }
-# for(i in 1:1000){
-#   print(i)
-#   # umcodieren von 1,2,3 to 0,1,2:
-#   Szen2w2w_2k_pn[[i]]$x <- ifelse(Szen2w2w_2k_pn[[i]]$x==1, 0, Szen2w2w_2k_pn[[i]]$x)
-#   Szen2w2w_2k_pn[[i]]$x <- ifelse(Szen2w2w_2k_pn[[i]]$x==2, 1, Szen2w2w_2k_pn[[i]]$x)
-#   Szen2w2w_2k_pn[[i]]$x <- ifelse(Szen2w2w_2k_pn[[i]]$x==3, 2, Szen2w2w_2k_pn[[i]]$x)
-# }
-# 
-# save(Szen2w2w_2k_pn,file = "Szen2w_2k_pn.RData")
-
-
-
 
 
 ### kleineres p ####
@@ -986,7 +950,7 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode from 1,2,3 to 0,1,2:
   Szen2w_500[[i]]$x <- ifelse(Szen2w_500[[i]]$x==1, 0, Szen2w_500[[i]]$x)
   Szen2w_500[[i]]$x <- ifelse(Szen2w_500[[i]]$x==2, 1, Szen2w_500[[i]]$x)
   Szen2w_500[[i]]$x <- ifelse(Szen2w_500[[i]]$x==3, 2, Szen2w_500[[i]]$x)
@@ -995,86 +959,6 @@ save(Szen2w_500, file = "Szen2w_500.RData")
 
 
 
-### kleineres p  + kleines beta ####
-
-# #### 2w ####
-# list_int <- list(c(-1,-1)) 
-# list_snp <- list(1:2)
-# 
-# 
-# set.seed(959)
-# mafs = runif(500,0.15,0.45)
-# Szen2w_500_0.7 <- list()
-# for(i in 1:1000){  
-#   Szen2w_500_0.7[[i]] <- simulateSNPglm(n.obs = 120, n.snp = 500,
-#                                     list.ia = list_int,
-#                                     list.snp = list_snp,
-#                                     maf = mafs,
-#                                     beta0 = log(0.3/(1-0.3)),
-#                                     beta = log(6))
-#   print(i)
-# }
-# for(i in 1:1000){
-#   print(i)
-#   # umcodieren von 1,2,3 to 0,1,2:
-#   Szen2w_500_0.7[[i]]$x <- ifelse(Szen2w_500_0.7[[i]]$x==1, 0, Szen2w_500_0.7[[i]]$x)
-#   Szen2w_500_0.7[[i]]$x <- ifelse(Szen2w_500_0.7[[i]]$x==2, 1, Szen2w_500_0.7[[i]]$x)
-#   Szen2w_500_0.7[[i]]$x <- ifelse(Szen2w_500_0.7[[i]]$x==3, 2, Szen2w_500_0.7[[i]]$x)
-# }
-# save(Szen2w_500_0.7, file = "Szen2w_500_0.7.RData")
-
-
-
-
-
-### tyexample mit fehler ####
-
-# list_int <- list(c(-1,-1), c(-1,-1), c(-1, -1), c(-1, -1), c(-1, -1), c(-1, -1)) 
-# list_snp <- list(1:2, 3:4, c(1,3), c(1,4), c(2,3), c(2,4))
-# 
-# 
-# set.seed(1202)
-# mafs = runif(500,0.15,0.45)
-# Szen2w_500_toy <- list()
-# for(i in 1:1000){  
-#   Szen2w_500_toy[[i]] <- simulateSNPglm(n.obs = 120, n.snp = 500,
-#                                         list.ia = list_int,
-#                                         list.snp = list_snp,
-#                                         maf = mafs,
-#                                         beta0 = log(0.1/(1-0.1)),
-#                                         beta = c(log(50), log(50), log(1.1), log(1.1), log(1.1), log(1.1)))
-#   print(i)
-# }
-# for(i in 1:1000){
-#   print(i)
-#   # umcodieren von 1,2,3 to 0,1,2:
-#   Szen2w_500_toy[[i]]$x <- ifelse(Szen2w_500_toy[[i]]$x==1, 0, Szen2w_500_toy[[i]]$x)
-#   Szen2w_500_toy[[i]]$x <- ifelse(Szen2w_500_toy[[i]]$x==2, 1, Szen2w_500_toy[[i]]$x)
-#   Szen2w_500_toy[[i]]$x <- ifelse(Szen2w_500_toy[[i]]$x==3, 2, Szen2w_500_toy[[i]]$x)
-# }
-# save(Szen2w_500_toy, file = "Szen2w_500_toy.RData")
-# 
-# 
-# cc <- c()
-# sc <- c()
-# for(i in 1:1000){
-# X = cbind(Szen2w_500_toy[[i]]$x, Szen2w_500_toy[[i]]$y)
-# p = ncol(X)
-# cors = abs(cor(X)[p,-p])
-# scores = getCLS(X)
-# 
-# cc_ <- c()
-# sc_ <- c()
-# for(l in 4:100){
-#   cc_ <- c(cc_, sum((rank(-cors) <= l)[1:2]))
-#   sc_ <- c(sc_, sum((rank(-scores) <= l)[1:2]))}
-# 
-# cc = rbind(cc, cc_)
-# sc = rbind(sc, sc_)
-# print(i)
-# }
-# 
-# colMeans(cc) < colMeans(sc)
 
 ### interaction but low no main effect ####
 list_int <- list(c(-1,-1), -1, -1) 
@@ -1090,21 +974,25 @@ for(i in 1:1000){
                                                list.snp = list_snp,
                                                maf = mafs,
                                                beta0 = log(0.3/(1-0.3)),
-                                               beta = c(log(50), log(1.0001), log(1.0001))
+                                               beta = c(log(50), log(1.0001), 
+                                                        log(1.0001))
   )
   print(i)
 }
 for(i in 1:1000){
   print(i)
-  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==1, 0, Szen2w_2k_int_nomain4[[i]]$x)
-  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==2, 1, Szen2w_2k_int_nomain4[[i]]$x)
-  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==3, 2, Szen2w_2k_int_nomain4[[i]]$x)
+  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==1, 0, 
+                                         Szen2w_2k_int_nomain4[[i]]$x)
+  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==2, 1, 
+                                         Szen2w_2k_int_nomain4[[i]]$x)
+  Szen2w_2k_int_nomain4[[i]]$x <- ifelse(Szen2w_2k_int_nomain4[[i]]$x==3, 2, 
+                                         Szen2w_2k_int_nomain4[[i]]$x)
 }
 
 
 save(Szen2w_2k_int_nomain4, file = "Szen2w_2k_int_nomain4.RData")
 
-#### only small main effect
+### only small main effect ####
 list_int <- list(-1, -1) 
 list_snp <- list(1, 2)
 
@@ -1124,18 +1012,22 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==1, 0, Szen2w_2k_int_nomain5[[i]]$x)
-  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==2, 1, Szen2w_2k_int_nomain5[[i]]$x)
-  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==3, 2, Szen2w_2k_int_nomain5[[i]]$x)
+  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==1, 0,
+                                         Szen2w_2k_int_nomain5[[i]]$x)
+  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==2, 1, 
+                                         Szen2w_2k_int_nomain5[[i]]$x)
+  Szen2w_2k_int_nomain5[[i]]$x <- ifelse(Szen2w_2k_int_nomain5[[i]]$x==3, 2, 
+                                         Szen2w_2k_int_nomain5[[i]]$x)
 }
 
-# save(Szen2w_2k_int_nomain5, file = "Szen2w_2k_int_nomain5.RData")
+save(Szen2w_2k_int_nomain5, file = "Szen2w_2k_int_nomain5.RData")
 
 
 CLS2w_2k_int_nomain4 <- numeric()
 for(i in 1:1000){
   
-  CLS2w_2k_int_nomain4 <- rbind(CLS2w_2k_int_nomain4, getCLS(cbind(Szen2w_2k_int_nomain4[[i]]$x,
-                                                                 Szen2w_2k_int_nomain4[[i]]$y)))
+  CLS2w_2k_int_nomain4 <- rbind(CLS2w_2k_int_nomain4, 
+                                getCLS(cbind(Szen2w_2k_int_nomain4[[i]]$x,
+                                             Szen2w_2k_int_nomain4[[i]]$y)))
   print(i)
 }

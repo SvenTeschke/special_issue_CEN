@@ -3,7 +3,7 @@ library(ggplot2)
 library("ggpubr") ## for ggrange
 
 # read the funtions we need
-source("all_functions_neu.R")
+source("all_functions.R")
 
 
 #### density ####
@@ -243,36 +243,6 @@ median(corr_[,572])
 
 
 
-mean_4w_2k_not_abs = mean_4w_2k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-
-plt_mean_4w_2k_not_abs = ggplot(mean_4w_2k_not_abs, aes(x = q, y = value, color = name)) + 
-  geom_line(linewidth = 1) + 
-  geom_line(aes(x = q, y = 4*q / 2000, colour = "expected"), linewidth = 0.75) +
-  geom_hline(yintercept = 4, linewidth = 0.5, lty =3, colour = "black") + 
-  geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=2000") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="Method:",
-                      values=c(corr = "yellow", 
-                               e0.1 = "violetred2",
-                               e0.2 = "violetred",
-                               e0.5 = "violet",  
-                               expected = "grey",
-                               RW = "firebrick",
-                               SW = "navy",
-                               whole = "darkgreen"),
-                      labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
-                                 expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
-
-ggsave(filename = "plt_mean_4w_2k_not_abs.pdf", plt_mean_4w_2k_not_abs, device = "pdf",
-       width = 10, height = 5)
 
 
 
@@ -438,42 +408,8 @@ median(corr_[,572])
 
 
 
-mean_4w_20k_not_abs = mean_4w_20k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-
-plt_mean_4w_20k_not_abs = ggplot(mean_4w_20k_not_abs, aes(x = q, y = value, color = name)) + 
-  geom_line(linewidth = 1) + 
-  geom_line(aes(x = q, y = 4*q / 20000, colour = "expected"), linewidth = 0.75) +
-  geom_hline(yintercept = 4, linewidth = 0.5, lty =3, colour = "black") + 
-  geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=20000") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="Method:",
-                      values=c(corr = "yellow", 
-                               e0.1 = "violetred2",
-                               e0.2 = "violetred",
-                               e0.5 = "violet",  
-                               expected = "grey",
-                               RW = "firebrick",
-                               SW = "navy",
-                               whole = "darkgreen"),
-                      labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
-                                 expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
-
-ggsave(filename = "plt_mean_4w_20k_not_abs.pdf", plt_mean_4w_20k_not_abs, device = "pdf",
-       width = 10, height = 5)
-
-
-
 
 ##### p = 200k #####
-# load("C://Users/teschke/Promotion/Research/merging_CLS_paper/Data/neu/output/4w/selected_4w_200k_not_abs.RData")
 load("selected_4w_200k_not_abs.RData")
 
 q = 10000
@@ -633,34 +569,5 @@ median(corr_[,572])
 
 
 
-mean_4w_200k_not_abs = mean_4w_200k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_4w_200k_not_abs = ggplot(mean_4w_200k_not_abs, aes(x = q, y = value, color = name)) + 
-  geom_line(linewidth = 1) + 
-  geom_line(aes(x = q, y = 4*q / 200000, colour = "expected"), linewidth = 0.75) +
-  geom_hline(yintercept = 4, linewidth = 0.5, lty =3, colour = "black") + 
-  geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = "q", y = "important variables found", title = "p=200000") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="Method:",
-                      values=c(corr = "yellow", 
-                               e0.1 = "violetred2",
-                               e0.2 = "violetred",
-                               e0.5 = "violet",  
-                               expected = "grey",
-                               RW = "firebrick",
-                               SW = "navy",
-                               whole = "darkgreen"),
-                      labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
-                                 expression("Sketching"~(epsilon~"="~0.5)), "expected",
-                                 "RW", "SW", "whole"))
-
-ggsave(filename = "plt_mean_4w_200k_not_abs.pdf", plt_mean_4w_200k_not_abs, device = "pdf",
-       width = 10, height = 5)
 

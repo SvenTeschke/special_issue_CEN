@@ -3,7 +3,7 @@ library(ggplot2)
 library("ggpubr") ## for ggrange
 
 # read the funtions we need
-source("all_functions_neu.R")
+source("all_functions.R")
 
 #### density plots ####
 
@@ -94,8 +94,9 @@ load("../Data/Fig02_Szen2w_2k_int_nomain4.RData")
 CLS2w_2k_int_nomain <- numeric()
 for(i in 1:1000){
   
-  CLS2w_2k_int_nomain <- rbind(CLS2w_2k_int_nomain, getCLS(cbind(Szen2w_2k_int_nomain4[[i]]$x,
-                                                                 Szen2w_2k_int_nomain4[[i]]$y)))
+  CLS2w_2k_int_nomain <- rbind(CLS2w_2k_int_nomain, 
+                               getCLS(cbind(Szen2w_2k_int_nomain4[[i]]$x,
+                                            Szen2w_2k_int_nomain4[[i]]$y)))
   print(i)
 }
 
@@ -135,13 +136,14 @@ ggsave(filename = "plots/density_nomain_withint.eps", plt_dens_no_with, device =
 
 
 ##### Figure 7 ####
-# what happens whein 'negative' influence on the response if a SNP (interaction) is present
+# what happens if a 'negative' influence on the response if a SNP(interaction) is present
 load("../Data/Szen2w_2k_neg.RData")
 
 CLS2w_2k_neg <- numeric()
 for(i in 1:1000){
   
-  CLS2w_2k_neg <- rbind(CLS2w_2k_neg, getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
+  CLS2w_2k_neg <- rbind(CLS2w_2k_neg, 
+                        getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
   print(i)
 }
 # save(CLS2w_2k_neg, file = "results/CLS2w_2k_neg.RData")
@@ -154,7 +156,8 @@ vv2w_ni_2w_neg = density(CLS2w_2k_neg[, -(1:2)])
 dens_2w_2k_neg =  ggplot() +
   geom_line(aes(x= vv2w_i2_neg$x, y = vv2w_i2_neg$y, colour = "imp2"), linewidth = 1) +
   geom_line(aes(x = vv2w_ni_2w_neg$x, vv2w_ni_2w_neg$y), linewidth = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1 (negative)") +
+  labs(x = "CLS", y = "estimated density", 
+       title = "Density of CLS in scenario 1 (negative)") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -183,7 +186,8 @@ vv2w_ni_2w = density(abs(CLS2w_2k[, -(1:2)]))
 dens_2w_2k_abs =  ggplot() + 
   geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
   geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
-  labs(x = "absolute CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
+  labs(x = "absolute CLS", y = "estimated density", 
+       title = "Density of CLS in scenario 1") +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -326,14 +330,16 @@ median(corr_[,574])
 
 
 
-mean_2w_2k_not_abs = mean_2w_2k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
+mean_2w_2k_not_abs = mean_2w_2k_not_abs %>% 
+  pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
 plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 2000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-  labs(x = expression(q), y = "important variables found", title = expression(p=="2000")) +
+  labs(x = expression(q), y = "important variables found",
+       title = expression(p == "2000")) +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
@@ -350,12 +356,14 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)),
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                    "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
 
-# ggsave(filename = "plots/plt_mean_2w_2k_not_abs.eps", plt_mean_2w_2k_not_abs, device = cairo_ps,
+# ggsave(filename = "plots/plt_mean_2w_2k_not_abs.eps", plt_mean_2w_2k_not_abs, 
+#        device = cairo_ps,
 #        width = 6.1, height = 5, units = "in", dpi = 300,  limitsize  = F)
 
 
@@ -513,7 +521,8 @@ plt_mean_2w_20k_not_abs = ggplot(mean_2w_20k_not_abs, aes(x = q, y = value, colo
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
@@ -683,45 +692,47 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)),
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                   "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
 
 
-# ggsave(filename = "plots/plt_mean_2w_200k_not_abs.eps", plt_mean_2w_200k_not_abs, device = cairo_ps,
+# ggsave(filename = "plots/plt_mean_2w_200k_not_abs.eps", plt_mean_2w_200k_not_abs, 
+#                    device = cairo_ps,
 #        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
 ##### p = 2000k ####
 # for Figure 4 (d)
-load("results/2w/selected_2w_2000k_10_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_20_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_30_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_40_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_50_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_60_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_70_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_80_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_90_not_abs_neu.RData")
-load("results/2w/selected_2w_2000k_100_not_abs_neu.RData")
-selected_2w_2000k_not_abs <- list()
-for(i in 1:length(selected_2w_2000k_10_not_abs)){
-  selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
-                                          selected_2w_2000k_20_not_abs[[i]],
-                                          selected_2w_2000k_30_not_abs[[i]],
-                                          selected_2w_2000k_40_not_abs[[i]],
-                                          selected_2w_2000k_50_not_abs[[i]],
-                                          selected_2w_2000k_60_not_abs[[i]],
-                                          selected_2w_2000k_70_not_abs[[i]],
-                                          selected_2w_2000k_80_not_abs[[i]],
-                                          selected_2w_2000k_90_not_abs[[i]],
-                                          selected_2w_2000k_100_not_abs[[i]])
-}
-names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
+# load("results/2w/selected_2w_2000k_10_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_20_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_30_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_40_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_50_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_60_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_70_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_80_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_90_not_abs_neu.RData")
+# load("results/2w/selected_2w_2000k_100_not_abs_neu.RData")
+# selected_2w_2000k_not_abs <- list()
+# for(i in 1:length(selected_2w_2000k_10_not_abs)){
+#   selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
+#                                           selected_2w_2000k_20_not_abs[[i]],
+#                                           selected_2w_2000k_30_not_abs[[i]],
+#                                           selected_2w_2000k_40_not_abs[[i]],
+#                                           selected_2w_2000k_50_not_abs[[i]],
+#                                           selected_2w_2000k_60_not_abs[[i]],
+#                                           selected_2w_2000k_70_not_abs[[i]],
+#                                           selected_2w_2000k_80_not_abs[[i]],
+#                                           selected_2w_2000k_90_not_abs[[i]],
+#                                           selected_2w_2000k_100_not_abs[[i]])
+# }
+# names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
 # save(selected_2w_2000k_not_abs, file = "results/2w/selected_2w_2000k_not_abs.RData")
-# load("results/2w/selected_2w_2000k_not_abs.RData")
+load("results/2w/selected_2w_2000k_not_abs.RData")
 
 q = 10000
 # whole:
@@ -841,7 +852,8 @@ median(corr_[,574])
 
 mean_2w_2000k_not_abs = mean_2w_2000k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
 
-plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, color = name)) + 
+plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, 
+                                   aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
   geom_line(aes(x = q, y = 2*q / 2000000, colour = "expected"), linewidth = 0.75) +
   geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
@@ -863,20 +875,23 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs, aes(x = q, y = value, 
                                SW = "navy",
                                whole = "darkgreen"),
                       labels = c("corr", 
-                                 expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
+                                 expression("Sketching"~(epsilon~"="~0.1)), 
+                                 expression("Sketching"~(epsilon~"="~0.2)),
                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
                                  "RW", "SW", "whole")) +
   theme(plot.margin = margin(10,10,10,10))
 
 
-# ggsave(filename = "plots/plt_mean_2w_2000k_not_abs.eps", plt_mean_2w_2000k_not_abs, device = cairo_ps,
+# ggsave(filename = "plots/plt_mean_2w_2000k_not_abs.eps", plt_mean_2w_2000k_not_abs, 
+#                 device = cairo_ps,
 #        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 # 
 # plt200k_2000k_not_abs = ggarrange(plt_mean_2w_200k_not_abs, plt_mean_2w_2000k_not_abs,
 #                                   common.legend = TRUE, legend="bottom")
 # 
-# ggsave(filename = "plots/plt200k_2000k_not_abs.eps", plt200k_2000k_not_abs, device = cairo_ps,
+# ggsave(filename = "plots/plt200k_2000k_not_abs.eps", plt200k_2000k_not_abs, 
+#                device = cairo_ps,
 #        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
