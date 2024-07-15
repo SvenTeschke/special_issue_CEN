@@ -14,7 +14,7 @@ source("simulation_scenarios.R")
 
 
 
-# download simulated data from ZENODO:
+# download simulated data from ZENODO and store the data in ("../Data/")
 
 
 

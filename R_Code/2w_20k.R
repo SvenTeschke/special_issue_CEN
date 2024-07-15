@@ -5,7 +5,7 @@ library(tidyverse)
 source('all_functions.R')
 
 # read in data
-load('Szen2w_20k.RData')
+load('../Data/Szen2w_20k.RData')
 
 set.seed(1451)
 q = 1000

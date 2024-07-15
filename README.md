@@ -1,5 +1,14 @@
 # special_issue_CEN
 
+PC
+R version 4.3.2 (2023-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+sever:
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Debian GNU/Linux 12 (bookworm)
+
 # Here the complete R Code according to the paper is stored
 
 - simulated RData data is not included due to memory capacity and must be run first
