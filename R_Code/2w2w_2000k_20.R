@@ -6,7 +6,7 @@ source('all_functions.R')
 
 
 # read in data
-load('Szen2w2w_2000k_20.RData')
+load('../Data/Szen2w2w_2000k_20.RData')
 
 set.seed(12032) 
 

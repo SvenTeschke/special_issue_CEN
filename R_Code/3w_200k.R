@@ -5,7 +5,7 @@ library(tidyverse)
 source('all_functions_neu.R')
 
 # read in data
-load('Szen3w_200k.RData')
+load('../Data/Szen3w_200k.RData')
 
 
 

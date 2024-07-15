@@ -5,7 +5,7 @@ library(tidyverse)
 source('all_functions.R')
 
 # read in data
-load('Szen2w_2000k_80.RData')
+load('../Data/Szen2w_2000k_80.RData')
 
 set.seed(150880) 
 p_whole_ = c()

@@ -6,7 +6,7 @@ source('all_functions.R')
 
 
 # read in data
-load('Szen4w_20k.RData')
+load('../Data/Szen4w_20k.RData')
 
 
 
