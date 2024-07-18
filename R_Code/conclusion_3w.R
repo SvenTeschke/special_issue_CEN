@@ -5,80 +5,11 @@ library("ggpubr") ## for ggrange
 # read the funtions we need
 source("all_functions.R")
 
-#### density ####
-load("Szen3w_2k.RData")
-load("Szen3w_20k.RData")
-
-# calculating the CLS for 2k:
-CLS3w_2k <- numeric()
-for(i in 1:1000){
-  
-  CLS3w_2k <- rbind(CLS3w_2k, getCLS(cbind(Szen3w_2k[[i]]$x, Szen3w_2k[[i]]$y)))
-  print(i)
-}
-
-# calculating the CLS for 20k:
-CLS3w_20k <- numeric()
-for(i in 1:1000){
-  
-  CLS3w_20k <- rbind(CLS3w_20k, getCLS(cbind(Szen3w_20k[[i]]$x, Szen3w_20k[[i]]$y)))
-  print(i)
-}
-
-#### 2k ####
-
-# # not absolute cls:
-# vv3w_i2 = density(CLS3w_2k[,1:3])
-# vv3w_ni_3w = density(CLS3w_2k[, -(1:3)])
-# 
-# 
-# dens_3w_2k =  ggplot() +
-#   geom_line(aes(x= vv3w_i2$x, y = vv3w_i2$y, colour = "imp2"), size = 1) +
-#   geom_line(aes(x = vv3w_ni_3w$x, vv3w_ni_3w$y), linewidth = 1) +
-#   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="SNPs:",
-#                       values=c(imp2 = "darkgreen"),
-#                       labels = c( "important"))
-# 
-# ggsave(filename = "dens_3w_2k.pdf", dens_3w_2k, device = "pdf",
-#        width = 10, height = 5)
-# 
-# 
-# #### 20k ####
-# 
-# # not absolute cls:
-# vv3w_i2 = density(CLS3w_20k[,1:3])
-# vv3w_ni_3w = density(CLS3w_20k[, -(1:3)])
-# 
-# 
-# dens_3w_20k =  ggplot() +
-#   geom_line(aes(x= vv3w_i2$x, y = vv3w_i2$y, colour = "imp2"), size = 1) +
-#   geom_line(aes(x = vv3w_ni_3w$x, vv3w_ni_3w$y), linewidth = 1) +
-#   labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="SNPs:",
-#                       values=c(imp2 = "darkgreen"),
-#                       labels = c( "important"))
-# 
-# ggsave(filename = "dens_3w_20k.pdf", dens_3w_20k, device = "pdf",
-#        width = 10, height = 5)
-
 
 #### how many ####
 
 #### 2k: ####
-load("selected_3w_2k_not_abs.RData")
+load("results/3w/selected_3w_2k_not_abs.RData")
 
 # table out of 3:
 q = 575
@@ -171,7 +102,6 @@ for(j in seq(1,1999,2)){
   
   print(j)
 }
-
 
 # RW:
 RW1_ = c()
@@ -280,41 +210,9 @@ mean_3w_2k_not_abs <-data.frame("q" = 3:1000,
                                 "e0.1" = colMeans(e_0.11_)[-c(1:2)])
 
 
-# mean_3w_2k_not_abs = mean_3w_2k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-# # neu = neu$name %>% factor(levels = c("whole", "RW", "SW", "e0.5", "e0.2", "corr"))
-# plt_mean_3w_2k_not_abs = ggplot(mean_3w_2k_not_abs, aes(x = q, y = value, color = name)) + 
-#   geom_line(linewidth = 1) + 
-#   geom_line(aes(x = q, y = 3*q / 2000, colour = "expected"), linewidth = 0.75) +
-#   geom_hline(yintercept = 3, linewidth = 0.5, lty =3, colour = "black") + 
-#   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-#   labs(x = "q", y = "important variables found", title = "3-way") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="Method:",
-#                       values=c(corr = "yellow", 
-#                                e0.1 = "violetred2",
-#                                e0.2 = "violetred",
-#                                e0.5 = "violet",  
-#                                expected = "grey",
-#                                RW = "firebrick",
-#                                SW = "navy",
-#                                whole = "darkgreen"),
-#                       labels = c("corr", 
-#                                  expression("Sketching"~(epsilon~"="~0.1)), 
-#                                  expression("Sketching"~(epsilon~"="~0.2)),
-#                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-#                                  "RW", "SW", "whole"))
-
-
-
-
 
 #### 20k: ####
-load("selected_3w_20k_not_abs.RData")
+load("results/3w/selected_3w_20k_not_abs.RData")
 
 # table out of 3:
 q = 575
@@ -541,45 +439,9 @@ mean_3w_20k_not_abs <- data.frame("q" = 3:1000,
                                  "e0.1" = colMeans(e_0.1_)[-c(1:2)])
 
 
-# mean_3w_20k_not_abs = mean_3w_20k_not_abs %>% pivot_longer(cols = c(whole, RW, SW, e0.5, e0.2, e0.1, corr))
-# 
-# plt_mean_3w_20k_not_abs = ggplot(mean_3w_20k_not_abs, aes(x = q, y = value, color = name)) + 
-#   geom_line(linewidth = 1) + 
-#   geom_line(aes(x = q, y = 3*q / 20000, colour = "expected"), linewidth = 0.75) +
-#   geom_hline(yintercept = 3, linewidth = 0.5, lty =3, colour = "black") + 
-#   geom_vline(xintercept = 575, linewidth = 0.5, lty =3, colour = "black") +
-#   labs(x = "q", y = "important variables found", title = "3-way") +
-#   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#         axis.text = element_text(size =17),
-#         axis.title = element_text(size = 20),
-#         legend.text = element_text(size = 19),
-#         legend.title = element_text(size = 19),
-#         legend.position = "bottom") +
-#   scale_colour_manual(name="Method:",
-#                       values=c(corr = "yellow", 
-#                                e0.1 = "violetred2",
-#                                e0.2 = "violetred",
-#                                e0.5 = "violet",  
-#                                expected = "grey",
-#                                RW = "firebrick",
-#                                SW = "navy",
-#                                whole = "darkgreen"),
-#                       labels = c("corr", 
-#                                  expression("Sketching"~(epsilon~"="~0.1)), expression("Sketching"~(epsilon~"="~0.2)),
-#                                  expression("Sketching"~(epsilon~"="~0.5)), "expected",
-#                                  "RW", "SW", "whole"))
-# 
-# 
-# plt_3w_2k_20k_not_abs = ggarrange(plt_mean_3w_2k_not_abs,plt_mean_3w_20k_not_abs,
-#                                  common.legend = TRUE, legend="bottom")
-# 
-# 
-# ggsave(filename = "plt_3w_2k_20k_not_abs.pdf", plt_3w_2k_20k_not_abs, device = "pdf",
-#        width = 10, height = 5)
-
 
 #### 200k: ####
-load("selected_3w_200k_not_abs.RData")
+load("results/3w/selected_3w_200k_not_abs.RData")
 
 q = 575
 how_whole = c()

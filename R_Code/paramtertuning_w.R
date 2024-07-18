@@ -33,12 +33,12 @@ for(i in 1:1000){
   h <- rbind(h, h_)
   r <- rbind(r, r_)
   print(i)
-  save(h,r, file = "results/w_2w_20k.RData")
+  save(h,r, file = "results/parametertuning/w_2w_20k.RData")
   
 }
 
 # Figure 14a)
-load("results/w_2w_20k.RData")
+load("results/parametertuning/w_2w_20k.RData")
 
 w <- c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)
 sliding_20k <- colMeans(h)
@@ -93,12 +93,12 @@ for(i in 1:100){
   h <- rbind(h, h_)
   r <- rbind(r, r_)
   print(i)
-  save(h,r, file = "results/w_2w_200k.RData")
+  save(h,r, file = "results/parametertuning/w_2w_200k.RData")
   
 }
 
 # Figure 14 b)
-load("results/w_2w_200k.RData")
+load("results/parametertuning/w_2w_200k.RData")
 
 w <- c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)
 sliding_200k <- colMeans(h)

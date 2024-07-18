@@ -20,7 +20,7 @@ Running under: Debian GNU/Linux 12 (bookworm)
 all_functions_neu - File with all functions i used
 
 simulation_scenarios - file with the simulation of all scenarios 
-   --> this takes long time and a lot of memory so we recommmend to download the simulates Data from Zenodo or 
+   --> this takes long time and a lot of memory so we recommmend to download the simulated Data from Zenodo or 
        go directly to the conclusion section
 
 2w_xxx - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
@@ -33,15 +33,15 @@ simulation_scenarios - file with the simulation of all scenarios
 
 4w_xxx - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
 
-   --> these calculations takes a lot aof time. So we recommend to download the results from Zenodo and save them at "results/"
+   --> these calculations takes a lot aof time. We therefore recommend downloading the results.zip file from Zenodo, unpacking it and saving the whole file in the current working directory
 
 conclusion_2w - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
 
 conclusion_2w2w - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
 
-conclusion_3w - Results of above Calculations of scenario 3
+conclusion_3w - Results of above Calculations of scenario 3 
 
-conclusion_4w - Results of above Calculations of scenario 4
+conclusion_4w - Results of above Calculations of scenario 4 
 
 hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
 

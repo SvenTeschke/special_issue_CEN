@@ -6,86 +6,11 @@ library("ggpubr") ## for ggrange
 source("all_functions.R")
 
 
-#### density ####
-load("Szen4w_2k.RData")
-load("Szen4w_20k.RData")
-
-# calculating the CLS for 2k:
-CLS4w_2k <- numeric()
-for(i in 1:1000){
-  
-  CLS4w_2k <- rbind(CLS4w_2k, getCLS(cbind(Szen4w_2k[[i]]$x, Szen4w_2k[[i]]$y)))
-  print(i)
-}
-
-# calculating the CLS for 20k:
-CLS4w_20k <- numeric()
-for(i in 1:1000){
-
-  CLS4w_20k <- rbind(CLS4w_20k, getCLS(cbind(Szen4w_20k[[i]]$x, Szen4w_20k[[i]]$y)))
-  print(i)
-}
-
-
-
-##### 2k: ####
-
-# not absolute cls:
-vv4w_i2 = density(CLS4w_2k[,1:2])
-vv4w_ni_4w = density(CLS4w_2k[, -(1:2)])
-
-
-dens_4w_2k =  ggplot() +
-  geom_line(aes(x= vv4w_i2$x, y = vv4w_i2$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv4w_ni_4w$x, vv4w_ni_4w$y, colour = "unimp"), linewidth = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen",
-                               unimp = "black"),
-                      labels = c( "important", "unimportant"))
-
-
-ggsave(filename = "dens_4w_2k.pdf", dens_4w_2k, device = "pdf",
-       width = 10, height = 5)
-
-
-##### 20k: ####
-
-# not absolute cls:
-vv4w_i2 = density(CLS4w_20k[,1:2])
-vv4w_ni_4w = density(CLS4w_20k[, -(1:2)])
-
-dens_4w_20k =  ggplot() + 
-  geom_line(aes(x= vv4w_i2$x, y = vv4w_i2$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv4w_ni_4w$x, vv4w_ni_4w$y), linewidth = 1) +
-  labs(x = "CLS", y = "estimated density", title = "Density of CLS in scenario 1") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =17),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen"),
-                      labels = c( "important"))
-
-ggsave(filename = "dens_4w_20k.pdf", dens_4w_20k, device = "pdf",
-       width = 10, height = 5)
-
-
-
-
 #### how many ####
 
 
 ##### p = 2k #####
-load("selected_4w_2k_not_abs.RData")
+load("results/4w/selected_4w_2k_not_abs.RData")
 q = 1000
 # whole:
 whole_ = c()
@@ -244,11 +169,8 @@ median(corr_[,572])
 
 
 
-
-
-
 ##### p = 20k #####
-load("selected_4w_20k_not_abs.RData")
+load("results/4w/selected_4w_20k_not_abs.RData")
 q = 1000
 # whole:
 whole_ = c()
@@ -410,7 +332,7 @@ median(corr_[,572])
 
 
 ##### p = 200k #####
-load("selected_4w_200k_not_abs.RData")
+load("results/4w/selected_4w_200k_not_abs.RData")
 
 q = 10000
 # whole:
@@ -566,8 +488,3 @@ median(e_0.5_[,572])
 median(e_0.2_[,572])
 median(e_0.1_[,572])
 median(corr_[,572])
-
-
-
-
-

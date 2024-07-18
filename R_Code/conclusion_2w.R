@@ -20,7 +20,7 @@ for(i in 1:1000){
   CLS2w_2k <- rbind(CLS2w_2k, getCLS(cbind(Szen2w_2k[[i]]$x, Szen2w_2k[[i]]$y)))
   print(i)
 }
-# save(CLS2w_2k, file = "results/CLS2w_2k.RData")
+# save(CLS2w_2k, file = "results/2w/CLS2w_2k.RData")
 
 # calculate the density:
 vv2w_i2 = density(CLS2w_2k[,1:2])
@@ -49,6 +49,33 @@ dens_2w_2k =  ggplot() +
 ggsave(filename = "plots/Fig01_density_2w_2k.eps", dens_2w_2k, device = cairo_ps,
        width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
 
+##### Figure 13 ####
+
+# calculate the density of the absolute CLS:
+vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
+vv2w_ni_2w = density(abs(CLS2w_2k[, -(1:2)]))
+
+dens_2w_2k_abs =  ggplot() + 
+  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
+  labs(x = "absolute CLS", y = "estimated density", 
+       title = "Density of CLS in scenario 1") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.text = element_text(size =14),
+        axis.title = element_text(size = 20),
+        legend.text = element_text(size = 19),
+        legend.title = element_text(size = 19),
+        legend.position = "bottom") +
+  scale_colour_manual(name="SNPs:",
+                      values=c(imp2 = "darkgreen",
+                               unimp = "black"),
+                      labels = c( "important", "unimportant")) +
+  theme(plot.margin = margin(10,10,10,10))
+
+# Figure 13:
+ggsave(filename = "plots/Fig13_density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
+       width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
+
 
 ##### Figure 2 ####
 # what happens when there is a low main effect and a large interaction effect:
@@ -65,7 +92,7 @@ for(i in 1:1000){
   print(i)
 }
 
-# save(CLS2w_2k_nomain, file = "results/CLS2w_2k_nomain.RData")
+# save(CLS2w_2k_nomain, file = "results/2w/CLS2w_2k_nomain.RData")
 
 vv2w_i2a = density(CLS2w_2k_nomain[,1:2])
 vv2w_ni_2wa = density(CLS2w_2k_nomain[, -(1:2)])
@@ -100,7 +127,7 @@ for(i in 1:1000){
   print(i)
 }
 
-# save(CLS2w_2k_int_nomain, file = "results/CLS2w_2k_int_nomain.RData")
+# save(CLS2w_2k_int_nomain, file = "results/2w/CLS2w_2k_int_nomain.RData")
 
 # calculate the density:
 vv2w_i2b = density(CLS2w_2k_int_nomain[,1:2])
@@ -146,7 +173,7 @@ for(i in 1:1000){
                         getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
   print(i)
 }
-# save(CLS2w_2k_neg, file = "results/CLS2w_2k_neg.RData")
+# save(CLS2w_2k_neg, file = "results/2w/CLS2w_2k_neg.RData")
 
 # calculate the density:
 vv2w_i2_neg = density(CLS2w_2k_neg[,1:2])
@@ -178,31 +205,8 @@ ggsave(filename = "plots/Fig07_density_2w_2k_neg.eps", dens_2w_2k_neg, device = 
 
 # absolute cls:
 
-##### Figure 13 ####
-# calculate the density of the absolute CLS:
-vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
-vv2w_ni_2w = density(abs(CLS2w_2k[, -(1:2)]))
 
-dens_2w_2k_abs =  ggplot() + 
-  geom_line(aes(x= vv2w_i2$x, y = vv2w_i2$y, colour = "imp2"), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w$x, vv2w_ni_2w$y, colour = "unimp"), linewidth = 1) +
-  labs(x = "absolute CLS", y = "estimated density", 
-       title = "Density of CLS in scenario 1") +
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size =14),
-        axis.title = element_text(size = 20),
-        legend.text = element_text(size = 19),
-        legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="SNPs:",
-                      values=c(imp2 = "darkgreen",
-                               unimp = "black"),
-                      labels = c( "important", "unimportant")) +
-  theme(plot.margin = margin(10,10,10,10))
 
-# Figure 13:
-ggsave(filename = "plots/Fig13_density_2w_2k_abs.eps", dens_2w_2k_abs, device = cairo_ps,
-        width = 8.2, height = 5, units = "in", dpi = 300,  limitsize  = FALSE)
 
 
 
@@ -907,23 +911,3 @@ plt2w_not_abs = ggarrange(plt_mean_2w_2k_not_abs,
 ggsave(filename = "plots/Fig04_2w_not_abs.eps", plt2w_not_abs, device = cairo_ps,
               width = 16.4, height = 5, units = "in", dpi = 300,  limitsize  = F)
 
-
-
-
-
-
-#### 20k ####
-
-load("../Data/Szen2w_20k.RData")
-
-
-
-# calculating the CLS for 20k:
-CLS2w_20k <- numeric()
-for(i in 1:1000){
-  
-  CLS2w_20k <- rbind(CLS2w_20k, getCLS(cbind(Szen2w_20k[[i]]$x, Szen2w_20k[[i]]$y)))
-  print(i)
-}
-
-save(CLS2w_20k, file = "results/CLS2w_20k.RDatat")
