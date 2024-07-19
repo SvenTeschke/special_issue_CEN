@@ -1,7 +1,7 @@
-library("logicFS")
-library("tidyverse")
-library("logicDT")
-library("ggplot2")
+library('logicFS')
+library('tidyverse')
+library('logicDT')
+library('ggplot2')
 
 
 
@@ -9,7 +9,7 @@ library("ggplot2")
 source('all_functions.R')
 
 # load the data. Here wie consider on 2-way intercation with a reduced p = 500
-load("../Data/Szen2w_500.RData")
+load('../Data/Szen2w_500.RData')
 
 
 
@@ -37,12 +37,12 @@ for(i in 1:1000){
   
   log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
                                           bagging.iter = 50, max_vars = 3,
-                                          max_conj = 3, search_algo = "greedy") 
+                                          max_conj = 3, search_algo = 'greedy') 
   
   
   Data_test_x = make.snp.dummy(Data_test[ , -501])
   
-  p1 = predict(log.out_ohne, Data_test_x, type = "class")  
+  p1 = predict(log.out_ohne, Data_test_x, type = 'class')  
   err_ohne = c(err_ohne, mean(p1 != resp_test))
   
   
@@ -57,13 +57,13 @@ for(i in 1:1000){
   
   log.out_mit = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
                                          bagging.iter = 50, max_vars = 3, 
-                                         max_conj = 3, search_algo = "greedy") 
+                                         max_conj = 3, search_algo = 'greedy') 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
   
   
-  p2 = predict(log.out_mit, Data_test_red_x, type = "class")
+  p2 = predict(log.out_mit, Data_test_red_x, type = 'class')
   err_mit <- c(err_mit, mean(p2 != resp_test))
   
   
@@ -75,13 +75,13 @@ for(i in 1:1000){
   
   log.out_mit_corr = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
                                               bagging.iter = 50, max_vars = 3, 
-                                              max_conj = 3, search_algo = "greedy") 
+                                              max_conj = 3, search_algo = 'greedy') 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
   
   
-  p3 = predict(log.out_mit_corr, Data_test_red_x, type = "class")
+  p3 = predict(log.out_mit_corr, Data_test_red_x, type = 'class')
   err_corr <- c(err_corr, mean(p3 != resp_test))
   
   
@@ -93,24 +93,24 @@ for(i in 1:1000){
   
   log.out_mit_samp = logicDT::logicDT.bagging(Data_train_red_x ,resp_train, 
                                               bagging.iter = 50, max_vars = 3,
-                                              max_conj = 3, search_algo = "greedy") 
+                                              max_conj = 3, search_algo = 'greedy') 
   
   
   Data_test_red_x = make.snp.dummy(Data_test[ , index])
   
   
-  p4 = predict(log.out_mit_samp, Data_test_red_x, type = "class")
+  p4 = predict(log.out_mit_samp, Data_test_red_x, type = 'class')
   err_samp  <- c(err_samp, mean(p4 != resp_test))
   
 
   
   
   save(err_mit, err_ohne, err_corr, err_samp, 
-       file ="results/2w_500/logreg_vergleich2w.RData")
+       file ='results/2w_500/logreg_vergleich2w.RData')
   #print(i)
   
 }
-load("results/2w_500/logreg_vergleich2w.RData")
+load('results/2w_500/logreg_vergleich2w.RData')
 
 
 #### Table 06 ####
@@ -148,25 +148,25 @@ for(i in 1:1000){
   
   #log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
                                          # bagging.iter = 50, max_vars = 3,
-                                         #  max_conj = 3, search_algo = "greedy") 
+                                         #  max_conj = 3, search_algo = 'greedy') 
   
   
   Data_test_x = make.snp.dummy(Data_test[ , -501])
   
-  #p1 = predict(log.out_ohne, Data_test_x, type = "class")  
+  #p1 = predict(log.out_ohne, Data_test_x, type = 'class')  
   #err_ohne = c(err_ohne, mean(p1 != resp_test))
   
   
   log.out_ohne_test = logicDT::logicDT.bagging(Data_test_x ,resp_test, 
                                                bagging.iter = 50, max_vars = 3, 
-                                               max_conj = 3, search_algo = "greedy",
-                                               vim_type = "logic", ave = "before") 
+                                               max_conj = 3, search_algo = 'greedy',
+                                               vim_type = 'logic', ave = 'before') 
   ohne[[i]] <- vim(log.out_ohne_test)$vims
   
   
   
   # log.out_ohne = logicDT::logicDT.bagging(Data_x ,resp, bagging.iter = 50, max_vars = 3, 
-  #                                        max_conj = 3, search_algo = "greedy") 
+  #                                        max_conj = 3, search_algo = 'greedy') 
   # ohne[[i]] <- vim(log.out_ohne)$vims
   
   # with variable selection
@@ -180,8 +180,8 @@ for(i in 1:1000){
   
   log.out_mit_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
                                               bagging.iter = 50, max_vars = 3, 
-                                              max_conj = 3, search_algo = "greedy",
-                                               vim_type = "logic", ave = "before") 
+                                              max_conj = 3, search_algo = 'greedy',
+                                               vim_type = 'logic', ave = 'before') 
   mit[[i]] <- vim(log.out_mit_test)$vims 
   
   
@@ -192,8 +192,8 @@ for(i in 1:1000){
   
   log.out_corr_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
                                                bagging.iter = 50, max_vars = 3, 
-                                               max_conj = 3, search_algo = "greedy",
-                                               vim_type = "logic", ave = "before")  
+                                               max_conj = 3, search_algo = 'greedy',
+                                               vim_type = 'logic', ave = 'before')  
   corr[[i]] <- vim(log.out_corr_test)$vims
   
     ## with an arbitrary selection:
@@ -202,17 +202,17 @@ for(i in 1:1000){
   
    log.out_arb_test = logicDT::logicDT.bagging(Data_red_x ,resp_test, 
                                                bagging.iter = 50, max_vars = 3,
-                                               max_conj = 3, search_algo = "greedy",
-                                               vim_type = "logic", ave = "before")  
+                                               max_conj = 3, search_algo = 'greedy',
+                                               vim_type = 'logic', ave = 'before')  
    arb[[i]] <- vim(log.out_arb_test)$vims
   
   
   print(i)
 }
 
-save(ohne, mit, corr,arb, file = "results/2w_500/var_imp_testtraining.RData")
+save(ohne, mit, corr,arb, file = 'results/2w_500/var_imp_testtraining.RData')
 
-load("results/2w_500/var_imp_testtraining.RData")
+load('results/2w_500/var_imp_testtraining.RData')
 
 
 
@@ -221,17 +221,17 @@ w_ohne <- c()
 w_corr <- c()
 w_arb <- c()
 for(i in 1:1000){
-  if(length(which(ohne[[i]]$var == "SNP1_1^SNP2_1")) == 1){w_ohne_ = which(ohne[[i]]$var == "SNP1_1^SNP2_1")}else{w_ohne_ = 1000000}
+  if(length(which(ohne[[i]]$var == 'SNP1_1^SNP2_1')) == 1){w_ohne_ = which(ohne[[i]]$var == 'SNP1_1^SNP2_1')}else{w_ohne_ = 1000000}
   w_ohne = c(w_ohne, w_ohne_)
   
   
-  if(length(which(mit[[i]]$var == "SNP1_1^SNP2_1")) == 1){w_mit_ = which(mit[[i]]$var == "SNP1_1^SNP2_1")}else{w_mit_ = 1000000}
+  if(length(which(mit[[i]]$var == 'SNP1_1^SNP2_1')) == 1){w_mit_ = which(mit[[i]]$var == 'SNP1_1^SNP2_1')}else{w_mit_ = 1000000}
   w_mit = c(w_mit, w_mit_)
   
-  if(length(which(corr[[i]]$var == "SNP1_1^SNP2_1")) == 1){w_corr_ = which(corr[[i]]$var == "SNP1_1^SNP2_1")}else{w_corr_ = 1000000}
+  if(length(which(corr[[i]]$var == 'SNP1_1^SNP2_1')) == 1){w_corr_ = which(corr[[i]]$var == 'SNP1_1^SNP2_1')}else{w_corr_ = 1000000}
   w_corr = c(w_corr, w_corr_)
   
-  if(length(which(arb[[i]] == "SNP1_1^SNP2_1")) == 1){w_arb_ = which(arb[[i]] == "SNP1_1^SNP2_1")}else{w_arb_ = 1000000}
+  if(length(which(arb[[i]] == 'SNP1_1^SNP2_1')) == 1){w_arb_ = which(arb[[i]] == 'SNP1_1^SNP2_1')}else{w_arb_ = 1000000}
   w_arb = c(w_arb, w_arb_)
   
   print(i)
@@ -252,39 +252,39 @@ for(i in 2:101){
 
 
 
-w_all = data.frame("q" = 1:100,
-                   "ohne" = w_ohne_/1000,
-                   "arb" = w_arb_/1000,
-                   "corr" = w_corr_/1000,
-                   "mit" = w_mit_/1000) 
+w_all = data.frame('q' = 1:100,
+                   'ohne' = w_ohne_/1000,
+                   'arb' = w_arb_/1000,
+                   'corr' = w_corr_/1000,
+                   'mit' = w_mit_/1000) 
 
 w_all = w_all %>% pivot_longer(cols = c(ohne, arb, #corr, 
                                         mit))
 
 plt_var_imp500_testtraining = ggplot(w_all, aes(x = q, y = value, color = name)) + 
   geom_line(linewidth = 1) + 
-  labs(x = "v", y = "presence in the top v", title = "p=500") +
+  labs(x = 'v', y = 'presence in the top v', title = 'p=500') +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="Method:",
-                      values=c(arb = "grey",
-                              # corr = "yellow", 
-                               mit = "firebrick",
-                               ohne = "navy"),
-                      labels = c("random", 
-                                # "corr", 
-                                 "CLS", "none")) +
+        legend.position = 'bottom') +
+  scale_colour_manual(name='Method:',
+                      values=c(arb = 'grey',
+                              # corr = 'yellow', 
+                               mit = 'firebrick',
+                               ohne = 'navy'),
+                      labels = c('random', 
+                                # 'corr', 
+                                 'CLS', 'none')) +
   theme(plot.margin = margin(10,10,10,10))
 
 
 # Figure 06:
-ggsave(filename = "plots/Fig06_var_imp500_testtraining.eps", plt_var_imp500_testtraining, 
+ggsave(filename = 'plots/Fig06_var_imp500_testtraining.eps', plt_var_imp500_testtraining, 
        device = cairo_ps,
-       width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
+       width = 8.2, height = 5, units = 'in',  dpi = 300,  limitsize  = FALSE)
 
 
 #### how often are the two important variables in the Top2, Top10 most in important variables ####
@@ -301,17 +301,17 @@ w_ohne <- c()
 w_corr <- c()
 w_arb <- c()
 for(i in 1:1000){
-  if(length(which(ohne[[i]] == "SNP1_1")) == 1){w_ohne_ = which(ohne[[i]] == "SNP1_1")}else{w_ohne_ = 1000000}
+  if(length(which(ohne[[i]] == 'SNP1_1')) == 1){w_ohne_ = which(ohne[[i]] == 'SNP1_1')}else{w_ohne_ = 1000000}
   w_ohne = c(w_ohne, w_ohne_)
   
   
-  if(length(which(mit[[i]] == "SNP1_1")) == 1){w_mit_ = which(mit[[i]] == "SNP1_1")}else{w_mit_ = 1000000}
+  if(length(which(mit[[i]] == 'SNP1_1')) == 1){w_mit_ = which(mit[[i]] == 'SNP1_1')}else{w_mit_ = 1000000}
   w_mit = c(w_mit, w_mit_)
   
-  if(length(which(corr[[i]] == "SNP1_1")) == 1){w_corr_ = which(corr[[i]] == "SNP1_1")}else{w_corr_ = 1000000}
+  if(length(which(corr[[i]] == 'SNP1_1')) == 1){w_corr_ = which(corr[[i]] == 'SNP1_1')}else{w_corr_ = 1000000}
   w_corr = c(w_corr, w_corr_)
   
-  if(length(which(arb[[i]] == "SNP1_1")) == 1){w_arb_ = which(arb[[i]] == "SNP1_1")}else{w_arb_ = 1000000}
+  if(length(which(arb[[i]] == 'SNP1_1')) == 1){w_arb_ = which(arb[[i]] == 'SNP1_1')}else{w_arb_ = 1000000}
   w_arb = c(w_arb, w_arb_)
   
   print(i)
@@ -330,17 +330,17 @@ w_ohne <- c()
 w_corr <- c()
 w_arb <- c()
 for(i in 1:1000){
-  if(length(which(ohne[[i]] == "SNP2_1")) == 1){w_ohne_ = which(ohne[[i]] == "SNP2_1")}else{w_ohne_ = 1000000}
+  if(length(which(ohne[[i]] == 'SNP2_1')) == 1){w_ohne_ = which(ohne[[i]] == 'SNP2_1')}else{w_ohne_ = 1000000}
   w_ohne = c(w_ohne, w_ohne_)
   
   
-  if(length(which(mit[[i]] == "SNP2_1")) == 1){w_mit_ = which(mit[[i]] == "SNP2_1")}else{w_mit_ = 1000000}
+  if(length(which(mit[[i]] == 'SNP2_1')) == 1){w_mit_ = which(mit[[i]] == 'SNP2_1')}else{w_mit_ = 1000000}
   w_mit = c(w_mit, w_mit_)
   
-  if(length(which(corr[[i]] == "SNP2_1")) == 1){w_corr_ = which(corr[[i]] == "SNP2_1")}else{w_corr_ = 1000000}
+  if(length(which(corr[[i]] == 'SNP2_1')) == 1){w_corr_ = which(corr[[i]] == 'SNP2_1')}else{w_corr_ = 1000000}
   w_corr = c(w_corr, w_corr_)
   
-  if(length(which(arb[[i]] == "SNP2_1")) == 1){w_arb_ = which(arb[[i]] == "SNP2_1")}else{w_arb_ = 1000000}
+  if(length(which(arb[[i]] == 'SNP2_1')) == 1){w_arb_ = which(arb[[i]] == 'SNP2_1')}else{w_arb_ = 1000000}
   w_arb = c(w_arb, w_arb_)
   
   print(i)

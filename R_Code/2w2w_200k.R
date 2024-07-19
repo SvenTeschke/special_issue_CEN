@@ -1,5 +1,5 @@
 # 2w2w_200k
-library(tidyverse)
+library('tidyverse')
 
 # read in the functions we need
 source('all_functions.R')
@@ -42,16 +42,16 @@ for(i in 1:100){
   p_sketch_0.1_ = cbind(p_sketch_0.1_, xyz3$p_sketch$SNP[1:10000],
                         xyz3$p_sketch$Score[1:10000])
   
-  selected_2w2w_200k_not_abs = list("whole" = p_whole_,
-                                   "RW" = p_RW_,
-                                   "SW" = p_SW_,
-                                   "corr" = p_corr_,
-                                   "e_0.5" = p_sketch_0.5_,
-                                   "e_0.2" = p_sketch_0.2_,
-                                   "e_0.1" = p_sketch_0.1_)
+  selected_2w2w_200k_not_abs = list('whole' = p_whole_,
+                                   'RW' = p_RW_,
+                                   'SW' = p_SW_,
+                                   'corr' = p_corr_,
+                                   'e_0.5' = p_sketch_0.5_,
+                                   'e_0.2' = p_sketch_0.2_,
+                                   'e_0.1' = p_sketch_0.1_)
   
-  Szen2w2w_200k[[i]] <- "done"
+  Szen2w2w_200k[[i]] <- 'done'
   gc()
-  save(selected_2w2w_200k_not_abs, file = "results/selected_2w2w_200k_not_abs.RData")
+  save(selected_2w2w_200k_not_abs, file = 'results/selected_2w2w_200k_not_abs.RData')
   print(i)
 }

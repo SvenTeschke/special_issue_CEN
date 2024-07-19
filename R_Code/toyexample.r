@@ -1,11 +1,11 @@
 # toyexample:
-library("tidyverse")
-library("ggplot2")
-library("ggpubr") ## for ggrange
+library('tidyverse')
+library('ggplot2')
+library('ggpubr') ## for ggrange
 
 
 # load all functions:
-source("all_functions.R")
+source('all_functions.R')
 
 
 
@@ -46,33 +46,33 @@ for(i in 1:1000){
 }
 
 
-toy = data.frame("q" = 2:45,
-                 "corr" = colMeans(cc),
-                 "cls" = colMeans(sc))
+toy = data.frame('q' = 2:45,
+                 'corr' = colMeans(cc),
+                 'cls' = colMeans(sc))
 toy <- toy %>% pivot_longer(cols = c(corr, cls))
 
 
 ##### Figure 08: #####
 toy_plot = ggplot(toy, aes(x= q, y = value, color = name)) +
   geom_line(linewidth = 1) + 
-  labs(x = expression(q), y = "important variables found (mean)", 
-       title = "How many important variables are found?") +
-  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = "black") + 
+  labs(x = expression(q), y = 'important variables found (mean)', 
+       title = 'How many important variables are found?') +
+  geom_hline(yintercept = 2, linewidth = 0.5, lty =3, colour = 'black') + 
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.text = element_text(size =14),
         axis.title = element_text(size = 20),
         legend.text = element_text(size = 19),
         legend.title = element_text(size = 19),
-        legend.position = "bottom") +
-  scale_colour_manual(name="Method:",
-                      values=c(corr = "yellow", 
-                               cls =  "darkgreen"),
-                      labels = c("CLS", "corr"))
+        legend.position = 'bottom') +
+  scale_colour_manual(name='Method:',
+                      values=c(corr = 'yellow', 
+                               cls =  'darkgreen'),
+                      labels = c('CLS', 'corr'))
 
 
 
-ggsave(filename = "plots/Fig08_toyplot.eps", toy_plot, device = cairo_ps,
-       width = 8.2, height = 5, units = "in",  dpi = 300,  limitsize  = FALSE)
+ggsave(filename = 'plots/Fig08_toyplot.eps', toy_plot, device = cairo_ps,
+       width = 8.2, height = 5, units = 'in',  dpi = 300,  limitsize  = FALSE)
 
 
 

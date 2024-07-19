@@ -76,17 +76,17 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
       for(l in 1:s){
       X_[f[l],] <- X_[f[l],] + X[d,] * g[l]}
     }
-  print("X_")
+  print('X_')
   rm(f)
   rm(g)
   gc()
-  print("del f,g")
+  print('del f,g')
   R <- qr.R(qr(X_)) # R from QR decomp.
   R_inv <- Inv_or_MP(R)
-  print("R_inv")
+  print('R_inv')
   
   Om <- X %*% R_inv
-  print("om")
+  print('om')
   Om_ <- c()
   for(i in 1:(p-1)){
     Om_[i] <- Om[i, ] %*% Om[p,]
@@ -96,8 +96,8 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
   }
   CLS_rank <- rank(-Om_)[1:vi]
   
-  return(list("cls" = Om_,
-              "rank" = CLS_rank))
+  return(list('cls' = Om_,
+              'rank' = CLS_rank))
 }
 
 
@@ -129,7 +129,7 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
   A <- numeric(0)  # control if we catch all SNPs
   # loop:
   SNPs = colnames(Data)
-  cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  cls = data.frame('SNP' = rep(NA, p), 'Score' = rep(NA, p))
   
   i = 0
   while (length(A) < p & i < R) { # break if R is reached or all variables are chosen 
@@ -140,7 +140,7 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
     
     if(pr == T){i = i+1
     print(i)
-    pp = paste((100*length(A))/p, "%")
+    pp = paste((100*length(A))/p, '%')
     print(pp)}
     
     # bagging yes or no:
@@ -203,13 +203,13 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
   
   
   if(samp_ == T){
-    print("sample")
+    print('sample')
     Data <- Data[, sample(1:p)]
   } else{Data = Data
-  print("normal")}
+  print('normal')}
   
   SNPs = colnames(Data)
-  cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  cls = data.frame('SNP' = rep(NA, p), 'Score' = rep(NA, p))
   
   fin <- w  # end of the first window 
   mi <- 1   # begin of the first window
@@ -291,12 +291,12 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
     
     if(abs == T){
       CCC = abs(CCC)
-      print("abs")} else{print("not abs")}
+      print('abs')} else{print('not abs')}
     
-    CCC = data.frame("SNP" = paste0("SNP", 1:length(CCC)), "Score" = CCC)
+    CCC = data.frame('SNP' = paste0('SNP', 1:length(CCC)), 'Score' = CCC)
     CCC = arrange(CCC, by = -CCC$Score)}else{CCC = NA}
   
-  print("whole done")
+  print('whole done')
   # RW:
   if(RW ==T){
     CCC_RW = randomCLS_general_CLS_sample(Data[,-res_number], Data[,res_number], 
@@ -305,7 +305,7 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
    CCC_RW = arrange(CCC_RW, by = -CCC_RW$Score)}else{CCC_RW = NA}
 
-  print("RW done")
+  print('RW done')
   # SW:
   if(SW == T){
     CCC_SW = Sliding_general_CLS_sampling(Data[,-res_number], Data[,res_number], w=w_SW, 
@@ -314,7 +314,7 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
     CCC_SW = arrange(CCC_SW, by = -CCC_SW$Score)}else{CCC_SW = NA}
 
-  print("SW done")
+  print('SW done')
 
  # correlation:
  if(corr_ == T){
@@ -324,28 +324,28 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
    corr_d <- apply(Data[,-res_number], 2, function(x) cor(x, res)) 
    if(abs == T){
      corr_d = abs(corr_d)
-     print("corr abs")
+     print('corr abs')
    }
-   corr_d <- data.frame("SNP" = names(corr_d), "Score" = as.numeric(corr_d))
+   corr_d <- data.frame('SNP' = names(corr_d), 'Score' = as.numeric(corr_d))
    corr_d <- arrange(corr_d, by = -corr_d$Score)}else{corr_d = NA}
 
-  print("corr done")
+  print('corr done')
 
 # sketch:
   if(sketch == T){
   CCC_sketch = sketch2b(Data, epsilon = eps, abs = abs, vi = 2)
-  CCC_sketch = data.frame("SNP" = paste0("SNP", 1:length(CCC_sketch$cls)), 
-                          "Score" = CCC_sketch$cls)
+  CCC_sketch = data.frame('SNP' = paste0('SNP', 1:length(CCC_sketch$cls)), 
+                          'Score' = CCC_sketch$cls)
   CCC_sketch = arrange(CCC_sketch, by = -CCC_sketch$Score)}else{CCC_sketch = NA}
   
   
   
   
-  return(list("p_whole" = CCC,
-              "p_RW" = CCC_RW,
-              "p_SW" = CCC_SW,
-              "p_corr" = corr_d,
-              "p_sketch" = CCC_sketch))
+  return(list('p_whole' = CCC,
+              'p_RW' = CCC_RW,
+              'p_SW' = CCC_SW,
+              'p_corr' = corr_d,
+              'p_sketch' = CCC_sketch))
   
 }
 
@@ -365,7 +365,7 @@ RW_CLS <- function(Data, response_, w = 0, R = 100,
   A <- numeric(0)  # control if we catch all SNPs
   # loop:
   SNPs = colnames(Data)
-  cls = data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  cls = data.frame('SNP' = rep(NA, p), 'Score' = rep(NA, p))
   
   i = 0
   while (length(A) < p & i < R) { # break if R is reached or all variables are chosen 
@@ -376,7 +376,7 @@ RW_CLS <- function(Data, response_, w = 0, R = 100,
     
     if(pr == T){i = i+1
     print(i)
-    pp = paste((100*length(A))/p, "%")
+    pp = paste((100*length(A))/p, '%')
     print(pp)}
     
     # bagging yes or no:
@@ -419,7 +419,7 @@ SW_CLS <- function(Data, response_, w = 0,
   } else{w = w}
   
   SNPs <- colnames(Data)
-  cls <- data.frame("SNP" = rep(NA, p), "Score" = rep(NA, p))
+  cls <- data.frame('SNP' = rep(NA, p), 'Score' = rep(NA, p))
   
   fin <- w  # end of the first window 
   mi <- 1   # begin of the first window
@@ -475,7 +475,7 @@ SW_CLS <- function(Data, response_, w = 0,
     cls$SNP[mi:ma] <- SNPs[mi:ma]
     
     
-  }else{print("Geht auf")}
+  }else{print('Geht auf')}
   
   
   return(cls)

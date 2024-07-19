@@ -1,22 +1,22 @@
 ## here i test the methods on the hapmap data
-library("ranger")
-library("logicFS")
-library("SNPassoc")
-library("tidyverse")
-library("GLDEX") # for wich.na
-library("randomForest")
+library('ranger')
+library('logicFS')
+library('SNPassoc')
+library('tidyverse')
+library('GLDEX') # for wich.na
+library('randomForest')
 
 
 # read the funtions we need
-source("all_functions.R")
+source('all_functions.R')
 
 #### Hap Map ####
-data("HapMap")
+data('HapMap')
 
 
 #### pre ####
 HapMapSNP_original <- HapMap[,-c(1:2)]
-responseHapMap <- as.numeric(HapMap$group == "CEU")
+responseHapMap <- as.numeric(HapMap$group == 'CEU')
 # make numeric: 
 HapMapSNP_add <- apply(HapMapSNP_original, MARGIN = 2, FUN = additive) 
 # missing values:

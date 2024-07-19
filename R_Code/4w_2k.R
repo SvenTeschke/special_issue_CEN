@@ -1,5 +1,5 @@
 # 4w_2k
-library(tidyverse)
+library('tidyverse')
 
 # read in the functions we need
 source('all_functions.R')
@@ -42,12 +42,12 @@ for(i in 1:1000){
   print(i)
 }
 
-selected_4w_2k_not_abs = list("whole" = p_whole_,
-                              "RW" = p_RW_,
-                              "SW" = p_SW_,
-                              "corr" = p_corr_,
-                              "e_0.5" = p_sketch_0.5_,
-                              "e_0.2" = p_sketch_0.2_,
-                              "e_0.1" = p_sketch_0.1_)
+selected_4w_2k_not_abs = list('whole' = p_whole_,
+                              'RW' = p_RW_,
+                              'SW' = p_SW_,
+                              'corr' = p_corr_,
+                              'e_0.5' = p_sketch_0.5_,
+                              'e_0.2' = p_sketch_0.2_,
+                              'e_0.1' = p_sketch_0.1_)
 
-save(selected_4w_2k_not_abs, file = "results/selected_4w_2k_not_abs.RData")
+save(selected_4w_2k_not_abs, file = 'results/selected_4w_2k_not_abs.RData')
