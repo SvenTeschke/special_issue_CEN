@@ -174,7 +174,7 @@ for(i in 1:1000){
   print(i)
 }
 # save(CLS2w_2k_neg, file = 'results/2w/CLS2w_2k_neg.RData')
-
+load('results/2w/CLS2w_2k_neg.RData')
 # calculate the density:
 vv2w_i2_neg = density(CLS2w_2k_neg[,1:2])
 vv2w_ni_2w_neg = density(CLS2w_2k_neg[, -(1:2)])
@@ -182,7 +182,7 @@ vv2w_ni_2w_neg = density(CLS2w_2k_neg[, -(1:2)])
 
 dens_2w_2k_neg =  ggplot() +
   geom_line(aes(x= vv2w_i2_neg$x, y = vv2w_i2_neg$y, colour = 'imp2'), linewidth = 1) +
-  geom_line(aes(x = vv2w_ni_2w_neg$x, vv2w_ni_2w_neg$y), linewidth = 1) +
+  geom_line(aes(x = vv2w_ni_2w_neg$x, vv2w_ni_2w_neg$y, colour = 'unimp'), linewidth = 1) +
   labs(x = 'CLS', y = 'estimated density', 
        title = 'Density of CLS in scenario 1 (negative)') +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
@@ -192,8 +192,9 @@ dens_2w_2k_neg =  ggplot() +
         legend.title = element_text(size = 19),
         legend.position = 'bottom') +
   scale_colour_manual(name='SNPs:',
-                      values=c(imp2 = 'darkgreen'),
-                      labels = c( 'important')) +
+                      values=c(imp2 = 'darkgreen',
+                               unimp = 'black'),
+                      labels = c( 'important', 'unimportant')) +
   theme(plot.margin = margin(10,10,10,10))
 
 # Figure 7:
