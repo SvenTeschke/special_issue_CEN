@@ -771,9 +771,6 @@ for(i in 1:10){
 save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_90.RData')
 
 
-rm(Szen2w2w_2000k)
-gc()
-
 # 100
 set.seed(15100) 
 list_int <- list(c(-1,-1), c(-1,-1)) 

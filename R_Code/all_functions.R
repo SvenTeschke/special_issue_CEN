@@ -351,7 +351,7 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
 
 
-###############################  later versions: ####
+###############################  further updated versions: ####
 RW_CLS <- function(Data, response_, w = 0, R = 100,
                    bagging = F, abs_cls = T, pr = T){
   n = nrow(Data)
