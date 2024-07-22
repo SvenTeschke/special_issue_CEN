@@ -93,10 +93,10 @@ source(file = "conclusion_2w.R")
 source(file = "conclusion_2w2w.R")
 
 ### Conclusion 3w:
-source(file = "conclusion_2w.R")
+source(file = "conclusion_3w.R")
 
 ### Conclusion 4w:
-source(file = "conclusion_2w.R")
+source(file = "conclusion_4w.R")
 
 ### real data scenario HapMap
 source(file = "hap_map.R")

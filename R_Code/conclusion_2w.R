@@ -10,7 +10,7 @@ source('all_functions.R')
 
 # not absolute cls:
 
-###### Figure 1 #######
+###### Figure 1: #######
 load('../Data/Szen2w_2k.RData')
 
 # calculating the CLS for p = 2k:
@@ -49,7 +49,7 @@ dens_2w_2k =  ggplot() +
 ggsave(filename = 'plots/Fig01_density_2w_2k.eps', dens_2w_2k, device = cairo_ps,
        width = 8.2, height = 5, units = 'in',  dpi = 300,  limitsize  = FALSE)
 
-##### Figure 13 ####
+##### Figure 13: ####
 
 # calculate the density of the absolute CLS:
 vv2w_i2 = density(abs(CLS2w_2k[,1:2]))
@@ -77,7 +77,7 @@ ggsave(filename = 'plots/Fig13_density_2w_2k_abs.eps', dens_2w_2k_abs, device = 
        width = 8.2, height = 5, units = 'in', dpi = 300,  limitsize  = FALSE)
 
 
-##### Figure 2 ####
+##### Figure 2: ####
 # what happens when there is a low main effect and a large interaction effect:
 
 
@@ -162,7 +162,7 @@ ggsave(filename = 'plots/density_nomain_withint.eps', plt_dens_no_with, device =
 
 
 
-##### Figure 7 ####
+##### Figure 7: ####
 # what happens if a 'negative' influence on the response if a SNP(interaction) is present
 load('../Data/Szen2w_2k_neg.RData')
 
@@ -214,9 +214,9 @@ ggsave(filename = 'plots/Fig07_density_2w_2k_neg.eps', dens_2w_2k_neg, device = 
 
 #### how many important SNPs we can detect? ####
 
-##### Figure 4 ####
+##### Figure 4: ####
 # and
-##### Table 3 #####
+##### Table 3: #####
 
 ##### p = 2k #####
 # for Figure 4 (a)
@@ -323,7 +323,7 @@ mean_2w_2k_not_abs <- data.frame('q' = 2:1000,
                                  'e0.2' = colMeans(e_0.2_)[-1],
                                  'e0.1' = colMeans(e_0.1_)[-1])
 
-# for Table 3 (a)
+#for Table 3 (a)
 # n*log(n) = 575:
 median(whole_[,574])
 median(RW_[,574])
@@ -712,31 +712,31 @@ plt_mean_2w_200k_not_abs = ggplot(mean_2w_200k_not_abs, aes(x = q, y = value, co
 
 ##### p = 2000k ####
 # for Figure 4 (d)
-# load('results/2w/selected_2w_2000k_10_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_20_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_30_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_40_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_50_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_60_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_70_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_80_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_90_not_abs_neu.RData')
-# load('results/2w/selected_2w_2000k_100_not_abs_neu.RData')
-# selected_2w_2000k_not_abs <- list()
-# for(i in 1:length(selected_2w_2000k_10_not_abs)){
-#   selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
-#                                           selected_2w_2000k_20_not_abs[[i]],
-#                                           selected_2w_2000k_30_not_abs[[i]],
-#                                           selected_2w_2000k_40_not_abs[[i]],
-#                                           selected_2w_2000k_50_not_abs[[i]],
-#                                           selected_2w_2000k_60_not_abs[[i]],
-#                                           selected_2w_2000k_70_not_abs[[i]],
-#                                           selected_2w_2000k_80_not_abs[[i]],
-#                                           selected_2w_2000k_90_not_abs[[i]],
-#                                           selected_2w_2000k_100_not_abs[[i]])
-# }
-# names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
-# save(selected_2w_2000k_not_abs, file = 'results/2w/selected_2w_2000k_not_abs.RData')
+load('results/2w/selected_2w_2000k_10_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_20_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_30_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_40_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_50_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_60_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_70_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_80_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_90_not_abs_neu.RData')
+load('results/2w/selected_2w_2000k_100_not_abs_neu.RData')
+selected_2w_2000k_not_abs <- list()
+for(i in 1:length(selected_2w_2000k_10_not_abs)){
+  selected_2w_2000k_not_abs[[i]] <- cbind(selected_2w_2000k_10_not_abs[[i]],
+                                          selected_2w_2000k_20_not_abs[[i]],
+                                          selected_2w_2000k_30_not_abs[[i]],
+                                          selected_2w_2000k_40_not_abs[[i]],
+                                          selected_2w_2000k_50_not_abs[[i]],
+                                          selected_2w_2000k_60_not_abs[[i]],
+                                          selected_2w_2000k_70_not_abs[[i]],
+                                          selected_2w_2000k_80_not_abs[[i]],
+                                          selected_2w_2000k_90_not_abs[[i]],
+                                          selected_2w_2000k_100_not_abs[[i]])
+}
+names(selected_2w_2000k_not_abs) = names(selected_2w_2000k_10_not_abs)
+save(selected_2w_2000k_not_abs, file = 'results/2w/selected_2w_2000k_not_abs.RData')
 load('results/2w/selected_2w_2000k_not_abs.RData')
 
 q = 10000
@@ -885,19 +885,6 @@ plt_mean_2w_2000k_not_abs = ggplot(mean_2w_2000k_not_abs,
                                  expression('Sketching'~(epsilon~'='~0.5)), 'expected',
                                  'RW', 'SW', 'whole')) +
   theme(plot.margin = margin(10,10,10,10))
-
-
-# ggsave(filename = 'plots/plt_mean_2w_2000k_not_abs.eps', plt_mean_2w_2000k_not_abs, 
-#                 device = cairo_ps,
-#        width = 8.2, height = 5, units = 'in', dpi = 300,  limitsize  = FALSE)
-
-# 
-# plt200k_2000k_not_abs = ggarrange(plt_mean_2w_200k_not_abs, plt_mean_2w_2000k_not_abs,
-#                                   common.legend = TRUE, legend='bottom')
-# 
-# ggsave(filename = 'plots/plt200k_2000k_not_abs.eps', plt200k_2000k_not_abs, 
-#                device = cairo_ps,
-#        width = 8.2, height = 5, units = 'in', dpi = 300,  limitsize  = FALSE)
 
 
 

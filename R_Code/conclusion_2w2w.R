@@ -6,7 +6,7 @@ library('ggpubr') ## for ggrange
 source('all_functions.R')
 
 
-#### Table 4 ####
+#### Table 4: ####
 
 #### 2k: ####
 load('results/2w2w/selected_2w2w_2k_not_abs_neu.RData')
@@ -92,7 +92,7 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-##### Figure 5 ####
+##### Figure 5: ####
 # count how many out of 2 we found for each interaction:
 q = 1000
 # whole:
@@ -763,7 +763,7 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-##### Figure 11 ####
+##### Figure 11: ####
 # how many out of 2 for each interaction:
 q = 10000
 # whole:
@@ -1061,11 +1061,11 @@ selected_2w2w_2000k_not_abs[[i]] = cbind(selected_2w2w_2000k_not_abs_10[[i]],
                                        selected_2w2w_2000k_not_abs_90[[i]],
                                        selected_2w2w_2000k_not_abs_100[[i]])}
 names(selected_2w2w_2000k_not_abs) = names(selected_2w2w_2000k_not_abs_10)
-# save(reslults/2w2w/selected_2w2w_2000k_not_abs,
-#       file = 'selected_2w2w_2000k_not_abs.RData')
-# 
-# 
-# load('results/2w2w/selected_2w2w_2000k_not_abs.RData')
+save(reslults/2w2w/selected_2w2w_2000k_not_abs,
+      file = 'selected_2w2w_2000k_not_abs.RData')
+
+
+load('results/2w2w/selected_2w2w_2000k_not_abs.RData')
 
 
 # for Table 4
@@ -1140,7 +1140,7 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-##### Figure 12 ####
+##### Figure 12: ####
 
 # how many out of two for each interaction:
 q = 10000

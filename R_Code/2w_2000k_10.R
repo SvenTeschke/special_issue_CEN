@@ -28,7 +28,7 @@ for(i in 1:10){
   xyz3 <- how_many2(Data = cbind(Szen2w_2000k[[i]]$x, Szen2w_2000k[[i]]$y), 
                     res_number = 2000001,abs = F,
                     whole = F, RW = F, SW = F, corr_ = F, sketch = T, eps = 0.1)
-  # just consider the SNPs with the 10000 largest CLS  
+# just consider the SNPs with the 10000 largest CLS  
 #  p_whole_ = cbind(p_whole_, xyz$p_whole$SNP[1:10000], xyz$p_whole$Score[1:10000])
   p_RW_ = cbind(p_RW_, xyz$p_RW$SNP[1:10000], xyz$p_RW$Score[1:10000]) 
   p_SW_ = cbind(p_SW_, xyz$p_SW$SNP[1:10000], xyz$p_SW$Score[1:10000])

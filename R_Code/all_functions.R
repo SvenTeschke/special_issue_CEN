@@ -54,9 +54,9 @@ vnorm <- function(x){
 
 # sketch2b: to calculate the cls of a matrix X with sketching
 # 
-# Input: - X:  combinded matrix of X and Y
+# Input: - X:  combined matrix of X and Y
 #        - epsilon: parameter
-#        - vi: how many important varaiables (optional, but must be specified)
+#        - vi: how many important variables (optional, but must be specified)
 #        - abs: abs or no abs cls?
 #
 # Output: - cls: cls of variable j with response y
@@ -67,7 +67,7 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
   p = ncol(X)
   n = nrow(X)
   X <- t(X)
-  r = round((ceiling(n*log(n)))/(epsilon^2)) # cohan
+  r = round((ceiling(n*log(n)))/(epsilon^2)) # Cohen
   s = round(ceiling(log(n)/epsilon^2))
   X_ <- matrix(0, nrow = r, ncol = n) 
   for(d in 1:p){
@@ -77,7 +77,7 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
       X_[f[l],] <- X_[f[l],] + X[d,] * g[l]}
     }
   print('X_')
-  rm(f)
+  rm(f)  # we remove things we do not need in the following steps to save memory 
   rm(g)
   gc()
   print('del f,g')
@@ -352,6 +352,8 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 
 
 ###############################  further updated versions: ####
+# not used in manusscript, but impoved coding. nevertheless these functions
+# lead to the same results as the above functions
 RW_CLS <- function(Data, response_, w = 0, R = 100,
                    bagging = F, abs_cls = T, pr = T){
   n = nrow(Data)

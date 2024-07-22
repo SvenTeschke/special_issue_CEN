@@ -41,7 +41,7 @@ HapMapSNP <- HapMapSNP_all[, -ind]  # 7648 vars left
 
 
 
-#### Table 05 ####
+#### Table 05: ####
 
 # calculate the prediction error in a random Forest model
 

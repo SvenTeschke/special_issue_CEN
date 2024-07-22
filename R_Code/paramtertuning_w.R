@@ -125,7 +125,7 @@ w_200k_plot <- ggplot(w_200k_l, aes(x = w, y = value, color = name)) +
   theme(plot.margin = margin(10,10,10,10))
 
 
-##### Figure 14 ####
+##### Figure 14: ####
 w_plot <- ggarrange(
   w_20k_plot, w_200k_plot,
   ncol = 2, 

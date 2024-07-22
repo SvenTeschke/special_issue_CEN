@@ -85,7 +85,7 @@ for(i in 1:1000){
   err_corr <- c(err_corr, mean(p3 != resp_test))
   
   
-   ## random selection
+   ## with a random selection
  
   index = sample(1:500, 25)
   
@@ -113,7 +113,7 @@ for(i in 1:1000){
 load('results/2w_500/logreg_vergleich2w.RData')
 
 
-#### Table 06 ####
+#### Table 06: ####
 err_corr %>% median()
 err_mit %>% median()
 err_ohne %>% median()
@@ -123,8 +123,8 @@ t.test(err_ohne, err_mit)
 
 
 
-#### varariable importance ####
-##### Figure 06 #####
+#### variable importance ####
+##### Figure 06: #####
 # with test and training:
 gc()
 set.seed(1754)
@@ -134,7 +134,7 @@ corr <- list()
 arb <- list()
 for(i in 1:1000){
   
-  Data =cbind(Szen2w_500[[i]]$x, Szen2w_500[[i]]$y)
+  Data = cbind(Szen2w_500[[i]]$x, Szen2w_500[[i]]$y)
   
   test_ind = sample(1:120, 60)
   Data_train = Data[-test_ind, ]
@@ -146,15 +146,8 @@ for(i in 1:1000){
   # without variable selection:
   Data_train_x <- make.snp.dummy(Data_train[,-501])
   
-  #log.out_ohne = logicDT::logicDT.bagging(Data_train_x ,resp_train, 
-                                         # bagging.iter = 50, max_vars = 3,
-                                         #  max_conj = 3, search_algo = 'greedy') 
-  
   
   Data_test_x = make.snp.dummy(Data_test[ , -501])
-  
-  #p1 = predict(log.out_ohne, Data_test_x, type = 'class')  
-  #err_ohne = c(err_ohne, mean(p1 != resp_test))
   
   
   log.out_ohne_test = logicDT::logicDT.bagging(Data_test_x ,resp_test, 
@@ -164,10 +157,6 @@ for(i in 1:1000){
   ohne[[i]] <- vim(log.out_ohne_test)$vims
   
   
-  
-  # log.out_ohne = logicDT::logicDT.bagging(Data_x ,resp, bagging.iter = 50, max_vars = 3, 
-  #                                        max_conj = 3, search_algo = 'greedy') 
-  # ohne[[i]] <- vim(log.out_ohne)$vims
   
   # with variable selection
   
