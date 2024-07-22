@@ -1,6 +1,52 @@
 # special_issue_CEN
 
-PC
+
+
+# Here the complete R Code according to the paper is stored
+
+- simulated RData data is not included due to memory capacity and must be run first or downloaded 
+  from Zenodo and save it at "'../Data/"
+
+
+# Descriptions:
+
+all_functions_neu - File with all functions i used
+
+simulation_scenarios - file with the simulation of all scenarios 
+   --> this takes long time and a lot of memory so we recommmend to download the simulated Data from Zenodo or 
+       go directly to the conclusion section
+
+2w_xxx - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
+         p=2000000 due to memory reasons
+
+2w2w_xxx - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
+           p=2000000 due to memory reasons
+
+3w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
+
+4w_xxx - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
+
+   --> these calculations takes a lot aof time. We therefore recommend downloading the results.zip file from Zenodo, unpacking it and saving the whole file in the current working directory
+
+conclusion_2w - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
+
+conclusion_2w2w - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
+
+conclusion_3w - Results of above Calculations of scenario 3 
+
+conclusion_4w - Results of above Calculations of scenario 4 
+
+hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
+
+2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance -> here calculations for Figure 06
+     
+toyexample - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
+
+paramtertuning_w - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14
+
+
+# version:
+# PC:
 R version 4.3.2 (2023-10-31 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows 10 x64 (build 19045)
@@ -52,50 +98,58 @@ loaded via a namespace (and not attached):
 [77] pkgconfig_2.0.3
 
 
-sever:
+# sever:
 R version 4.3.3 (2024-02-29)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: Debian GNU/Linux 12 (bookworm)
 
-# Here the complete R Code according to the paper is stored
+Matrix products: default
+BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.21.so;  
+        LAPACK version 3.11.0
 
-- simulated RData data is not included due to memory capacity and must be run first or downloaded 
-  from Zenodo and save it at "'../Data/"
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C
 
+time zone: Europe/Berlin
+tzcode source: system (glibc)
 
-# Descriptions:
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base
 
-all_functions_neu - File with all functions i used
+other attached packages:
+ [1] GLDEX_2.0.0.9.3      spacefillr_0.3.3     cluster_2.1.6
+ [4] SNPassoc_2.1-0       lubridate_1.9.3      forcats_1.0.0
+ [7] stringr_1.5.1        dplyr_1.1.4          purrr_1.0.2
+[10] readr_2.1.5          tidyr_1.3.1          tibble_3.2.1
+[13] tidyverse_2.0.0      scrime_1.3.5         ggplot2_3.5.0
+[16] ranger_0.16.0        randomForest_4.7-1.1
 
-simulation_scenarios - file with the simulation of all scenarios 
-   --> this takes long time and a lot of memory so we recommmend to download the simulated Data from Zenodo or 
-       go directly to the conclusion section
-
-2w_xxx - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
-         p=2000000 due to memory reasons
-
-2w2w_xxx - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
-           p=2000000 due to memory reasons
-
-3w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
-
-4w_xxx - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
-
-   --> these calculations takes a lot aof time. We therefore recommend downloading the results.zip file from Zenodo, unpacking it and saving the whole file in the current working directory
-
-conclusion_2w - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
-
-conclusion_2w2w - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
-
-conclusion_3w - Results of above Calculations of scenario 3 
-
-conclusion_4w - Results of above Calculations of scenario 4 
-
-hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
-
-2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance -> here calculations for Figure 06
-     
-toyexample - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
-
-paramtertuning_w - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14
-
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.4        xfun_0.43           htmlwidgets_1.6.4
+ [4] lattice_0.22-6      tzdb_0.4.0          vctrs_0.6.5
+ [7] tools_4.3.3         generics_0.1.3      parallel_4.3.3
+[10] sandwich_3.1-0      fansi_1.0.6         pkgconfig_2.0.3
+[13] haplo.stats_1.9.5.1 Matrix_1.6-5        data.table_1.15.4
+[16] checkmate_2.3.1     lifecycle_1.0.4     compiler_4.3.3
+[19] MatrixModels_0.5-3  munsell_0.5.1       codetools_0.2-20
+[22] poisbinom_1.0.1     SparseM_1.81        quantreg_5.97
+[25] htmltools_0.5.8.1   htmlTable_2.4.2     Formula_1.2-5
+[28] pillar_1.9.0        MASS_7.3-60.0.1     rms_6.8-0
+[31] Hmisc_5.1-2         multcomp_1.4-25     rpart_4.1.23
+[34] nlme_3.1-164        tidyselect_1.2.1    digest_0.6.35
+[37] mvtnorm_1.2-4       polspline_1.1.24    stringi_1.8.3
+[40] splines_4.3.3       fastmap_1.1.1       grid_4.3.3
+[43] colorspace_2.1-0    cli_3.6.2           magrittr_2.0.3
+[46] base64enc_0.1-3     arsenal_3.6.3       survival_3.5-8
+[49] utf8_1.2.4          TH.data_1.1-2       foreign_0.8-86
+[52] withr_3.0.0         scales_1.3.0        backports_1.4.1
+[55] timechange_0.3.0    rmarkdown_2.26      nnet_7.3-19
+[58] gridExtra_2.3       zoo_1.8-12          hms_1.1.3
+[61] evaluate_0.23       knitr_1.46          rlang_1.1.3
+[64] Rcpp_1.0.12         glue_1.7.0          rstudioapi_0.16.0
+[67] plyr_1.8.9          R6_2.5.1
