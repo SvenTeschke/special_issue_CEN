@@ -1,6 +1,10 @@
 # special_issue_CEN
 
 
+# Order Structure:
+
+
+
 
 # Here the complete R Code according to the paper is stored
 
