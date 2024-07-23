@@ -17,9 +17,8 @@ R_Code/results - Here all intermediat results are stored. If you don't want to r
 
 # Descriptions of the Code files:
 
-- simulated RData data is not included due to memory capacity and must be run first or downloaded 
+The simulated RData data is not included due to memory capacity and must be run first or downloaded 
   from Zenodo https://doi.org/10.5281/zenodo.12742957
-
 
 - masterscript - With this file, all calculations and analyses can be run directly at once. If you only want to view single calculations, I recommend viewing the corresponding files separately.
 
