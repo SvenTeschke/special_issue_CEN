@@ -1,0 +1,29 @@
+git rebase -i --root
+
+pick zu drop ändern
+
+esc und dann :wq ENTER
+
+warten bis git das rebase durchgeführt hat
+
+Bereinige das Repository:
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+Force-Push ins Remote-Repository, um die Änderungen zu aktualisieren:
+git push --force --all
+
+
+------------------------------------------------------
+
+
+
+git log --stat
+
+
+
+
+pip install git-filter-repo
+
+
+
