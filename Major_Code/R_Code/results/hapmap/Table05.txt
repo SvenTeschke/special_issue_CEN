@@ -1,0 +1,2 @@
+"method","without","random","CLS","corr"
+"prediction error","0","0.125","0","0"
