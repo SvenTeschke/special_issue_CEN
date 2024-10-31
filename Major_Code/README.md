@@ -58,7 +58,7 @@ R_Code/results - This folder does not exist initially.
 
 - conclusion_4w.R - The results of the above calculations for Scenario 4 
 
-- hapmap.R - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
+- hap_map.R - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
 
 - 2w500_logicDT.R - Evaluation of scenario 1 with p=500, with logicDT and focus on variable 
                     importance and prediction performance -> here calculations for Figure 06 and Table 06

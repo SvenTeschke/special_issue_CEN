@@ -367,9 +367,6 @@ plt_mean_2w_2k_not_abs = ggplot(mean_2w_2k_not_abs, aes(x = q, y = value, color 
                                    'RW', 'SW', 'whole')) +
   theme(plot.margin = margin(10,10,10,10))
 
-# ggsave(filename = 'plots/plt_mean_2w_2k_not_abs.eps', plt_mean_2w_2k_not_abs, 
-#        device = cairo_ps,
-#        width = 6.1, height = 5, units = 'in', dpi = 300,  limitsize  = F)
 
 
 
