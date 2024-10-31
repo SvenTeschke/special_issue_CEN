@@ -11,7 +11,7 @@ R_Code/  -  Here the complete R Code according to the paper is stored
 R_Code/plots - Here the Figures according to the paper are stored
 
 R_Code/results - Here all intermediat results are stored. If you don't want to run all the Code and want to use them you have to download the results.zip file
-                  from Zenodo
+                  from Zenodo and unzip it into R_Code/ . The R_Code/results folder contained here can (only) then be deleted.
 
 
 

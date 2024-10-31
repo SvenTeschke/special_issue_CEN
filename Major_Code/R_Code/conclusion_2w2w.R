@@ -507,7 +507,7 @@ for(j in seq(1,1999,2)){
 }
 
 
-# sketch 0.5
+# sketch e_0.5:
 e_0.51_ = c()
 e_0.52_ = c()
 for(j in seq(1,1999,2)){

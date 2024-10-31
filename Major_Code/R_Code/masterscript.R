@@ -2,15 +2,15 @@
 
 
 
-# In a first step load the file containing all functions we need:
+# The first step is to load the file that contains all the functions we need:
 source("all_functions.R")
 
 
 # simulate data:
 source("simulation_scenarios.R") 
 # This takes a very long time and requires a lot of storage.
-# I recommend downloading the data from ZENODO, or go directly to the 
-# Conclusions section where the calculated results are analyzed.  
+# I recommend to download the data from ZENODO or to go directly to 
+# the conclusions section where the calculated results are analysed.  
 
 
 
@@ -20,9 +20,9 @@ source("simulation_scenarios.R")
 
 
 
-# calculation of the scores for the simulation scenarios:
-# this takes very long, so i recommend to go directly go to section conclusion 
-#  and download the results from ZENODO
+# Calculation of the scores for the simulation scenarios:
+# This takes a very long time, so I recommend to download the results 
+# from ZENODO go directly to the conclusion section.
 
 
 # for the 2-way interactions:

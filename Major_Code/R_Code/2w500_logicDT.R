@@ -72,7 +72,7 @@ for(i in 1:1000){
   
   
    ## with correlation
-  corr_d <- apply(Data_train[,-501], 2, function(x) cor(x, resp_train)) #%>% abs()
+  corr_d <- apply(Data_train[,-501], 2, function(x) cor(x, resp_train)) 
   index = which(rank(-corr_d) < 25)
   
   Data_train_red_x <- make.snp.dummy(Data_train[,index])

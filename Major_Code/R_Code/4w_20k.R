@@ -9,7 +9,7 @@ if (!dir.exists("results/4w")) {
   dir.create("results/4w", recursive = TRUE)
 }
 
-# read in the data:
+# Read in the data:
 load('../Data/Szen4w_20k.RData')
 
 

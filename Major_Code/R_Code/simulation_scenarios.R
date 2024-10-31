@@ -3,18 +3,18 @@
 library('tidyverse')
 library('scrime')
 
-# We will use the function simulateSNPglm from the scrime package
+# We will use the simulateSNPglm function from the scrime package
 
 if (!dir.exists("../Data")) {
   dir.create("../Data", recursive = TRUE)
 }
 
-setwd("../Data")
+
 
 
 ### 2way interaction: ####
 
-# In the first scenario we will have only one important 2 way interaction
+# In the first scenario, we have only one important 2-way interaction
 
 #### p = 2k ####
 list_int <- list(c(-1,-1)) 
@@ -42,7 +42,7 @@ for(i in 1:1000){
   Szen2w_2k[[i]]$x <- ifelse(Szen2w_2k[[i]]$x==3, 2, Szen2w_2k[[i]]$x)
 }
 
- save(Szen2w_2k, file = 'Szen2w_2k.RData')
+ save(Szen2w_2k, file = '../Data/Szen2w_2k.RData')
 
 
 #### p = 20k ####
@@ -68,7 +68,7 @@ for(i in 1:1000){
   Szen2w_20k[[i]]$x <- ifelse(Szen2w_20k[[i]]$x==3, 2, Szen2w_20k[[i]]$x)
 }
 
-save(Szen2w_20k, file = 'Szen2w_20k.RData')
+save(Szen2w_20k, file = '../Data/Szen2w_20k.RData')
 
 
 #### p = 200k ####
@@ -96,7 +96,7 @@ for(i in 1:100){
   Szen2w_200k[[i]]$x <- ifelse(Szen2w_200k[[i]]$x==2, 1, Szen2w_200k[[i]]$x)
   Szen2w_200k[[i]]$x <- ifelse(Szen2w_200k[[i]]$x==3, 2, Szen2w_200k[[i]]$x)
 }
-save(Szen2w_200k, file = 'Szen2w_200k.RData')
+save(Szen2w_200k, file = '../Data/Szen2w_200k.RData')
 
 
 
@@ -104,7 +104,7 @@ save(Szen2w_200k, file = 'Szen2w_200k.RData')
 #### p = 2000k ####
 list_int <- list(c(-1,-1)) 
 list_snp <- list(1:2)
-# have to split it up, otherwise it becomes too large
+# We have to split it up. Otherwise the data will be too big.
 set.seed(10)
 mafs = runif(2000000,0.15,0.45)
 Szen2w_2000k <- list()
@@ -126,7 +126,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_10.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_10.RData')
 
 
 set.seed(20)
@@ -150,7 +150,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_20.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_20.RData')
 
 
 set.seed(30)
@@ -174,7 +174,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_30.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_30.RData')
 
 set.seed(40)
 mafs = runif(2000000,0.15,0.45)
@@ -197,7 +197,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_40.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_40.RData')
 
 set.seed(50)
 mafs = runif(2000000,0.15,0.45)
@@ -220,7 +220,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_50.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_50.RData')
 
 set.seed(60)
 mafs = runif(2000000,0.15,0.45)
@@ -243,7 +243,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_60.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_60.RData')
 
 set.seed(70)
 mafs = runif(2000000,0.15,0.45)
@@ -266,7 +266,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_70.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_70.RData')
 
 
 set.seed(80)
@@ -290,7 +290,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_80.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_80.RData')
 
 set.seed(90)
 mafs = runif(2000000,0.15,0.45)
@@ -313,7 +313,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_90.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_90.RData')
 
 set.seed(100)
 mafs = runif(2000000,0.15,0.45)
@@ -336,7 +336,7 @@ for(i in 1:10){
   Szen2w_2000k[[i]]$x <- ifelse(Szen2w_2000k[[i]]$x==3, 2, Szen2w_2000k[[i]]$x)
 }
 
-save(Szen2w_2000k, file =  'Szen2w_2000k_100.RData')
+save(Szen2w_2000k, file =  '../Data/Szen2w_2000k_100.RData')
 
 
 ### 3way  ####
@@ -367,7 +367,7 @@ for(i in 1:1000){
   Szen3w_2k[[i]]$x <- ifelse(Szen3w_2k[[i]]$x==3, 2, Szen3w_2k[[i]]$x)
 }
 
-save(Szen3w_2k, file = 'Szen3w_2k.RData')
+save(Szen3w_2k, file = '../Data/Szen3w_2k.RData')
 
 
 
@@ -399,7 +399,7 @@ for(i in 1:1000){
   Szen3w_20k[[i]]$x <- ifelse(Szen3w_20k[[i]]$x==3, 2, Szen3w_20k[[i]]$x)
 }
 
-save(Szen3w_20k, file = 'Szen3w_20k.RData')
+save(Szen3w_20k, file = '../Data/Szen3w_20k.RData')
 
 
 #### p = 200k ####
@@ -429,7 +429,7 @@ for(i in 1:100){
   print(i)
 }
 
-save(Szen3w_200k, file = 'Szen3w_200k.RData')
+save(Szen3w_200k, file = '../Data/Szen3w_200k.RData')
 
 
 
@@ -462,7 +462,7 @@ for(i in 1:1000){
   Szen2w2w_2k[[i]]$x <- ifelse(Szen2w2w_2k[[i]]$x==3, 2, Szen2w2w_2k[[i]]$x)
 }
 
-save(Szen2w2w_2k, file = 'Szen2w2w_2k.RData')
+save(Szen2w2w_2k, file = '../Data/Szen2w2w_2k.RData')
 
 
 
@@ -493,7 +493,7 @@ for(i in 1:1000){
   Szen2w2w_20k[[i]]$x <- ifelse(Szen2w2w_20k[[i]]$x==3, 2, Szen2w2w_20k[[i]]$x)
 }
 
-save(Szen2w2w_20k, file = 'Szen2w2w_20k.RData')
+save(Szen2w2w_20k, file = '../Data/Szen2w2w_20k.RData')
 
 
 #### p = 200k ####
@@ -525,11 +525,11 @@ for(i in 1:100){
   Szen2w2w_200k[[i]]$x <- ifelse(Szen2w2w_200k[[i]]$x==3, 2, Szen2w2w_200k[[i]]$x)
 }
 
-save(Szen2w2w_200k, file = 'Szen2w2w_200k.RData')
+save(Szen2w2w_200k, file = '../Data/Szen2w2w_200k.RData')
 
 
 #### p = 2000k ####
-# have to split it up, otherwise it gets too large
+# We have to split it up. Otherwise the data will be too big.
 set.seed(1514) 
 list_int <- list(c(-1,-1), c(-1,-1)) 
 list_snp <- list(1:2,3:4)
@@ -555,7 +555,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_10.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_10.RData')
 
 
 set.seed(1524)
@@ -583,7 +583,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_20.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_20.RData')
 
 
 set.seed(1534) 
@@ -611,7 +611,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_30.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_30.RData')
 
 
 set.seed(1544)
@@ -638,7 +638,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_40.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_40.RData')
 
 
 set.seed(1554)
@@ -666,7 +666,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_50.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_50.RData')
 
 set.seed(1564)
 list_int <- list(c(-1,-1), c(-1,-1)) 
@@ -693,7 +693,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_60.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_60.RData')
 
 set.seed(1574) 
 list_int <- list(c(-1,-1), c(-1,-1)) 
@@ -720,7 +720,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_70.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_70.RData')
 
 set.seed(1584) 
 list_int <- list(c(-1,-1), c(-1,-1)) 
@@ -747,7 +747,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_80.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_80.RData')
 
 set.seed(1594)
 list_int <- list(c(-1,-1), c(-1,-1)) 
@@ -774,7 +774,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_90.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_90.RData')
 
 
 # 100
@@ -803,7 +803,7 @@ for(i in 1:10){
   print(i)
 }
 
-save(Szen2w2w_2000k, file = 'Szen2w2w_2000k_100.RData')
+save(Szen2w2w_2000k, file = '../Data/Szen2w2w_2000k_100.RData')
 
 
 
@@ -830,13 +830,13 @@ for(i in 1:1000){
 }
 for(i in 1:1000){
   print(i)
-  # umcodieren von 1,2,3 to 0,1,2:
+  # recode:
   Szen4w_2k[[i]]$x <- ifelse(Szen4w_2k[[i]]$x==1, 0, Szen4w_2k[[i]]$x)
   Szen4w_2k[[i]]$x <- ifelse(Szen4w_2k[[i]]$x==2, 1, Szen4w_2k[[i]]$x)
   Szen4w_2k[[i]]$x <- ifelse(Szen4w_2k[[i]]$x==3, 2, Szen4w_2k[[i]]$x)
 }
 
-save(Szen4w_2k, file = 'Szen4w_2k.RData')
+save(Szen4w_2k, file = '../Data/Szen4w_2k.RData')
 
 
 
@@ -869,7 +869,7 @@ for(i in 1:1000){
   Szen4w_20k[[i]]$x <- ifelse(Szen4w_20k[[i]]$x==3, 2, Szen4w_20k[[i]]$x)
 }
 
-save(Szen4w_20k, file = 'Szen4w_20k.RData')
+save(Szen4w_20k, file = '../Data/Szen4w_20k.RData')
 
 
 
@@ -900,9 +900,9 @@ for(i in 1:100){
   print(i)
 }
 
-save(Szen4w_200k, file = 'Szen4w_200k.RData')
+save(Szen4w_200k, file = '../Data/Szen4w_200k.RData')
 
-### negatives beta ####
+### negative beta ####
 list_int <- list(c(1, 1)) 
 list_snp <- list(1:2)
 
@@ -931,7 +931,7 @@ for(i in 1:1000){
 save(Szen2w_2k_neg, file = '/Szen2w_2k_neg.RData')
 
 
-### kleineres p ####
+### small p ####
 
 #### 2w ####
 list_int <- list(c(-1,-1)) 
@@ -958,12 +958,12 @@ for(i in 1:1000){
   Szen2w_500[[i]]$x <- ifelse(Szen2w_500[[i]]$x==2, 1, Szen2w_500[[i]]$x)
   Szen2w_500[[i]]$x <- ifelse(Szen2w_500[[i]]$x==3, 2, Szen2w_500[[i]]$x)
 }
-save(Szen2w_500, file = 'Szen2w_500.RData')
+save(Szen2w_500, file = '../Data/Szen2w_500.RData')
 
 
 
 
-### interaction but low no main effect ####
+### with interaction but low no main effect ####
 list_int <- list(c(-1,-1), -1, -1) 
 list_snp <- list(1:2, 1, 2)
 
@@ -993,7 +993,7 @@ for(i in 1:1000){
 }
 
 
-save(Szen2w_2k_int_nomain4, file = 'Szen2w_2k_int_nomain4.RData')
+save(Szen2w_2k_int_nomain4, file = '../Data/Szen2w_2k_int_nomain4.RData')
 
 ### only small main effect ####
 list_int <- list(-1, -1) 
@@ -1023,7 +1023,7 @@ for(i in 1:1000){
                                          Szen2w_2k_int_nomain5[[i]]$x)
 }
 
-save(Szen2w_2k_int_nomain5, file = 'Szen2w_2k_int_nomain5.RData')
+save(Szen2w_2k_int_nomain5, file = '../Data/Szen2w_2k_int_nomain5.RData')
 
 
 CLS2w_2k_int_nomain4 <- numeric()

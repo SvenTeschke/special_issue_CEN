@@ -2,7 +2,7 @@ library('tidyverse')
 library('ggplot2')
 library('ggpubr') ## for ggrange
 
-# Read the funtions we need:
+# Read the functions we need:
 source('all_functions.R')
 
 if (!dir.exists("results/3w")) {
@@ -89,7 +89,7 @@ how_e_0.1 %>% mean()
 
 
 
-# how many for different q:
+# how many for different values of q:
 q = 1000
 # whole:
 whole1_ = c()
@@ -290,7 +290,7 @@ how_e_0.1 %>% median()
 how_e_0.1 %>% mean()
 
 
-# how many for different q:
+# how many for different values of q:
 q = 1000
 # whole:
 whole_ = c()
