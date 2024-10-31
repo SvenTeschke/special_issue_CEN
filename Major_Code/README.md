@@ -6,9 +6,9 @@
 Data/  - here you the simulated data is stored. If you download it from Zenodo, you have to store it there. 
           If you run the Code of the simulation studies, the data will be stored there automatically 
 
-R_Code/  - Here you find all Code files
+R_Code/  -  Here the complete R Code according to the paper is stored
 
-R_Code/plots - Here the complete R Code according to the paper is stored
+R_Code/plots - Here the Figures according to the paper are stored
 
 R_Code/results - Here all intermediat results are stored. If you don't want to run all the Code and want to use them you have to download the results.zip file
                   from Zenodo
@@ -20,41 +20,43 @@ R_Code/results - Here all intermediat results are stored. If you don't want to r
 The simulated RData data is not included due to memory capacity and must be run first or downloaded 
   from Zenodo https://doi.org/10.5281/zenodo.12742957
 
-- masterscript - With this file, all calculations and analyses can be run directly at once. If you only want to view single calculations, I recommend viewing the corresponding files separately.
+- masterscript.R - With this file, all calculations and analyses can be run directly at once. 
+                   If you only want to view single calculations, I recommend viewing the corresponding files separately.
 
-- all_functions_neu - File with all functions i used
+- all_functions.R - File with all functions i used
 
-- simulation_scenarios - file with the simulation of all scenarios 
+- simulation_scenarios.R - file with the simulation of all scenarios 
     --> this takes long time and a lot of memory so we recommmend to download the simulated Data from Zenodo or 
         go directly to the conclusion section
 
-- 2w_xxx - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
+- 2w_xxx.R - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
          p=2000000 due to memory reasons
 
-- 2w2w_xxx - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
+- 2w2w_xxx.R - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
            p=2000000 due to memory reasons
 
-- 3w_xxx - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
+- 3w_xxx.R - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
 
-- 4w_xxx - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
+- 4w_xxx.R - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
       --> these calculations takes a lot aof time. We therefore recommend downloading the results.zip file from Zenodo, 
           unpacking it and saving the whole file in the current working directory
 
-- conclusion_2w - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
+- conclusion_2w.R - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
 
-- conclusion_2w2w - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
+- conclusion_2w2w.R - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
 
-- conclusion_3w - Results of above Calculations of scenario 3 
+- conclusion_3w.R - Results of above Calculations of scenario 3 
 
-- conclusion_4w - Results of above Calculations of scenario 4 
+- conclusion_4w.R - Results of above Calculations of scenario 4 
 
-- hapmap - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
+- hapmap.R - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
 
-- 2w500_logicDT - Evaluation of scenario 1 with p=500, with logicDT and focus on variable importance and prediction performance -> here calculations for Figure 06
+- 2w500_logicDT.R - Evaluation of scenario 1 with p=500, with logicDT and focus on variable 
+                    importance and prediction performance -> here calculations for Figure 06 and Table 06
      
-- toyexample - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
+- toyexample.R - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
 
-- paramtertuning_w - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14
+- paramtertuning_w.R - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14 and Table 02
 
 
 # sessionInfo():
