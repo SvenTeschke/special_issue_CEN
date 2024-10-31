@@ -3,15 +3,17 @@
 
 # Order Structure:
 
-Data/  - here you the simulated data is stored. If you download it from Zenodo, you have to store it there. 
-          If you run the Code of the simulation studies, the data will be stored there automatically 
+Data/  - This is where the simulated data is stored. If you download it from Zenodo, you have to save it there.
+          If you run the Code of the simulation studies, the data is automatically saved there.
 
-R_Code/  -  Here the complete R Code according to the paper is stored
+R_Code/  -  This is where the full R code for the paper is stored.
 
-R_Code/plots - Here the Figures according to the paper are stored
+R_Code/plots - This is where the Figures are stored according to the paper.
 
-R_Code/results - Here all intermediat results are stored. If you don't want to run all the Code and want to use them you have to download the results.zip file
-                  from Zenodo and unzip it into R_Code/ . The R_Code/results folder contained here can (only) then be deleted.
+R_Code/results - All results and intermediate results are stored here. If you don't want to run all the code and 
+                 want to use the (intermediate) results, you have to download the results.zip file from 
+                 Zenodo (https://doi.org/10.5281/zenodo.12742957) and unzip it into R_Code/ 
+                 (Only) then can you delete the R_Code/results folder.
 
 
 
@@ -20,49 +22,55 @@ R_Code/results - Here all intermediat results are stored. If you don't want to r
 The simulated RData data is not included due to memory capacity and must be run first or downloaded 
   from Zenodo https://doi.org/10.5281/zenodo.12742957
 
-- masterscript.R - With this file, all calculations and analyses can be run directly at once. 
+- masterscript.R - This file can be used to perform all calculations and analyses at once. 
                    If you only want to view single calculations, I recommend viewing the corresponding files separately.
 
 - all_functions.R - File with all functions i used
 
 - simulation_scenarios.R - file with the simulation of all scenarios 
-    --> this takes long time and a lot of memory so we recommmend to download the simulated Data from Zenodo or 
-        go directly to the conclusion section
+                            --> This takes long time and uses a lot of memory, so I recommend downloading the simulated data from Zenodo or 
+                                skip directly to the conclusion section
 
-- 2w_xxx.R - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
+- 2w_xxx.R - Evaluation of scenario 1 (one 2-way interaction), for p={2000, 20000, 200000, 2000000}; we split the analysis for
          p=2000000 due to memory reasons
-
-- 2w2w_xxx.R - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we splittet the analysis for
-           p=2000000 due to memory reasons
-
-- 3w_xxx.R - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
-
-- 4w_xxx.R - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
-      --> these calculations takes a lot aof time. We therefore recommend downloading the results.zip file from Zenodo, 
+         --> these calculations takes a lot of time. We therefore recommend downloading the results.zip file from Zenodo, 
           unpacking it and saving the whole file in the current working directory
 
-- conclusion_2w.R - Results of above Calculations of scenario 1 -> here calcultaions for Figure 1,2,4,7 and for Table 3 are done
+- 2w2w_xxx.R - Evaluation of scenario 2 (two 2-way interactions), for p={2000, 20000, 200000, 2000000}; we split the analysis for
+           p=2000000 due to memory reasons
+           --> these calculations takes a lot of time. We therefore recommend downloading the results.zip file from Zenodo, 
+          unpacking it and saving the whole file in the current working directory
 
-- conclusion_2w2w.R - Results of above Calculations of scenario 2 -> here calcultaions for Figure 5,10,11,12 and for Table 4 are done
+- 3w_xxx.R - Evaluation of scenario 3 (one 3-way interactions), for p={2000, 20000, 200000}
+             --> these calculations takes a lot of time. We therefore recommend downloading the results.zip file from Zenodo, 
+          unpacking it and saving the whole file in the current working directory
 
-- conclusion_3w.R - Results of above Calculations of scenario 3 
+- 4w_xxx.R - Evaluation of scenario 4 (one 4-way interactions), for p={2000, 20000, 200000}
+      --> these calculations takes a lot of time. We therefore recommend downloading the results.zip file from Zenodo, 
+          unpacking it and saving the whole file in the current working directory
 
-- conclusion_4w.R - Results of above Calculations of scenario 4 
+- conclusion_2w.R - The results of the above calculations for Scenario 1 -> here calculations for Figure 1,2,4,7 and for Table 3 are done
+
+- conclusion_2w2w.R - The results of the above calculations for Scenario 2 -> here calculations for Figure 5,10,11,12 and for Table 4 are done
+
+- conclusion_3w.R - The results of the above calculations for Scenario 3 
+
+- conclusion_4w.R - The results of the above calculations for Scenario 4 
 
 - hapmap.R - Evaluation of the hap map data with random Forests with focus on prediction performance  -> here calculations for Table 5
 
 - 2w500_logicDT.R - Evaluation of scenario 1 with p=500, with logicDT and focus on variable 
                     importance and prediction performance -> here calculations for Figure 06 and Table 06
      
-- toyexample.R - Rcode for the toyexample in the motivation section -> here calculations for Figure 08
+- toyexample.R - Code for the toyexample in the motivation section -> here calculations for Figure 08
 
-- paramtertuning_w.R - consider the influence or the parameter w in the RW and SW approach -> here calculations for Figure 14 and Table 02
+- paramtertuning_w.R -Consider the influence on parameter w in the RW and SW approach and R in the RW approach -> here calculations for Figure 14 and Table 02
 
 
 # sessionInfo():
 
 Some of the calculations were carried out on the authors own PC, others on the server of the Faculty of Statistics at TU Dortmund University. 
-In addition, the R version was updated over time. None of these points have any influence on the results, but it should be briefly mentioned here.
+In addition, the R version was updated over time. None of these points have any impact on the results, but it should be mentioned here.
 
 ## PC:
 R version 4.3.2 (2023-10-31 ucrt)
