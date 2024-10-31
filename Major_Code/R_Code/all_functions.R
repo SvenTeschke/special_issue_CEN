@@ -12,14 +12,11 @@
 
 
 getCLS = function(XY){
-  # If number of rows is less than number of columns,
-  # need to transpose combination matrix, as this switches the roles of obs and variables,
   if(nrow(XY) < ncol(XY)) C = t(XY) else C = XY
   decomp = qr.Q(qr(C)) 
   
   CLS <- c() 
-  # to save the matrix multiplication with Q we calculate only the scalar product of the 
-  # corresponding rows.
+
   for(i in 1:(nrow(decomp)-1)){
     CLS[i] <- decomp[i, ] %*% decomp[nrow(decomp), ]
   }
@@ -77,11 +74,11 @@ sketch2b <- function(X, epsilon = 0.2, vi = 2,
       X_[f[l],] <- X_[f[l],] + X[d,] * g[l]}
     }
   print('X_')
-  rm(f)  # we remove things we do not need in the following steps to save memory 
+  rm(f)  
   rm(g)
   gc()
   print('del f,g')
-  R <- qr.R(qr(X_)) # R from QR decomp.
+  R <- qr.R(qr(X_)) 
   R_inv <- Inv_or_MP(R)
   print('R_inv')
   
@@ -132,11 +129,10 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
   cls = data.frame('SNP' = rep(NA, p), 'Score' = rep(NA, p))
   
   i = 0
-  while (length(A) < p & i < R) { # break if R is reached or all variables are chosen 
-    # at least once
+  while (length(A) < p & i < R) { 
     
-    s = sample(1:p, w)  # sample w SNPs in each step independently
-    A <- c(A, s) %>% unique() # count how many different SNPs we consider
+    s = sample(1:p, w)  
+    A <- c(A, s) %>% unique() 
     
     if(pr == T){i = i+1
     print(i)
@@ -151,10 +147,10 @@ randomCLS_general_CLS_sample <- function(Data, response_, w = 0, R = 100,
     
     # construct window, contains of w SNPs and response y:
     XY_ = cbind(Data[n_ ,s], response_[n_]) 
-    # calc all scores for the subset:
+   
     levs_ = getCLS(XY_) 
     
-    if(abs_cls == T){ # abs or not?
+    if(abs_cls == T){ 
       levs_ <- abs(levs_)
     } else{levs_ <- levs_}
     
@@ -199,7 +195,7 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
     w = n+1
   } else{w = w}
   
-  s = w # steps forward -> no overlapping
+  s = w # steps forward
   
   
   if(samp_ == T){
@@ -214,7 +210,7 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
   fin <- w  # end of the first window 
   mi <- 1   # begin of the first window
   ma <- fin  # end of window
-  # start with loop:
+ 
   
   while(fin < (p+(s/2))){ 
     if(pr == T){
@@ -228,9 +224,9 @@ Sliding_general_CLS_sampling <- function(Data, response_, w = 0,
     } else{n_ = 1:n}
     
     
-    # construct window, contains of w SNPs and response y
+    # construct window
     XY_ = cbind(Data[n_ ,mi:ma], response_[n_])
-    # calc all scores for the subset:
+    
     levs_ = getCLS(XY_)    
     
     # absolute cls?
@@ -350,10 +346,17 @@ how_many2 <- function(Data, res_number = 2001, abs =T,
 }
 
 
+########################################################################################
+########################################################################################
+###############################  further updated versions: #############################
+########################################################################################
+########################################################################################
 
-###############################  further updated versions: ####
-# not used in manusscript, but improved coding. nevertheless these functions
+# not used in manuscript, but improved coding. nevertheless these functions
 # lead to the same results as the above functions
+
+
+
 RW_CLS <- function(Data, response_, w = 0, R = 100,
                    bagging = F, abs_cls = T, pr = T){
   n = nrow(Data)
@@ -410,6 +413,7 @@ RW_CLS <- function(Data, response_, w = 0, R = 100,
   
 }
 
+########################################################################################
 SW_CLS <- function(Data, response_, w = 0,
           abs_cls = T){
   n = nrow(Data)

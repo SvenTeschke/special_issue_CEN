@@ -2,7 +2,7 @@ library('tidyverse')
 library('ggplot2')
 library('ggpubr') ## for ggrange
 
-# Read the funtions we need:
+# Read the functions we need:
 source('all_functions.R')
 
 if (!dir.exists("results/2w")) {
@@ -24,7 +24,7 @@ for(i in 1:1000){
   CLS2w_2k <- rbind(CLS2w_2k, getCLS(cbind(Szen2w_2k[[i]]$x, Szen2w_2k[[i]]$y)))
   print(i)
 }
-# save(CLS2w_2k, file = 'results/2w/CLS2w_2k.RData')
+save(CLS2w_2k, file = 'results/2w/CLS2w_2k.RData')
 
 # calculate the density:
 vv2w_i2 = density(CLS2w_2k[,1:2])
@@ -96,7 +96,7 @@ for(i in 1:1000){
   print(i)
 }
 
-# save(CLS2w_2k_nomain, file = 'results/2w/CLS2w_2k_nomain.RData')
+save(CLS2w_2k_nomain, file = 'results/2w/CLS2w_2k_nomain.RData')
 
 vv2w_i2a = density(CLS2w_2k_nomain[,1:2])
 vv2w_ni_2wa = density(CLS2w_2k_nomain[, -(1:2)])
@@ -131,7 +131,7 @@ for(i in 1:1000){
   print(i)
 }
 
-# save(CLS2w_2k_int_nomain, file = 'results/2w/CLS2w_2k_int_nomain.RData')
+save(CLS2w_2k_int_nomain, file = 'results/2w/CLS2w_2k_int_nomain.RData')
 
 # calculate the density:
 vv2w_i2b = density(CLS2w_2k_int_nomain[,1:2])
@@ -177,7 +177,7 @@ for(i in 1:1000){
                         getCLS(cbind(Szen2w_2k_neg[[i]]$x, Szen2w_2k_neg[[i]]$y)))
   print(i)
 }
-# save(CLS2w_2k_neg, file = 'results/2w/CLS2w_2k_neg.RData')
+save(CLS2w_2k_neg, file = 'results/2w/CLS2w_2k_neg.RData')
 load('results/2w/CLS2w_2k_neg.RData')
 # calculate the density:
 vv2w_i2_neg = density(CLS2w_2k_neg[,1:2])
