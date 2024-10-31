@@ -65,7 +65,7 @@ R_Code/results - This folder does not exist initially.
      
 - toyexample.R - Code for the toyexample in the motivation section -> here calculations for Figure 08
 
-- paramtertuning_w.R -Consider the influence on parameter w in the RW and SW approach and R in the RW approach -> here calculations for Figure 14 and Table 02
+- paramtertuning.R -Consider the influence on parameter w in the RW and SW approach and R in the RW approach -> here calculations for Figure 14 and Table 02
 
 
 # sessionInfo():

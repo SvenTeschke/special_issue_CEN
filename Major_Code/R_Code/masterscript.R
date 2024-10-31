@@ -106,4 +106,4 @@ source(file = "hap_map.R")
 source(file = "2w500_logicDT.R")
 
 ### parameter tuning analysis:
-source(file = "paramtertuning_w.R")
+source(file = "paramtertuning.R")

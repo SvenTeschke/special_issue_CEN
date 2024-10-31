@@ -159,7 +159,7 @@ table02 <- data.frame("p" = p, "w" = c(w[1], w[2], w[2], w[2]),
                               round(log(p[4])*p[4] / w[2])))
 table02
 
-write.table(table02, file = "results/parametertuning/Table02", sep = "\t", row.names = FALSE)
+write.table(table02, file = "results/parametertuning/Table02.txt", sep = "\t", row.names = FALSE)
 
 
 
