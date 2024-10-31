@@ -21,7 +21,7 @@ r <- c()
 for(i in 1:1000){
   h_ <- c()
   r_ <- c()
-  for(j in c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)){ # different sizes for w
+  for(j in c(200,500,1000,1250,2000,2500,4000,5000,10000, 20000)){ 
     xyz <- how_many2(Data = cbind(Szen2w_20k[[i]]$x, Szen2w_20k[[i]]$y), 
                      res_number = 20001,abs = F,
                      whole = F, SW=T, RW = T, R = 1000, w_RW = j, corr_ = F, sketch = F,

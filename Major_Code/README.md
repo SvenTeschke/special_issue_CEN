@@ -3,24 +3,25 @@
 
 # Order Structure:
 
-Data/  - This is where the simulated data is stored. If you download it from Zenodo, you have to save it there.
+Data/  - This is where the simulated data is stored. The simulated RData data is not included due to memory capacity and 
+         must be run first or download it from Zenodo https://doi.org/10.5281/zenodo.12742957 and store it here.
           If you run the Code of the simulation studies, the data is automatically saved there.
 
 R_Code/  -  This is where the full R code for the paper is stored.
 
 R_Code/plots - This is where the Figures are stored according to the paper.
 
-R_Code/results - All results and intermediate results are stored here. If you don't want to run all the code and 
-                 want to use the (intermediate) results, you have to download the results.zip file from 
-                 Zenodo (https://doi.org/10.5281/zenodo.12742957) and unzip it into R_Code/ 
-                 (Only) then can you delete the R_Code/results folder.
-
+R_Code/results - This folder does not exist initially.
+                 Theoretically, it is created automatically when the code is executed and all 
+                 results are saved there (sorted in the respective subfolders). However, the 
+                 calculations take a lot of time and memory capacity. I therefore recommend 
+                 downloading the results and intermediate results from Zenodo as well. 
+                 The file is called results.zip. (https://doi.org/10.5281/zenodo.12742957) 
+                 Please unzip this file an store it in R_Code/
 
 
 # Descriptions of the Code files:
 
-The simulated RData data is not included due to memory capacity and must be run first or downloaded 
-  from Zenodo https://doi.org/10.5281/zenodo.12742957
 
 - masterscript.R - This file can be used to perform all calculations and analyses at once. 
                    If you only want to view single calculations, I recommend viewing the corresponding files separately.
