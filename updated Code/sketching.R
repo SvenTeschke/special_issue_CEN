@@ -1,3 +1,6 @@
+library('tidyverse')
+
+
 # Inv_or_MP: function to get inverse or pseudoinverse
 #
 # Input: R - Matrix
@@ -50,6 +53,8 @@ return(cls)
 
 
 
+
+
 sketching_fast <- function(X, epsilon = 0.5){
   p = ncol(X)
   n = nrow(X)
@@ -78,21 +83,31 @@ sketching_fast <- function(X, epsilon = 0.5){
 }
 
 
+helpfunction <- function(x){
+  f = sample(1:r, s, replace = TRUE)        
+  g = sample(c(-1, 1), s, replace = TRUE) 
+  X_[f, ] <- X_[f, ] + t(x %o% g)
+  return(X_)
+}
+
+sketching_faster <- function(X, epsilon = 0.5){
+  p = ncol(X)
+  n = nrow(X)
+  X <- t(X)
+  r = round((ceiling(n * log(n))) / (epsilon^2)) # Cohen
+  s = round(ceiling(log(n) / epsilon^2))
+  X_ <- matrix(0, nrow = r, ncol = n)
+  
+  X_ <- apply(X, 1, helpfunction)
+  
+  
+  R <- qr.R(qr(X_)) # R from QR decomp.
+  R_inv <- Inv_or_MP(R)
+  
+  Om <- X %*% R_inv
+  cls <- Om[1:(p-1), ] %*% Om[p, ]
+  return(cls)
+  
+}
 
 
-
-
-
-# Beispiel-Daten
-r <- 5   # Anzahl der Zeilen in der Matrix
-n <- 4   # Anzahl der Spalten in der Matrix
-X_ <- matrix(0, nrow = r, ncol = n)  # Initialisiere Matrix
-row_to_add <- c(1, 2, 3, 4)         # Vektor, der hinzugefügt werden soll
-f <- c(1, 3, 4)                     # Zeilenindizes, zu denen addiert werden soll
-
-# Outer verwenden, um eine Gewichtungsmatrix zu erzeugen
-add_matrix <- outer(1:r, f, function(i, j) i == j)  # 1, wenn Zeile i in f
-add_matrix <- add_matrix %*% row_to_add            # Skalierung nach Spalten
-
-# Addiere zur Matrix
-X_ <- X_ + add_matrix
